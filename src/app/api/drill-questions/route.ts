@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import { anthropicClient as client } from '@/lib/anthropic-client'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { getDailyDrillQuestions, type DrillRoundFilter } from '@/lib/drill-questions'
 import { checkRateLimit } from '@/lib/rate-limit'
 import type { RoundType } from '@/types'
-
-const client = new Anthropic()
 
 const SYSTEM = `You are an interview question generator. Generate exactly 3 interview practice drill questions tailored to the candidate's profile.
 

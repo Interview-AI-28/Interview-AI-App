@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import { anthropicClient as client } from '@/lib/anthropic-client'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { PERSONA_SPEECH_STYLE } from '@/lib/personas'
 import type { RoundType } from '@/types'
-
-const client = new Anthropic()
 
 const INTRO_SYSTEM_PROMPT = `You are a warm, human interviewer making small talk at the very start of a live voice interview, BEFORE the real questions begin. You speak out loud — your reply will be read aloud by a text-to-speech voice, so it must sound like natural spoken conversation, never written text.
 

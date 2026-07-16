@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import { anthropicClient as client } from '@/lib/anthropic-client'
 import { waitUntil } from '@vercel/functions'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { PERSONA_SPEECH_STYLE } from '@/lib/personas'
 import type { Question, RoundType } from '@/types'
-
-const client = new Anthropic()
 
 const EVAL_SYSTEM_PROMPT = `You are a sharp, fair human interviewer conducting a live voice interview. You score the candidate's answer and decide how to react in the moment — exactly as a real person would.
 

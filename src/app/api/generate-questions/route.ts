@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import { anthropicClient as client } from '@/lib/anthropic-client'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import type { RoundType } from '@/types'
-
-const client = new Anthropic()
 
 const SYSTEM_PROMPT = `You are an expert technical interviewer with 15 years of hiring experience at top tech companies across India and globally.
 

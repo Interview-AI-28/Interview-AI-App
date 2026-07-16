@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import { anthropicClient as client } from '@/lib/anthropic-client'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { checkRateLimit } from '@/lib/rate-limit'
-
-const client = new Anthropic()
 
 // Static instructions in the system block so they're cache-eligible across calls.
 const SYSTEM = `You are an expert interview preparation coach.
