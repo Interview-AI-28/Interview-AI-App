@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'Terms and conditions for using the InterviewAI platform.',
 }
 
-const LAST_UPDATED = 'June 2025'
+const LAST_UPDATED = 'July 2026'
 
 const SECTIONS = [
   {
@@ -15,11 +15,10 @@ const SECTIONS = [
     content: (
       <>
         <p>
-          By accessing or using InterviewAI at <strong>interviewai.in</strong> (the &quot;Platform&quot;),
+          By accessing or using InterviewAI at <strong>interview-ai.in</strong> (the &quot;Platform&quot;),
           you agree to be bound by these Terms of Service (&quot;Terms&quot;). These Terms form a
-          legally binding agreement between you and{' '}
-          <strong>[Your Registered Legal Entity Name]</strong> (&quot;InterviewAI&quot;, &quot;we&quot;, &quot;us&quot;,
-          or &quot;our&quot;), incorporated under the laws of India.
+          legally binding agreement between you and the operator of the Platform
+          (&quot;InterviewAI&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;), based in India.
         </p>
         <p className="mt-2">
           If you do not agree to these Terms, do not use the Platform. We reserve the right to
@@ -73,7 +72,7 @@ const SECTIONS = [
       <ul className="list-disc pl-5 space-y-2">
         <li>You may create one account per Google identity. Creating multiple accounts to circumvent usage limits is prohibited and may result in permanent suspension of all associated accounts.</li>
         <li>You are responsible for all activity that occurs under your account.</li>
-        <li>Notify us immediately at <a href="mailto:support@interviewai.in" className="text-blue-600 hover:underline">support@interviewai.in</a> if you suspect unauthorised access.</li>
+        <li>Notify us immediately at <a href="mailto:support@interview-ai.in" className="text-blue-600 hover:underline">support@interview-ai.in</a> if you suspect unauthorised access.</li>
         <li>We reserve the right to suspend or terminate accounts that violate these Terms.</li>
       </ul>
     ),
@@ -178,9 +177,7 @@ const SECTIONS = [
           the platform, even if advised of the possibility of such damages.
         </p>
         <p className="mt-2">
-          In no event shall our total liability to you exceed the amount you paid to
-          InterviewAI in the 3 months immediately preceding the event giving rise to the
-          claim, or ₹500, whichever is greater.
+          In no event shall our total liability to you exceed ₹500.
         </p>
       </>
     ),
@@ -223,7 +220,7 @@ const SECTIONS = [
           disputes arising out of or relating to these Terms shall first be attempted to be
           resolved through good-faith negotiation. If unresolved within 30 days, disputes shall
           be submitted to binding arbitration in accordance with the Arbitration and Conciliation
-          Act, 1996, with the seat of arbitration in <strong>Mumbai, Maharashtra</strong>. The
+          Act, 1996, with the seat of arbitration in <strong>India</strong>. The
           language of arbitration shall be English.
         </p>
         <p className="mt-2">
@@ -238,8 +235,8 @@ const SECTIONS = [
     content: (
       <p>
         For questions about these Terms, contact us at:{' '}
-        <a href="mailto:legal@interviewai.in" className="text-blue-600 hover:underline">
-          legal@interviewai.in
+        <a href="mailto:support@interview-ai.in" className="text-blue-600 hover:underline">
+          support@interview-ai.in
         </a>
       </p>
     ),

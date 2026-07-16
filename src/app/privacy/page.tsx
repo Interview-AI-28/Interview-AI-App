@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'How InterviewAI collects, uses, and protects your personal data.',
 }
 
-const LAST_UPDATED = 'June 2025'
+const LAST_UPDATED = 'July 2026'
 
 export default function PrivacyPage() {
   return (
@@ -39,16 +39,14 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-semibold text-gray-900 mb-3">1. Who We Are</h2>
             <p>
               InterviewAI (&quot;InterviewAI&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is an AI-powered mock
-              interview platform operated by <strong>[Your Registered Legal Entity Name]</strong>,
-              incorporated under the laws of India. Our platform helps job seekers practise
+              interview platform, operated from India. Our platform helps job seekers practise
               interviews through voice-based AI conversations and receive detailed feedback reports.
             </p>
             <p className="mt-2">
               This Privacy Policy explains how we collect, use, share, and protect your personal
-              data when you use our website and services at <strong>interviewai.in</strong> (the
-              &quot;Platform&quot;). It is compliant with India&apos;s{' '}
-              <strong>Digital Personal Data Protection Act, 2023 (DPDP Act)</strong> and, where
-              applicable, the EU&apos;s <strong>General Data Protection Regulation (GDPR)</strong>.
+              data when you use our website and services at <strong>interview-ai.in</strong> (the
+              &quot;Platform&quot;). It is designed with reference to India&apos;s{' '}
+              <strong>Digital Personal Data Protection Act, 2023 (DPDP Act)</strong>.
             </p>
             <p className="mt-2">
               By using the Platform, you acknowledge that you have read and understood this Privacy
@@ -102,7 +100,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-3">3. Legal Basis for Processing</h2>
-            <p className="mb-2">Under the DPDP Act and GDPR, we rely on the following legal grounds:</p>
+            <p className="mb-2">Under the DPDP Act, we rely on the following legal grounds:</p>
             <ul className="list-disc pl-5 space-y-2">
               <li><strong>Consent</strong> — You actively sign in with Google and agree to these terms, thereby consenting to processing your name, email, interview content, and feedback.</li>
               <li><strong>Legitimate interests</strong> — We retain anonymised authentication records (without any personal profile data) to prevent system abuse (e.g., repeatedly circumventing rate limits via duplicate accounts). This retention is the minimum necessary and does not materially affect your privacy.</li>
@@ -165,7 +163,7 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-semibold text-gray-900 mb-3">6. Public Report Sharing</h2>
             <p>
               When you share your interview report, a unique link is generated (e.g.,{' '}
-              <code className="bg-gray-100 px-1 rounded text-xs">interviewai.in/report/abc123</code>).
+              <code className="bg-gray-100 px-1 rounded text-xs">interview-ai.in/report/abc123</code>).
               Anyone with this link can view your full report — including your scores, strengths, gaps,
               and quotes from your answers — without logging in.
             </p>
@@ -208,14 +206,15 @@ export default function PrivacyPage() {
             </ul>
             <p className="mt-2">
               In the event of a data breach that is likely to result in a risk to your rights, we will
-              notify you and the relevant authorities within 72 hours as required by applicable law.
+              notify affected users and, where legally required, the relevant authorities without
+              undue delay.
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-3">10. Your Rights</h2>
             <p className="mb-3">
-              Under the DPDP Act 2023 and GDPR (where applicable), you have the following rights:
+              Under India&apos;s DPDP Act 2023, you have the following rights:
             </p>
             <div className="space-y-3">
               {[
@@ -225,7 +224,6 @@ export default function PrivacyPage() {
                 ['Right to Data Portability', 'Contact us to request an export of your data in machine-readable format (JSON/CSV).'],
                 ['Right to Withdraw Consent', 'You may withdraw consent at any time by deleting your account. This does not affect the lawfulness of processing carried out prior to withdrawal.'],
                 ['Right to Lodge a Grievance (DPDP)', 'You may file a grievance with our Grievance Officer (see Section 12). If unresolved within 30 days, you may escalate to the Data Protection Board of India once constituted.'],
-                ['Right to Lodge a Complaint (GDPR — EU users)', 'EU/EEA residents may lodge a complaint with their local supervisory authority.'],
               ].map(([title, body]) => (
                 <div key={title} className="bg-gray-50 border border-gray-200 rounded-xl p-4">
                   <div className="font-semibold text-gray-900 text-sm mb-1">{title}</div>
@@ -272,11 +270,9 @@ export default function PrivacyPage() {
               Grievance Officer to address any concerns regarding the processing of your personal data:
             </p>
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm space-y-1">
-              <div><span className="font-semibold text-gray-800">Name:</span> <span className="text-gray-700">[Grievance Officer Name]</span></div>
               <div><span className="font-semibold text-gray-800">Designation:</span> <span className="text-gray-700">Grievance Officer, InterviewAI</span></div>
-              <div><span className="font-semibold text-gray-800">Email:</span> <a href="mailto:privacy@interviewai.in" className="text-blue-600 hover:underline">privacy@interviewai.in</a></div>
-              <div><span className="font-semibold text-gray-800">Address:</span> <span className="text-gray-700">[Registered Office Address, India]</span></div>
-              <div><span className="font-semibold text-gray-800">Response time:</span> <span className="text-gray-700">We will acknowledge within 48 hours and resolve within 30 days.</span></div>
+              <div><span className="font-semibold text-gray-800">Email:</span> <a href="mailto:support@interview-ai.in" className="text-blue-600 hover:underline">support@interview-ai.in</a></div>
+              <div><span className="font-semibold text-gray-800">Response time:</span> <span className="text-gray-700">We aim to resolve grievances within 30 days.</span></div>
             </div>
           </section>
 
@@ -295,8 +291,8 @@ export default function PrivacyPage() {
             <p>
               For any privacy-related questions, data export requests, or to exercise your rights,
               contact us at:{' '}
-              <a href="mailto:privacy@interviewai.in" className="text-blue-600 hover:underline">
-                privacy@interviewai.in
+              <a href="mailto:support@interview-ai.in" className="text-blue-600 hover:underline">
+                support@interview-ai.in
               </a>
             </p>
           </section>
