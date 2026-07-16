@@ -82,9 +82,9 @@ const SECTIONS = [
     title: '5. Access',
     content: (
       <ul className="list-disc pl-5 space-y-2">
-        <li><strong>The Platform is free and unlimited.</strong> There is no paywall, no purchased credits, and no subscription — every account has full access to every feature at no cost.</li>
-        <li><strong>Voluntary support:</strong> Users who wish to support the project may do so voluntarily via the optional Support page. This is not a purchase, carries no entitlement beyond what is already free, and is non-refundable.</li>
-        <li>We may introduce reasonable rate limits to prevent abuse of the Platform&apos;s infrastructure or underlying AI services; these are not credits and do not gate normal usage.</li>
+        <li><strong>The Platform is currently free and unlimited.</strong> There is no paywall, no purchased credits, and no subscription — every account has full access to every feature at no cost.</li>
+        <li><strong>Future changes.</strong> We may introduce paid plans, subscriptions, or other paid features in the future. If we do, we will provide reasonable advance notice before any change affects your access, and continued use of the Platform after such notice constitutes acceptance of the updated terms.</li>
+        <li>We may introduce reasonable rate limits to prevent abuse of the Platform&apos;s infrastructure or underlying AI services; these do not gate normal usage.</li>
       </ul>
     ),
   },

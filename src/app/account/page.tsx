@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Mic, Heart, CheckCircle, ArrowLeft, Loader2, Trash2 } from 'lucide-react'
+import { Mic, CheckCircle, ArrowLeft, Loader2, Trash2 } from 'lucide-react'
 
 interface AccountData {
   user: { email: string; name: string; referral_code: string }
@@ -134,22 +134,6 @@ export default function AccountPage() {
 
       <main className="max-w-3xl mx-auto px-6 py-10 space-y-6">
         <h1 className="text-2xl font-bold text-gray-900">Account</h1>
-
-        {/* Support */}
-        <div className="bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-200 rounded-2xl p-6">
-          <h2 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-            <Heart className="w-4 h-4 text-indigo-600" /> Support this project
-          </h2>
-          <p className="text-sm text-gray-600 mb-4">
-            InterviewAI is free and unlimited. If it&rsquo;s helped you, consider chipping in — totally optional.
-          </p>
-          <Link
-            href="/pricing"
-            className="block text-center bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-xl text-sm font-semibold transition-colors"
-          >
-            Support this project →
-          </Link>
-        </div>
 
         {/* Referral */}
         <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">

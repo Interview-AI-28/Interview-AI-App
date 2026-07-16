@@ -24,7 +24,6 @@ export default async function LandingPage() {
 
   const dashboardHref = '/dashboard'
   const signupHref = '/auth/login'
-  const pricingHref = isLoggedIn ? '/pricing' : '/auth/login'
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -34,9 +33,6 @@ export default async function LandingPage() {
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
             <span className="font-bold text-xl text-gray-900">InterviewAI</span>
-          </div>
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/pricing" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Pricing</Link>
           </div>
           <div className="flex items-center gap-4">
             {isLoggedIn ? (
@@ -122,7 +118,7 @@ export default async function LandingPage() {
                     href={signupHref}
                     className="bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-700 text-lg px-8 py-4 rounded-xl transition-all active:scale-[0.97] font-medium"
                   >
-                    No credit card · 1 free session
+                    Free &amp; unlimited — no credit card
                   </Link>
                 </>
               )}
@@ -132,7 +128,7 @@ export default async function LandingPage() {
             <div className="flex flex-wrap justify-center gap-3">
               {[
                 { icon: Mic, value: displayCount, label: 'Mock interviews completed' },
-                { icon: Zap, value: 'No subscription', label: 'Pay as you go, credits never expire' },
+                { icon: Zap, value: '100% free', label: 'Unlimited practice, no cost' },
                 { icon: Clock, value: '24 / 7', label: 'Practice any time, no scheduling' },
               ].map(({ icon: Icon, value, label }) => (
                 <div key={label} className="bg-white border border-gray-200 shadow-sm rounded-xl px-4 py-3 sm:px-6 sm:py-4 flex items-center gap-2.5 sm:gap-3 max-w-[calc(50%-6px)] sm:max-w-none">
@@ -247,63 +243,6 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className="px-6 py-24 bg-slate-50">
-        <div className="max-w-4xl mx-auto">
-          <FadeIn>
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-3">
-              Buy sessions when you need them
-            </h2>
-            <p className="text-center text-gray-500 mb-12">
-              No subscription. No monthly bills. Credits never expire.
-            </p>
-          </FadeIn>
-          <StaggerContainer className="grid md:grid-cols-3 gap-5">
-            {[
-              { name: 'Single', price: '₹249', per: '₹249/session', sessions: '1 session', saving: null, highlighted: false },
-              { name: 'Starter Pack', price: '₹999', per: '₹200/session', sessions: '5 sessions', saving: 'Save 20%', highlighted: true },
-              { name: 'Serious Prep', price: '₹1,799', per: '₹180/session', sessions: '10 sessions', saving: 'Save 28%', highlighted: false },
-            ].map(({ name, price, per, sessions, saving, highlighted }) => (
-              <StaggerItem key={name} lift>
-                <div
-                  className={`rounded-2xl p-8 border text-center transition-all duration-300 h-full ${
-                    highlighted
-                      ? 'bg-indigo-50 border-indigo-300 shadow-md scale-[1.03]'
-                      : 'bg-white border-gray-200 shadow-sm hover:border-indigo-200'
-                  }`}
-                >
-                  {saving && (
-                    <div className={`text-xs font-bold px-3 py-1 rounded-full w-fit mx-auto mb-4 ${
-                      highlighted ? 'bg-indigo-100 text-indigo-700 border border-indigo-200' : 'bg-gray-100 text-gray-600 border border-gray-200'
-                    }`}>
-                      {saving}
-                    </div>
-                  )}
-                  <div className="font-bold text-lg mb-1 text-gray-900">{name}</div>
-                  <div className="text-4xl font-bold mb-1 text-gray-900">{price}</div>
-                  <div className={`text-sm mb-1 ${highlighted ? 'text-indigo-600' : 'text-gray-500'}`}>{per}</div>
-                  <div className={`text-sm font-medium mb-6 ${highlighted ? 'text-indigo-700' : 'text-gray-600'}`}>{sessions}</div>
-                  <Link
-                    href={pricingHref}
-                    className={`block py-2.5 rounded-xl text-sm font-semibold transition-colors ${
-                      highlighted
-                        ? 'bg-indigo-600 text-white hover:bg-indigo-500'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'
-                    }`}
-                  >
-                    Buy now →
-                  </Link>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-          <p className="text-center text-sm text-gray-500 mt-8">
-            New? Every account includes 1 free session — no payment needed.{' '}
-            <Link href={isLoggedIn ? '/dashboard' : '/auth/login'} className="text-indigo-600 hover:text-indigo-700 transition-colors">Get started →</Link>
-          </p>
-        </div>
-      </section>
-
       {/* Bottom CTA */}
       <section className="px-6 py-24 relative overflow-hidden bg-white">
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-50 to-transparent pointer-events-none" />
@@ -312,7 +251,7 @@ export default async function LandingPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Your interview is in 9 hours. Are you ready?
           </h2>
-          <p className="text-gray-500 mb-10">One free session. No credit card. Just practice.</p>
+          <p className="text-gray-500 mb-10">Unlimited free practice. No credit card. Just practice.</p>
           <Link
             href={isLoggedIn ? dashboardHref : signupHref}
             className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 active:scale-[0.97] text-white font-semibold px-8 py-4 rounded-xl transition-all text-lg shadow-[0_4px_24px_rgba(99,102,241,0.3)]"
@@ -333,7 +272,6 @@ export default async function LandingPage() {
           <div className="flex gap-6 text-sm text-gray-500">
             <Link href="/privacy" className="hover:text-gray-700 transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-gray-700 transition-colors">Terms of Service</Link>
-            <Link href="/pricing" className="hover:text-gray-700 transition-colors">Pricing</Link>
           </div>
           <p className="text-sm text-gray-400">© 2026 InterviewAI. Made in India.</p>
         </div>
