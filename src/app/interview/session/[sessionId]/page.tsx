@@ -840,12 +840,10 @@ function SessionPageInner({ params }: SessionPageProps) {
       body: JSON.stringify({ session_id: sessionId }),
     }).catch(() => {})
 
-    // charge: true — credit is only deducted when the user ends the call or
-    // all questions are answered. Browser crashes / network drops never reach here.
     fetch('/api/generate-feedback', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ session_id: sessionId, charge: true }),
+      body: JSON.stringify({ session_id: sessionId }),
     }).catch(console.error)
 
     // Step 5 — navigate to the feedback page.
@@ -869,26 +867,12 @@ function SessionPageInner({ params }: SessionPageProps) {
   }
 
   if (error) {
-    const noCredits = error.toLowerCase().includes('credit')
     const isSpeechError = error.toLowerCase().includes('speech') || error.toLowerCase().includes('recognition')
     return (
       <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center px-4">
         <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-8 max-w-md text-center">
           <p className="text-red-400 mb-4 text-sm leading-relaxed">{error}</p>
-          {noCredits && (
-            <p className="text-gray-400 text-sm mb-4">
-              You need credits to start an interview. Pick up a plan on the pricing page.
-            </p>
-          )}
           <div className="flex gap-3 justify-center">
-            {noCredits && (
-              <button
-                onClick={() => router.push('/pricing')}
-                className="bg-indigo-600 text-white px-5 py-2 rounded-xl font-medium text-sm hover:bg-indigo-500 transition-colors"
-              >
-                View Pricing
-              </button>
-            )}
             {isSpeechError && (
               <button
                 onClick={() => { setError(''); setDeepgramRetry(n => n + 1) }}

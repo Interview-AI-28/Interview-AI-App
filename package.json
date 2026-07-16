@@ -39,7 +39,6 @@
     "next": "14.2.18",
     "pdf-parse": "^2.4.5",
     "posthog-js": "^1.376.0",
-    "razorpay": "^2.9.5",
     "react": "^18",
     "react-dom": "^18",
     "resend": "^4.0.1",

@@ -62,7 +62,7 @@ function SetupPageInner() {
   }, [loading])
 
   // Pre-fill round_type from query param (e.g. from "Practice This" on dashboard).
-  // Default to full_loop so first-time users get comprehensive coverage for their 1 credit.
+  // Default to full_loop so first-time users get comprehensive coverage.
   const prefillRoundType = (searchParams.get('round_type') as RoundType | null) ?? 'full_loop'
   const validRoundTypes: RoundType[] = ['tech_l1', 'tech_l2', 'managerial', 'hr', 'full_loop']
   const initialRoundType = validRoundTypes.includes(prefillRoundType) ? prefillRoundType : 'full_loop'
@@ -444,7 +444,7 @@ function SetupPageInner() {
             <div>
               <h2 className="text-xl font-bold text-gray-900 mb-1">Choose Your Interview Round</h2>
               <p className="text-sm text-gray-600 mb-5">
-                All options cost <strong className="text-gray-700">1 credit</strong>. Pick based on what you need today.
+                Pick based on what you need today.
               </p>
 
               {/* Full Interview Loop (primary, recommended) */}
@@ -472,7 +472,7 @@ function SetupPageInner() {
                       <span className="text-xs font-semibold bg-indigo-600 text-white px-2 py-0.5 rounded-full">
                         Recommended
                       </span>
-                      <span className="text-xs text-gray-500 ml-auto">~60 min · 1 credit</span>
+                      <span className="text-xs text-gray-500 ml-auto">~60 min</span>
                     </div>
                     <p className="text-sm text-gray-600 mt-1 leading-relaxed">
                       Covers all 4 round types in one session — Technical L1, Technical L2, Managerial &amp; HR.
@@ -524,7 +524,7 @@ function SetupPageInner() {
               </div>
 
               <p className="text-xs text-gray-400 mt-3 text-center">
-                ~30 min for individual rounds &nbsp;·&nbsp; Each option costs 1 credit
+                ~30 min for individual rounds
               </p>
             </div>
           )}

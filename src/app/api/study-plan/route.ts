@@ -23,7 +23,7 @@ Return ONLY a JSON array (no markdown, no extra text) with this structure:
 
 Rules:
 - Day 1 must target the weakest topic
-- At most 2 mock interviews in the plan (they cost credits); use round types: tech_l1, tech_l2, managerial, hr, or full_loop
+- At most 2 mock interviews in the plan (to keep it realistic and not interview-fatigue the candidate); use round types: tech_l1, tech_l2, managerial, hr, or full_loop
 - Other days: "Review X concept", "Practice explaining Y aloud", "Do today's free drill" — link to /drill for drill days
 - Last day before interview (if known): "Light warm-up — 3-question drill only", link to /drill
 - If target role and company are known, reference them in "action" and "why"

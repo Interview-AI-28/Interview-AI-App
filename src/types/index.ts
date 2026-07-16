@@ -1,4 +1,3 @@
-export type Plan = 'free' | 'payg'
 export type RoundType = 'tech_l1' | 'tech_l2' | 'managerial' | 'hr' | 'full_loop'
 export type SessionStatus = 'setup' | 'in_progress' | 'completed' | 'abandoned'
 export type TransactionType = 'signup' | 'purchase' | 'referral' | 'session_use'
@@ -8,8 +7,6 @@ export interface User {
   email: string
   name: string
   avatar_url: string | null
-  credit_balance: number
-  plan: Plan
   referral_code: string
   created_at: string
   current_streak: number

@@ -25,23 +25,9 @@ export async function GET(
       return NextResponse.json({ error: 'Session not found' }, { status: 404 })
     }
 
-    // Plan + balance gate. Credits are NOT deducted here — only when the interview
-    // is successfully completed (generate-feedback). This ensures interrupted or
-    // errored sessions don't waste a credit.
-    const { data: userData } = await supabase
-      .from('users')
-      .select('credit_balance, plan')
-      .eq('id', user.id)
-      .single()
-
-    if (session.status === 'setup' && userData?.plan !== 'unlimited' && (userData?.credit_balance ?? 0) <= 0) {
-      return NextResponse.json({ error: 'No credits available' }, { status: 402 })
-    }
-
     // Transition setup → in_progress (idempotent: .eq('status', 'setup') is a no-op if already started)
     if (session.status === 'setup') {
-      // Rate limit: max 10 sessions started per hour. Credits are the real abuse
-      // guard; this just stops runaway loops. 3/hr was too tight for normal practice.
+      // Rate limit: max 10 sessions started per hour, to stop runaway loops.
       const oneHourAgo = new Date(Date.now() - 3_600_000).toISOString()
       const { count: recentCount } = await supabase
         .from('interview_sessions')
