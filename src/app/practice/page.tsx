@@ -63,7 +63,6 @@ export default function PracticeIndexPage() {
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-400">
           <span>© 2026 InterviewAI. Made in India.</span>
           <div className="flex gap-6">
-            <Link href="/pricing" className="hover:text-gray-900">Pricing</Link>
             <Link href="/privacy" className="hover:text-gray-900">Privacy</Link>
             <Link href="/terms" className="hover:text-gray-900">Terms</Link>
           </div>

@@ -141,12 +141,6 @@ export default async function DashboardPage() {
             <span className="font-bold text-gray-900 tracking-tight">InterviewAI</span>
           </div>
           <div className="flex items-center gap-4">
-            <Link
-              href="/pricing"
-              className="text-xs text-gray-400 hover:text-gray-600 transition-colors whitespace-nowrap"
-            >
-              Support this project
-            </Link>
             <UserMenu
               name={authUser.user_metadata?.full_name ?? ''}
               email={authUser.email ?? ''}

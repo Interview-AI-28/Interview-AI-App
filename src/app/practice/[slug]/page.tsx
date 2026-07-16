@@ -197,7 +197,6 @@ export default async function PracticeGuidePage({
           <span>© 2026 InterviewAI. Made in India.</span>
           <div className="flex gap-6">
             <Link href="/practice" className="hover:text-gray-900">All guides</Link>
-            <Link href="/pricing" className="hover:text-gray-900">Pricing</Link>
             <Link href="/privacy" className="hover:text-gray-900">Privacy</Link>
           </div>
         </div>
