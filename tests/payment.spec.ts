@@ -98,7 +98,7 @@ test.describe('Payment / Pricing flow', () => {
     expect(opts).toHaveProperty('key')
     expect(opts).toHaveProperty('amount')
     expect(opts).toHaveProperty('currency', 'INR')
-    expect(opts).toHaveProperty('name', expect.stringMatching(/InterviewAI/i))
+    expect(opts).toHaveProperty('name', expect.stringMatching(/Intervizly/i))
   })
 
   test('payment success calls verify-payment endpoint', async ({ page }) => {

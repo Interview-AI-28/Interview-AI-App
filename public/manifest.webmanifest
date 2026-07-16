@@ -1,6 +1,6 @@
 {
-  "name": "InterviewAI — Mock Interview Practice",
-  "short_name": "InterviewAI",
+  "name": "Intervizly — Mock Interview Practice",
+  "short_name": "Intervizly",
   "description": "Practice voice mock interviews with AI and get instant feedback.",
   "start_url": "/dashboard",
   "scope": "/",

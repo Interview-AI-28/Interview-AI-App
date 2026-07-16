@@ -55,7 +55,7 @@ export default async function FeedbackPage({
               <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
                 <Mic className="w-3.5 h-3.5 text-white" />
               </div>
-              <span className="font-bold text-gray-900">InterviewAI</span>
+              <span className="font-bold text-gray-900">Intervizly</span>
             </div>
             <Link href="/dashboard" className="flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
               <ArrowLeft className="w-4 h-4" /> Dashboard
@@ -183,7 +183,7 @@ export default async function FeedbackPage({
             <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
               <Mic className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="font-bold text-gray-900">InterviewAI</span>
+            <span className="font-bold text-gray-900">Intervizly</span>
           </div>
           <Link href="/dashboard" className="flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Dashboard

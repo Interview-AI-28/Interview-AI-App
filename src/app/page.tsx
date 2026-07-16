@@ -32,7 +32,7 @@ export default async function LandingPage() {
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
-            <span className="font-bold text-xl text-gray-900">InterviewAI</span>
+            <span className="font-bold text-xl text-gray-900">Intervizly</span>
           </div>
           <div className="flex items-center gap-4">
             {isLoggedIn ? (
@@ -267,13 +267,13 @@ export default async function LandingPage() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full" />
-            <span className="font-bold text-gray-900">InterviewAI</span>
+            <span className="font-bold text-gray-900">Intervizly</span>
           </div>
           <div className="flex gap-6 text-sm text-gray-500">
             <Link href="/privacy" className="hover:text-gray-700 transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-gray-700 transition-colors">Terms of Service</Link>
           </div>
-          <p className="text-sm text-gray-400">© 2026 InterviewAI. Made in India.</p>
+          <p className="text-sm text-gray-400">© 2026 Intervizly. Made in India.</p>
         </div>
       </footer>
     </div>

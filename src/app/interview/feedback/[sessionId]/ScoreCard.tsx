@@ -69,7 +69,7 @@ export default function ScoreCard({
 
     ctx.fillStyle = '#ffffff'
     ctx.font = 'bold 26px system-ui, sans-serif'
-    ctx.fillText('InterviewAI', 120, 76)
+    ctx.fillText('Intervizly', 120, 76)
 
     ctx.fillStyle = '#94a3b8'   // slate-400
     ctx.font = '18px system-ui, sans-serif'
@@ -168,7 +168,7 @@ export default function ScoreCard({
     // Including the report URL in the body text triggers LinkedIn's link-card
     // detection, which pulls the og:image (the scorecard graphic) automatically.
     const text = [
-      `${performanceEmoji} Just completed a mock interview on InterviewAI!`,
+      `${performanceEmoji} Just completed a mock interview on Intervizly!`,
       '',
       `🏢 Company: ${company}`,
       `💼 Role: ${role}`,
@@ -183,7 +183,7 @@ export default function ScoreCard({
       `View my full feedback report 👇`,
       shareUrl,
       '',
-      `If you're prepping for interviews, give InterviewAI a try — it's free to start.`,
+      `If you're prepping for interviews, give Intervizly a try — it's free to start.`,
       '',
       `#InterviewPrep #MockInterview #CareerGrowth #JobSearch #TechInterview`,
     ].join('\n')
@@ -199,7 +199,7 @@ export default function ScoreCard({
   function shareOnWhatsApp() {
     const emoji = selectionProbability >= 75 ? '🔥' : selectionProbability >= 55 ? '💪' : '📈'
     const text = [
-      `${emoji} Mock interview result — InterviewAI`,
+      `${emoji} Mock interview result — Intervizly`,
       '',
       `🏢 ${company} — ${role}`,
       `📊 ${roundLabel}`,

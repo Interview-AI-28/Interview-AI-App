@@ -86,7 +86,7 @@ export default async function DashboardPage() {
   const user = userData as User | null
   const currentStreak = user?.current_streak ?? 0
   const longestStreak = user?.longest_streak ?? 0
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://interviewai.in'
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://interview-ai-app-iota.vercel.app'
   const referralLink = user?.referral_code ? `${appUrl}/?ref=${user.referral_code}` : null
 
   // Score trend: chronological, last 8 completed sessions with reports (for chart)
@@ -138,7 +138,7 @@ export default async function DashboardPage() {
             <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
               <div className="w-2 h-2 bg-white rounded-full" />
             </div>
-            <span className="font-bold text-gray-900 tracking-tight">InterviewAI</span>
+            <span className="font-bold text-gray-900 tracking-tight">Intervizly</span>
           </div>
           <div className="flex items-center gap-4">
             <UserMenu

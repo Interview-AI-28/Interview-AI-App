@@ -10,13 +10,13 @@ const inter = Inter({
   weight: ['300', '400', '500', '600', '700'],
 })
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://interviewai.in'
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://interview-ai-app-iota.vercel.app'
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: 'InterviewAI — Practice like it\'s real. Perform when it matters.',
-    template: '%s | InterviewAI',
+    default: 'Intervizly — Practice like it\'s real. Perform when it matters.',
+    template: '%s | Intervizly',
   },
   description: 'AI-powered voice mock interview platform for the Indian job market. Practice full telephonic interview rounds — Technical L1/L2, Managerial, HR — with real-time AI feedback and detailed scorecards.',
   keywords: [
@@ -40,18 +40,18 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'InterviewAI',
+    title: 'Intervizly',
   },
   openGraph: {
-    title: 'InterviewAI — Practice like it\'s real. Perform when it matters.',
+    title: 'Intervizly — Practice like it\'s real. Perform when it matters.',
     description: 'AI voice mock interviews for the Indian job market. Get JD-specific questions, real-time feedback, and a detailed scorecard.',
     type: 'website',
     url: APP_URL,
-    siteName: 'InterviewAI',
+    siteName: 'Intervizly',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'InterviewAI — Practice like it\'s real.',
+    title: 'Intervizly — Practice like it\'s real.',
     description: 'AI voice mock interviews for the Indian job market. JD-specific questions, real-time feedback, selection probability score.',
   },
   alternates: {
@@ -70,7 +70,7 @@ const jsonLd = {
       '@type': 'WebSite',
       '@id': `${APP_URL}/#website`,
       url: APP_URL,
-      name: 'InterviewAI',
+      name: 'Intervizly',
       description: 'AI-powered voice mock interview platform for the Indian job market.',
       potentialAction: {
         '@type': 'SearchAction',
@@ -81,7 +81,7 @@ const jsonLd = {
     {
       '@type': 'SoftwareApplication',
       '@id': `${APP_URL}/#app`,
-      name: 'InterviewAI',
+      name: 'Intervizly',
       url: APP_URL,
       applicationCategory: 'EducationalApplication',
       operatingSystem: 'Web',
@@ -89,7 +89,7 @@ const jsonLd = {
         '@type': 'Offer',
         price: '0',
         priceCurrency: 'INR',
-        description: '1 free mock interview session included',
+        description: 'Unlimited free mock interview practice',
       },
     },
   ],

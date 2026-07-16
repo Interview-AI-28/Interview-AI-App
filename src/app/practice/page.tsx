@@ -4,7 +4,7 @@ import { Mic, ArrowRight } from 'lucide-react'
 import { PRACTICE_GUIDES } from '@/lib/practice-content'
 
 export const metadata: Metadata = {
-  title: 'Mock Interview Practice Guides by Company & Role — InterviewAI',
+  title: 'Mock Interview Practice Guides by Company & Role — Intervizly',
   description:
     'Free company-specific mock interview practice. Sample questions and tips for Google, Amazon, Flipkart, TCS, Infosys and more — then practise live with AI.',
   alternates: { canonical: '/practice' },
@@ -19,7 +19,7 @@ export default function PracticeIndexPage() {
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <Mic className="w-4 h-4 text-white" />
             </div>
-            <span className="font-bold text-xl text-gray-900">InterviewAI</span>
+            <span className="font-bold text-xl text-gray-900">Intervizly</span>
           </Link>
           <Link
             href="/auth/login"
@@ -61,7 +61,7 @@ export default function PracticeIndexPage() {
 
       <footer className="border-t border-gray-100 px-6 py-8 mt-8">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-400">
-          <span>© 2026 InterviewAI. Made in India.</span>
+          <span>© 2026 Intervizly. Made in India.</span>
           <div className="flex gap-6">
             <Link href="/privacy" className="hover:text-gray-900">Privacy</Link>
             <Link href="/terms" className="hover:text-gray-900">Terms</Link>

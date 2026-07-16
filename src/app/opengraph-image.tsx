@@ -48,7 +48,7 @@ export default function Image() {
 
       {/* Brand name */}
       <div style={{ color: '#111827', fontWeight: 'bold', fontSize: '56px', marginBottom: '20px', display: 'flex' }}>
-        InterviewAI
+        Intervizly
       </div>
 
       {/* Tagline */}

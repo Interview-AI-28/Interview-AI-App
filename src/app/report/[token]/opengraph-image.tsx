@@ -23,7 +23,7 @@ export default async function Image({ params }: { params: { token: string } }) {
     .eq('share_token', params.token)
     .single()
 
-  const appDomain = (process.env.NEXT_PUBLIC_APP_URL ?? 'interviewai.app').replace(/^https?:\/\//, '')
+  const appDomain = (process.env.NEXT_PUBLIC_APP_URL ?? 'https://interview-ai-app-iota.vercel.app').replace(/^https?:\/\//, '')
 
   if (!data) {
     return new ImageResponse(
@@ -40,7 +40,7 @@ export default async function Image({ params }: { params: { token: string } }) {
           fontFamily: 'system-ui, sans-serif',
         }}
       >
-        InterviewAI Report
+        Intervizly Report
       </div>,
       { width: 1200, height: 630 }
     )
@@ -94,7 +94,7 @@ export default async function Image({ params }: { params: { token: string } }) {
           >
             AI
           </div>
-          <span style={{ color: 'white', fontWeight: 'bold', fontSize: '26px' }}>InterviewAI</span>
+          <span style={{ color: 'white', fontWeight: 'bold', fontSize: '26px' }}>Intervizly</span>
         </div>
         <span style={{ color: '#94a3b8', fontSize: '18px' }}>Mock Interview Result</span>
       </div>

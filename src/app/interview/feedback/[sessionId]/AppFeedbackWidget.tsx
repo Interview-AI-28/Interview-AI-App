@@ -67,7 +67,7 @@ export default function AppFeedbackWidget({ sessionId }: Props) {
           <CheckCircle2 className="w-12 h-12 text-emerald-600 mb-3" />
           <p className="font-semibold text-gray-900 text-lg">Thank you for your feedback!</p>
           <p className="text-gray-500 text-sm mt-1">
-            We read every submission and use it to make InterviewAI better.
+            We read every submission and use it to make Intervizly better.
           </p>
         </div>
       ) : (
@@ -76,7 +76,7 @@ export default function AppFeedbackWidget({ sessionId }: Props) {
             <div>
               <h3 className="font-semibold text-gray-900">How was your experience?</h3>
               <p className="text-sm text-gray-500 mt-0.5">
-                Your feedback helps us improve InterviewAI for everyone.
+                Your feedback helps us improve Intervizly for everyone.
               </p>
             </div>
             <button

@@ -54,7 +54,7 @@ export default async function BriefingPage({
             <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
               <Mic className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="font-bold text-gray-900">InterviewAI</span>
+            <span className="font-bold text-gray-900">Intervizly</span>
           </div>
           <Link
             href="/dashboard"
