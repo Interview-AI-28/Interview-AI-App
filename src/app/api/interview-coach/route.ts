@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import { anthropicClient as client } from '@/lib/anthropic-client'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { checkRateLimit } from '@/lib/rate-limit'
-
-const client = new Anthropic()
 
 // Static coaching instructions — cached so follow-up messages don't re-pay
 // full input tokens for the instruction block on every turn.

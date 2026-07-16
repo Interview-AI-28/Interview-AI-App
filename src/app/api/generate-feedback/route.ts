@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import { anthropicClient as client } from '@/lib/anthropic-client'
 import { waitUntil } from '@vercel/functions'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { Resend } from 'resend'
@@ -8,8 +8,6 @@ import type { Question, Answer, FeedbackJSON } from '@/types'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
-
-const client = new Anthropic()
 
 // Max chars per answer in the LLM prompt. 1500 chars ≈ 250 spoken words — generous
 // enough to capture any complete answer, while preventing a single rambling response

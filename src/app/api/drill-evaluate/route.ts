@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
+import { anthropicClient as client } from '@/lib/anthropic-client'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { normalizeTopic } from '@/lib/utils'
-
-const client = new Anthropic()
 
 const DRILL_SYSTEM = `You are a concise interview coach evaluating a practice drill answer. Score the candidate honestly.
 
