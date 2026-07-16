@@ -15,7 +15,7 @@ export default function PrivacyPage() {
       <nav className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
               <Mic className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-bold text-gray-900">Intervizly</span>
@@ -52,7 +52,7 @@ export default function PrivacyPage() {
               By using the Platform, you acknowledge that you have read and understood this Privacy
               Policy and consent to the processing of your personal data as described herein.
             </p>
-            <div className="mt-3 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-blue-800">
+            <div className="mt-3 bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3 text-sm text-indigo-800">
               <strong>Geographic scope:</strong> Intervizly is currently available exclusively
               to users in <strong>India</strong>. If you are accessing the Platform from outside
               India, please discontinue use until we announce availability in your region. We are
@@ -231,7 +231,7 @@ export default function PrivacyPage() {
                     <div className="text-xs text-gray-600 space-y-1.5">
                       <p>
                         You can delete your personal data at any time from your{' '}
-                        <Link href="/account" className="text-blue-600 hover:underline">Account Settings</Link>{' '}
+                        <Link href="/account" className="text-indigo-600 hover:underline">Account Settings</Link>{' '}
                         page. The following is <strong>permanently deleted</strong>: your name, email,
                         profile photo, interview transcripts, feedback reports, session history, focus
                         area analysis, referral relationships, and push notification tokens.
@@ -269,9 +269,9 @@ export default function PrivacyPage() {
               As required under the DPDP Act 2023 and the IT Act 2000, we have designated a
               Grievance Officer to address any concerns regarding the processing of your personal data:
             </p>
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm space-y-1">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-5 text-sm space-y-1">
               <div><span className="font-semibold text-gray-800">Designation:</span> <span className="text-gray-700">Grievance Officer, Intervizly</span></div>
-              <div><span className="font-semibold text-gray-800">Email:</span> <a href="mailto:intervizly@gmail.com" className="text-blue-600 hover:underline">intervizly@gmail.com</a></div>
+              <div><span className="font-semibold text-gray-800">Email:</span> <a href="mailto:intervizly@gmail.com" className="text-indigo-600 hover:underline">intervizly@gmail.com</a></div>
               <div><span className="font-semibold text-gray-800">Response time:</span> <span className="text-gray-700">We aim to resolve grievances within 30 days.</span></div>
             </div>
           </section>
@@ -291,7 +291,7 @@ export default function PrivacyPage() {
             <p>
               For any privacy-related questions, data export requests, or to exercise your rights,
               contact us at:{' '}
-              <a href="mailto:intervizly@gmail.com" className="text-blue-600 hover:underline">
+              <a href="mailto:intervizly@gmail.com" className="text-indigo-600 hover:underline">
                 intervizly@gmail.com
               </a>
             </p>
@@ -300,7 +300,7 @@ export default function PrivacyPage() {
           <div className="border-t border-gray-200 pt-6 text-xs text-gray-400">
             <p>
               This policy should be read alongside our{' '}
-              <Link href="/terms" className="text-blue-500 hover:underline">Terms of Service</Link>.
+              <Link href="/terms" className="text-indigo-500 hover:underline">Terms of Service</Link>.
             </p>
           </div>
 

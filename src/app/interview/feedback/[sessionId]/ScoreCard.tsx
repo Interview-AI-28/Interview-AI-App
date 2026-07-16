@@ -43,7 +43,7 @@ export default function ScoreCard({
     // Dark gradient background
     const bg = ctx.createLinearGradient(0, 0, W, H)
     bg.addColorStop(0, '#0f172a')   // slate-900
-    bg.addColorStop(1, '#1e3a5f')   // deep blue
+    bg.addColorStop(1, '#1e1b4b')   // deep indigo
     ctx.fillStyle = bg
     ctx.fillRect(0, 0, W, H)
 
@@ -58,7 +58,7 @@ export default function ScoreCard({
     }
 
     // Top bar: logo + label
-    ctx.fillStyle = '#3b82f6'   // blue-500
+    ctx.fillStyle = '#6366f1'   // indigo-500
     ctx.beginPath()
     ctx.roundRect(60, 48, 44, 44, 10)
     ctx.fill()
@@ -92,11 +92,11 @@ export default function ScoreCard({
     const chipText = roundLabel
     ctx.font = '600 18px system-ui, sans-serif'
     const chipW = ctx.measureText(chipText).width + 32
-    ctx.fillStyle = 'rgba(59, 130, 246, 0.25)'
+    ctx.fillStyle = 'rgba(99, 102, 241, 0.25)'
     ctx.beginPath()
     ctx.roundRect(W / 2 - chipW / 2, 196, chipW, 34, 17)
     ctx.fill()
-    ctx.fillStyle = '#93c5fd'   // blue-300
+    ctx.fillStyle = '#a5b4fc'   // indigo-300
     ctx.fillText(chipText, W / 2, 220)
 
     // Score section — two big numbers side by side

@@ -32,7 +32,7 @@ export default async function OrgDashboardPage() {
     return (
       <Shell>
         <div className="bg-white rounded-2xl border border-gray-200 p-10 text-center">
-          <Building2 className="w-10 h-10 text-blue-500 mx-auto mb-4" />
+          <Building2 className="w-10 h-10 text-indigo-500 mx-auto mb-4" />
           <h1 className="text-xl font-bold text-gray-900 mb-2">Cohort Analytics for Teams &amp; Colleges</h1>
           <p className="text-gray-500 text-sm max-w-md mx-auto mb-6">
             Track interview readiness across your whole batch — average scores, total practice
@@ -138,7 +138,7 @@ export default async function OrgDashboardPage() {
   return (
     <Shell>
       <div className="mb-6">
-        <div className="text-xs text-blue-600 font-medium uppercase tracking-wide mb-1">
+        <div className="text-xs text-indigo-600 font-medium uppercase tracking-wide mb-1">
           {orgInfo?.type === 'college' ? 'College cohort' : 'Team'} analytics
         </div>
         <h1 className="text-2xl font-bold text-gray-900">{orgInfo?.name ?? 'Your organization'}</h1>
@@ -225,7 +225,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       <nav className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
               <Mic className="w-3.5 h-3.5 text-white" />
             </div>
             <span className="font-bold text-gray-900">Intervizly</span>

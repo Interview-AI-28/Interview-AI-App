@@ -145,7 +145,7 @@ function buildWelcomeHtml(name: string, appUrl: string) {
   <div style="max-width:600px;margin:0 auto;background:white;border-radius:16px;overflow:hidden;border:1px solid #e5e7eb;">
     <div style="background:#1d4ed8;padding:32px;text-align:center;">
       <h1 style="color:white;margin:0;font-size:24px;">Intervizly</h1>
-      <p style="color:#93c5fd;margin:8px 0 0;">Practice like it&apos;s real. Perform when it matters.</p>
+      <p style="color:#c7d2fe;margin:8px 0 0;">Practice like it&apos;s real. Perform when it matters.</p>
     </div>
     <div style="padding:32px;">
       <p style="color:#374151;margin-bottom:8px;">Hi ${name},</p>

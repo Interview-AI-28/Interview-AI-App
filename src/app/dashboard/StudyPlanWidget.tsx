@@ -22,7 +22,7 @@ interface StoredPlan {
 const ROUND_COLORS: Record<string, string> = {
   tech_l1: 'bg-indigo-50 text-indigo-600 border border-indigo-200',
   tech_l2: 'bg-violet-50 text-violet-600 border border-violet-200',
-  managerial: 'bg-blue-50 text-blue-600 border border-blue-200',
+  managerial: 'bg-indigo-50 text-indigo-600 border border-indigo-200',
   hr: 'bg-emerald-50 text-emerald-600 border border-emerald-200',
   full_loop: 'bg-orange-50 text-orange-600 border border-orange-200',
   drill: 'bg-gray-100 text-gray-600 border border-gray-200',
