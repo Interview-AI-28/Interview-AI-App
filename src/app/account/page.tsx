@@ -2,15 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Mic, CreditCard, CheckCircle, ArrowLeft, Loader2, Trash2 } from 'lucide-react'
+import { Mic, Heart, CheckCircle, ArrowLeft, Loader2, Trash2 } from 'lucide-react'
 
 interface AccountData {
-  user: { email: string; name: string; plan: string; credit_balance: number; referral_code: string }
-}
-
-const planLabels: Record<string, string> = {
-  free: 'Free',
-  payg: 'Pay-as-you-go',
+  user: { email: string; name: string; referral_code: string }
 }
 
 export default function AccountPage() {
@@ -119,7 +114,6 @@ export default function AccountPage() {
   const { user } = data
   const appUrl = typeof window !== 'undefined' ? window.location.origin : 'https://interviewai.in'
   const referralLink = `${appUrl}/?ref=${user.referral_code}`
-  const lowCredits = user.credit_balance < 2
 
   return (
     <div className="bg-slate-50 min-h-screen">
@@ -139,39 +133,21 @@ export default function AccountPage() {
       </nav>
 
       <main className="max-w-3xl mx-auto px-6 py-10 space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Account &amp; Billing</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Account</h1>
 
-        {/* Credits & plan */}
+        {/* Support */}
         <div className="bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-200 rounded-2xl p-6">
-          <h2 className="font-semibold text-gray-900 mb-5 flex items-center gap-2">
-            <CreditCard className="w-4 h-4 text-indigo-600" /> Credits
+          <h2 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+            <Heart className="w-4 h-4 text-indigo-600" /> Support this project
           </h2>
-          <div className="flex items-start justify-between mb-6 gap-4">
-            <div>
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="bg-indigo-50 text-indigo-600 border border-indigo-200 rounded-full px-3 py-1 text-xs font-medium">
-                  {planLabels[user.plan] ?? user.plan}
-                </span>
-              </div>
-              <div className="text-sm text-gray-600 mt-1">
-                {user.plan === 'free' ? '1 free session included with signup' : 'Credits never expire'}
-              </div>
-            </div>
-            <div className="text-right flex-shrink-0">
-              <div className="text-4xl font-bold text-gray-900 leading-none">{user.credit_balance}</div>
-              <div className="text-xs text-gray-500 mt-1">credits left</div>
-              {lowCredits && (
-                <div className="mt-2 text-xs bg-amber-50 text-amber-600 border border-amber-200 px-2 py-1 rounded-full font-medium">
-                  Running low
-                </div>
-              )}
-            </div>
-          </div>
+          <p className="text-sm text-gray-600 mb-4">
+            InterviewAI is free and unlimited. If it&rsquo;s helped you, consider chipping in — totally optional.
+          </p>
           <Link
             href="/pricing"
             className="block text-center bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-xl text-sm font-semibold transition-colors"
           >
-            Buy more sessions
+            Support this project →
           </Link>
         </div>
 
@@ -229,7 +205,7 @@ export default function AccountPage() {
               <h2 className="font-semibold text-gray-900 mb-2">Data deleted successfully</h2>
               <p className="text-sm text-gray-600 mb-6">
                 Your interview history, transcripts, feedback reports, and personal profile
-                have been permanently removed. Your remaining credits are still here if you return.
+                have been permanently removed. You&rsquo;re welcome to return any time.
               </p>
               <Link
                 href="/dashboard"
@@ -249,8 +225,7 @@ export default function AccountPage() {
                 This action <strong className="text-gray-900">cannot be undone</strong>.
               </p>
               <p className="text-sm text-gray-600 mb-4">
-                <strong className="text-gray-900">What is kept:</strong> your remaining credit balance and payment records —
-                so if you return, your unused credits are still here. See our{' '}
+                See our{' '}
                 <Link href="/privacy" className="text-indigo-600 hover:underline">Privacy Policy</Link>{' '}
                 for full details.
               </p>

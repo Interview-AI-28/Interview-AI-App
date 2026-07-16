@@ -69,21 +69,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { session_id, charge } = await request.json() as { session_id: string; charge?: boolean }
+    const { session_id } = await request.json() as { session_id: string }
 
-    // Fetch session, questions, answers, existing report, and user plan in parallel.
+    // Fetch session, questions, answers, and existing report in parallel.
     const [
       { data: session },
       { data: questions },
       { data: answers },
       { data: existingReport },
-      { data: userData },
     ] = await Promise.all([
       supabase.from('interview_sessions').select('*').eq('id', session_id).eq('user_id', user.id).single(),
       supabase.from('questions').select('*').eq('session_id', session_id).eq('asked', true).order('order_index'),
       supabase.from('answers').select('*').eq('session_id', session_id).order('recorded_at'),
       supabase.from('feedback_reports').select('*').eq('session_id', session_id).maybeSingle(),
-      supabase.from('users').select('plan, credit_balance').eq('id', user.id).single(),
     ])
 
     if (!session) {
@@ -92,11 +90,7 @@ export async function POST(request: NextRequest) {
 
     // Dedup: if a report already exists (e.g. from the background pre-generation that
     // fires in evaluate-answer when the last question is answered), return it immediately.
-    // If this is a charge request, still deduct — the pre-gen doesn't charge.
     if (existingReport) {
-      if (charge === true) {
-        await chargeSessionCredit(supabase, user.id, session_id, userData?.plan)
-      }
       return NextResponse.json({ report: existingReport, cached: true })
     }
 
@@ -229,14 +223,7 @@ Generate a comprehensive feedback report for this candidate.`
 
     if (reportError) {
       console.error('Report save error:', reportError)
-      // Do not charge credits when the report failed to save — the user would
-      // lose a credit without getting a readable report.
       return NextResponse.json({ error: 'Failed to save report' }, { status: 500 })
-    }
-
-    // Credit deduction is fast (~300 ms) and must be reliable — keep it before response.
-    if (charge === true) {
-      await chargeSessionCredit(supabase, user.id, session_id, userData?.plan)
     }
 
     // Streak, weak areas, referral credit, and email are all non-critical for the
@@ -262,37 +249,6 @@ Generate a comprehensive feedback report for this candidate.`
 }
 
 // ── Side-effect helpers ────────────────────────────────────────────────────
-
-async function chargeSessionCredit(
-  supabase: Awaited<ReturnType<typeof import('@/lib/supabase-server').createServerSupabaseClient>>,
-  userId: string,
-  sessionId: string,
-  plan?: string | null,
-) {
-  if (plan === 'unlimited') return
-
-  const { createServiceClient } = await import('@/lib/supabase-server')
-  const svc = await createServiceClient()
-
-  // Insert the debit transaction first. The unique partial index on
-  // credit_transactions(session_id) WHERE type='session_use' causes this INSERT
-  // to fail with a unique violation if the session was already charged (e.g. on a
-  // retry). We catch that and skip the balance update — idempotent by design.
-  const { error: txError } = await svc.from('credit_transactions').insert({
-    user_id: userId,
-    amount: -1,
-    type: 'session_use',
-    session_id: sessionId,
-  })
-
-  if (txError) {
-    if (txError.code !== '23505') console.error('chargeSessionCredit tx error:', txError)
-    return
-  }
-
-  const { error: balErr } = await svc.rpc('increment_user_credits', { p_user_id: userId, p_amount: -1 })
-  if (balErr) console.error('chargeSessionCredit balance update error:', balErr)
-}
 
 async function updateStreak(supabase: Awaited<ReturnType<typeof import('@/lib/supabase-server').createServerSupabaseClient>>, userId: string) {
   const today = new Date().toISOString().slice(0, 10)

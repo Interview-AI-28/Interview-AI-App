@@ -4,7 +4,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { normalizeTopic } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
-import { Mic, Plus, Clock, TrendingUp, CreditCard, Flame, Target, Gift, ArrowRight, Zap } from 'lucide-react'
+import { Mic, Plus, Clock, TrendingUp, Flame, Target, Gift, ArrowRight, Zap } from 'lucide-react'
 import type { User, InterviewSession, FeedbackReport } from '@/types'
 import type { RoundType } from '@/types'
 import { CopyReferral } from './CopyReferral'
@@ -84,7 +84,6 @@ export default async function DashboardPage() {
   )
 
   const user = userData as User | null
-  const creditBalance = user?.credit_balance ?? 0
   const currentStreak = user?.current_streak ?? 0
   const longestStreak = user?.longest_streak ?? 0
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://interviewai.in'
@@ -130,7 +129,6 @@ export default async function DashboardPage() {
       <OnboardingModal
         show={!sessions?.length}
         userName={authUser.user_metadata?.full_name?.split(' ')[0] ?? 'there'}
-        creditBalance={creditBalance}
       />
 
       {/* Top nav */}
@@ -142,25 +140,17 @@ export default async function DashboardPage() {
             </div>
             <span className="font-bold text-gray-900 tracking-tight">InterviewAI</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <Link
               href="/pricing"
-              className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${
-                creditBalance > 0
-                  ? 'bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100'
-                  : 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100'
-              }`}
+              className="text-xs text-gray-400 hover:text-gray-600 transition-colors whitespace-nowrap"
             >
-              <CreditCard className="w-3 h-3" />
-              {creditBalance} {creditBalance === 1 ? 'credit' : 'credits'}
-              {creditBalance === 0 && ' · Top up →'}
+              Support this project
             </Link>
             <UserMenu
               name={authUser.user_metadata?.full_name ?? ''}
               email={authUser.email ?? ''}
               avatarUrl={authUser.user_metadata?.avatar_url}
-              creditBalance={creditBalance}
-              plan={user?.plan ?? 'free'}
             />
           </div>
         </div>
@@ -178,23 +168,13 @@ export default async function DashboardPage() {
               <EnableReminders />
             </div>
           </div>
-          {creditBalance > 0 ? (
-            <Link
-              href="/interview/setup"
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 text-sm whitespace-nowrap"
-            >
-              <Plus className="w-4 h-4" />
-              Start New Interview
-            </Link>
-          ) : (
-            <Link
-              href="/pricing"
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 text-sm whitespace-nowrap"
-            >
-              <Plus className="w-4 h-4" />
-              Buy Credits
-            </Link>
-          )}
+          <Link
+            href="/interview/setup"
+            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-semibold transition-all duration-200 text-sm whitespace-nowrap"
+          >
+            <Plus className="w-4 h-4" />
+            Start New Interview
+          </Link>
         </div>
 
         {/* Interview countdown (client — reads localStorage) */}
@@ -208,7 +188,7 @@ export default async function DashboardPage() {
             </div>
             <div>
               <div className="font-semibold text-gray-900 text-sm">Daily Drill</div>
-              <div className="text-xs text-gray-500">3 questions · 5 min · completely free · no credits needed</div>
+              <div className="text-xs text-gray-500">3 questions · 5 min · completely free</div>
             </div>
           </div>
           <Link
@@ -220,7 +200,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Stats row */}
-        <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <StaggerContainer className="grid grid-cols-3 gap-4 mb-8">
           <StaggerItem lift>
             <div className="bg-white border border-gray-200 hover:border-gray-300 rounded-2xl p-4 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 bg-indigo-50 border border-indigo-200 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -273,19 +253,6 @@ export default async function DashboardPage() {
                 <div className="text-xs text-gray-500">
                   Day streak{longestStreak > currentStreak ? ` · best ${longestStreak}` : ''}
                 </div>
-              </div>
-            </div>
-          </StaggerItem>
-          <StaggerItem lift>
-            <div className="bg-white border border-gray-200 hover:border-gray-300 rounded-2xl p-4 flex items-center gap-3 transition-all duration-200">
-              <div className="w-10 h-10 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-center flex-shrink-0">
-                <CreditCard className="w-5 h-5 text-emerald-600" />
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-indigo-600">
-                  {creditBalance}
-                </div>
-                <div className="text-xs text-gray-500">Credits left</div>
               </div>
             </div>
           </StaggerItem>
@@ -436,21 +403,12 @@ export default async function DashboardPage() {
                 with instant AI feedback.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                {creditBalance > 0 ? (
-                  <Link
-                    href="/interview/setup"
-                    className="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200"
-                  >
-                    <Plus className="w-4 h-4" /> Start First Interview
-                  </Link>
-                ) : (
-                  <Link
-                    href="/pricing"
-                    className="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200"
-                  >
-                    Get started for free →
-                  </Link>
-                )}
+                <Link
+                  href="/interview/setup"
+                  className="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200"
+                >
+                  <Plus className="w-4 h-4" /> Start First Interview
+                </Link>
                 <Link
                   href="/drill"
                   className="inline-flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-900 px-6 py-3 rounded-xl text-sm font-medium transition-all duration-200"

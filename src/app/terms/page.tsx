@@ -71,7 +71,7 @@ const SECTIONS = [
     title: '4. User Account',
     content: (
       <ul className="list-disc pl-5 space-y-2">
-        <li>You may create one account per Google identity. Creating multiple accounts to claim free credits is prohibited and may result in permanent suspension of all associated accounts.</li>
+        <li>You may create one account per Google identity. Creating multiple accounts to circumvent usage limits is prohibited and may result in permanent suspension of all associated accounts.</li>
         <li>You are responsible for all activity that occurs under your account.</li>
         <li>Notify us immediately at <a href="mailto:support@interviewai.in" className="text-blue-600 hover:underline">support@interviewai.in</a> if you suspect unauthorised access.</li>
         <li>We reserve the right to suspend or terminate accounts that violate these Terms.</li>
@@ -79,15 +79,12 @@ const SECTIONS = [
     ),
   },
   {
-    title: '5. Credits and Payments',
+    title: '5. Access',
     content: (
       <ul className="list-disc pl-5 space-y-2">
-        <li><strong>Free credit:</strong> Each new account receives 1 free interview session credit on signup.</li>
-        <li><strong>Paid credits:</strong> Additional credits are purchased as one-time packs via Razorpay (Single, Starter, or Serious Prep). All prices are in Indian Rupees (INR) and inclusive of applicable taxes.</li>
-        <li><strong>Credits never expire</strong> and are non-transferable. Credits are non-refundable once an interview session has been started and questions have been generated.</li>
-        <li><strong>Refund policy:</strong> If a session fails due to a technical error on our end before any questions are asked, we will restore your credit. Contact <a href="mailto:support@interviewai.in" className="text-blue-600 hover:underline">support@interviewai.in</a> within 7 days.</li>
-        <li><strong>Credits survive account data deletion.</strong> If you request deletion of your personal data, your remaining credit balance and payment records are retained. Credits you have purchased are not forfeited by a deletion request. Should you return to the Platform, your credits will be intact.</li>
-        <li>We reserve the right to change pricing for new purchases with 30 days&apos; advance notice.</li>
+        <li><strong>The Platform is free and unlimited.</strong> There is no paywall, no purchased credits, and no subscription — every account has full access to every feature at no cost.</li>
+        <li><strong>Voluntary support:</strong> Users who wish to support the project may do so voluntarily via the optional Support page. This is not a purchase, carries no entitlement beyond what is already free, and is non-refundable.</li>
+        <li>We may introduce reasonable rate limits to prevent abuse of the Platform&apos;s infrastructure or underlying AI services; these are not credits and do not gate normal usage.</li>
       </ul>
     ),
   },
@@ -98,7 +95,7 @@ const SECTIONS = [
         <p className="mb-2">You agree not to:</p>
         <ul className="list-disc pl-5 space-y-2">
           <li>Use the Platform for any unlawful purpose or in violation of any applicable law.</li>
-          <li>Create multiple accounts to claim free credits (account farming).</li>
+          <li>Create multiple accounts to circumvent rate limits or other abuse protections.</li>
           <li>Attempt to reverse-engineer, scrape, or extract the AI models, question banks, or proprietary algorithms.</li>
           <li>Use the Platform to train or fine-tune competing AI models.</li>
           <li>Submit content that is defamatory, hateful, sexually explicit, or infringes third-party intellectual property rights.</li>
@@ -207,14 +204,12 @@ const SECTIONS = [
           You may delete your personal data at any time from your{' '}
           <Link href="/account" className="text-blue-600 hover:underline">Account Settings</Link>{' '}
           page. Deletion removes your name, email, interview history, transcripts, and feedback
-          reports. Your credit balance, active subscription, and payment records are{' '}
-          <strong>not</strong> deleted — they are retained so you do not lose what you paid for
-          and can return to the Platform at any time with your credits intact.
+          reports, and you are welcome to return to the Platform at any time.
         </p>
         <p className="mt-2">
           We may suspend or terminate your access if you breach these Terms or engage in
-          fraudulent activity (including creating multiple accounts to claim free credits).
-          Upon such termination, unused credits are forfeited and no refund is issued.
+          fraudulent or abusive activity (including creating multiple accounts to circumvent
+          rate limits).
         </p>
       </>
     ),

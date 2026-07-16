@@ -27,10 +27,9 @@ const STEPS = [
 interface Props {
   show: boolean
   userName: string
-  creditBalance: number
 }
 
-export default function OnboardingModal({ show, userName, creditBalance }: Props) {
+export default function OnboardingModal({ show, userName }: Props) {
   const [visible, setVisible] = useState(false)
   const router = useRouter()
 
@@ -70,11 +69,7 @@ export default function OnboardingModal({ show, userName, creditBalance }: Props
             Welcome, {userName}!
           </h2>
           <p className="text-gray-500 mt-2 text-sm">
-            You have{' '}
-            <span className="font-semibold text-indigo-600">
-              {creditBalance} free {creditBalance === 1 ? 'session' : 'sessions'}
-            </span>{' '}
-            ready to use.
+            Let&rsquo;s get your first mock interview started.
           </p>
         </div>
 
@@ -93,21 +88,12 @@ export default function OnboardingModal({ show, userName, creditBalance }: Props
         </div>
 
         <div className="flex flex-col gap-3">
-          {creditBalance > 0 ? (
-            <button
-              onClick={startInterview}
-              className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
-            >
-              Start your first interview <ArrowRight className="w-4 h-4" />
-            </button>
-          ) : (
-            <button
-              onClick={() => { dismiss(); router.push('/pricing') }}
-              className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
-            >
-              Get started <ArrowRight className="w-4 h-4" />
-            </button>
-          )}
+          <button
+            onClick={startInterview}
+            className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
+          >
+            Start your first interview <ArrowRight className="w-4 h-4" />
+          </button>
           <button
             onClick={dismiss}
             className="w-full py-2.5 text-gray-500 text-sm hover:text-gray-700 transition-colors"

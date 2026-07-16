@@ -21,9 +21,8 @@ export async function POST() {
     //
     // ── What is retained (not PII, or legally required) ──────────────────────
     // - auth.users row              → prevents re-granting free signup credit on re-login
-    // - public.users row            → anonymised; credit_balance preserved so the user
-    //                                 keeps purchased credits when they return
-    // - credit_transactions         → 7-year retention required by Income Tax Act 1961
+    // - public.users row            → anonymised, not deleted
+    // - credit_transactions         → historical referral-bonus ledger, kept as-is
 
     await Promise.all([
       serviceClient.from('user_feedback').delete().eq('user_id', userId),
@@ -48,7 +47,7 @@ export async function POST() {
         current_streak: 0,
         longest_streak: 0,
         last_session_date: null,
-        // credit_balance, plan, and referral_code are intentionally NOT touched
+        // credit_balance, plan, and referral_code are legacy columns, intentionally NOT touched
       })
       .eq('id', userId)
 

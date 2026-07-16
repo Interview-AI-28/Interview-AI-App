@@ -5,25 +5,16 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
-  CreditCard, LogOut, User, FileText, Shield, ChevronDown,
+  LogOut, User, FileText, Shield, ChevronDown,
 } from 'lucide-react'
 
 interface Props {
   name: string
   email: string
   avatarUrl?: string
-  creditBalance: number
-  plan: string
 }
 
-const planLabels: Record<string, string> = {
-  free: 'Free',
-  payg: 'Pay-as-you-go',
-  pro: 'Pro',
-  unlimited: 'Unlimited',
-}
-
-export default function UserMenu({ name, email, avatarUrl, creditBalance, plan }: Props) {
+export default function UserMenu({ name, email, avatarUrl }: Props) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const router = useRouter()
@@ -107,19 +98,6 @@ export default function UserMenu({ name, email, avatarUrl, creditBalance, plan }
             </div>
           </div>
 
-          {/* Credits + plan */}
-          <div className="px-4 py-3 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <CreditCard className="w-4 h-4 text-indigo-600" />
-                <span>{creditBalance} credit{creditBalance !== 1 ? 's' : ''} left</span>
-              </div>
-              <span className="text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200 px-2 py-0.5 rounded-full">
-                {planLabels[plan] ?? plan}
-              </span>
-            </div>
-          </div>
-
           {/* Nav items */}
           <div className="py-1">
             <Link
@@ -128,7 +106,7 @@ export default function UserMenu({ name, email, avatarUrl, creditBalance, plan }
               className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
             >
               <User className="w-4 h-4 text-gray-400" />
-              Account &amp; Billing
+              Account
             </Link>
             <Link
               href="/privacy"

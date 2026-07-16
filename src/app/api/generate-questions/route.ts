@@ -118,18 +118,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Role too long' }, { status: 400 })
     }
 
-    // Gate the paid generation: a user with no credits can't run the interview anyway,
-    // so don't pay for an LLM call they can't use. Also cap creation rate to stop a
-    // runaway loop from racking up Claude spend (credits are the real abuse guard).
-    const { data: gateUser } = await supabase
-      .from('users')
-      .select('credit_balance, plan')
-      .eq('id', user.id)
-      .single()
-    if ((gateUser?.credit_balance ?? 0) <= 0) {
-      return NextResponse.json({ error: 'No credits available' }, { status: 402 })
-    }
-
+    // Cap creation rate to stop a runaway loop from racking up Claude spend.
     const oneHourAgo = new Date(Date.now() - 3_600_000).toISOString()
     const { count: recentSetups } = await supabase
       .from('interview_sessions')
