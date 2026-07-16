@@ -3,8 +3,8 @@ import { Mic } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — InterviewAI',
-  description: 'How InterviewAI collects, uses, and protects your personal data.',
+  title: 'Privacy Policy — Intervizly',
+  description: 'How Intervizly collects, uses, and protects your personal data.',
 }
 
 const LAST_UPDATED = 'July 2026'
@@ -18,7 +18,7 @@ export default function PrivacyPage() {
             <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
               <Mic className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="font-bold text-gray-900">InterviewAI</span>
+            <span className="font-bold text-gray-900">Intervizly</span>
           </Link>
           <div className="flex items-center gap-4 text-sm text-gray-500">
             <Link href="/terms" className="hover:text-gray-900">Terms</Link>
@@ -38,14 +38,14 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-3">1. Who We Are</h2>
             <p>
-              InterviewAI (&quot;InterviewAI&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is an AI-powered mock
+              Intervizly (&quot;Intervizly&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is an AI-powered mock
               interview platform, operated from India. Our platform helps job seekers practise
               interviews through voice-based AI conversations and receive detailed feedback reports.
             </p>
             <p className="mt-2">
               This Privacy Policy explains how we collect, use, share, and protect your personal
-              data when you use our website and services at <strong>interview-ai.in</strong> (the
-              &quot;Platform&quot;). It is designed with reference to India&apos;s{' '}
+              data when you use our website and services (the &quot;Platform&quot;). It is designed
+              with reference to India&apos;s{' '}
               <strong>Digital Personal Data Protection Act, 2023 (DPDP Act)</strong>.
             </p>
             <p className="mt-2">
@@ -53,7 +53,7 @@ export default function PrivacyPage() {
               Policy and consent to the processing of your personal data as described herein.
             </p>
             <div className="mt-3 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-sm text-blue-800">
-              <strong>Geographic scope:</strong> InterviewAI is currently available exclusively
+              <strong>Geographic scope:</strong> Intervizly is currently available exclusively
               to users in <strong>India</strong>. If you are accessing the Platform from outside
               India, please discontinue use until we announce availability in your region. We are
               working to expand globally and will update this policy when we do.
@@ -110,7 +110,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-3">4. Third-Party Services That Receive Your Data</h2>
             <p className="mb-3">
-              We use the following sub-processors. By using InterviewAI, you acknowledge that your
+              We use the following sub-processors. By using Intervizly, you acknowledge that your
               data may be transferred to and processed by these services:
             </p>
             <div className="overflow-x-auto rounded-xl border border-gray-200">
@@ -163,7 +163,7 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-semibold text-gray-900 mb-3">6. Public Report Sharing</h2>
             <p>
               When you share your interview report, a unique link is generated (e.g.,{' '}
-              <code className="bg-gray-100 px-1 rounded text-xs">interview-ai.in/report/abc123</code>).
+              <code className="bg-gray-100 px-1 rounded text-xs">interview-ai-app-iota.vercel.app/report/abc123</code>).
               Anyone with this link can view your full report — including your scores, strengths, gaps,
               and quotes from your answers — without logging in.
             </p>
@@ -187,7 +187,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-lg font-semibold text-gray-900 mb-3">8. Children&apos;s Privacy</h2>
             <p>
-              InterviewAI is intended for users who are 18 years of age or older. We do not knowingly
+              Intervizly is intended for users who are 18 years of age or older. We do not knowingly
               collect data from children under 18. If you believe a minor has created an account,
               please contact us immediately and we will delete the account.
             </p>
@@ -270,8 +270,8 @@ export default function PrivacyPage() {
               Grievance Officer to address any concerns regarding the processing of your personal data:
             </p>
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 text-sm space-y-1">
-              <div><span className="font-semibold text-gray-800">Designation:</span> <span className="text-gray-700">Grievance Officer, InterviewAI</span></div>
-              <div><span className="font-semibold text-gray-800">Email:</span> <a href="mailto:support@interview-ai.in" className="text-blue-600 hover:underline">support@interview-ai.in</a></div>
+              <div><span className="font-semibold text-gray-800">Designation:</span> <span className="text-gray-700">Grievance Officer, Intervizly</span></div>
+              <div><span className="font-semibold text-gray-800">Email:</span> <a href="mailto:intervizly@gmail.com" className="text-blue-600 hover:underline">intervizly@gmail.com</a></div>
               <div><span className="font-semibold text-gray-800">Response time:</span> <span className="text-gray-700">We aim to resolve grievances within 30 days.</span></div>
             </div>
           </section>
@@ -291,8 +291,8 @@ export default function PrivacyPage() {
             <p>
               For any privacy-related questions, data export requests, or to exercise your rights,
               contact us at:{' '}
-              <a href="mailto:support@interview-ai.in" className="text-blue-600 hover:underline">
-                support@interview-ai.in
+              <a href="mailto:intervizly@gmail.com" className="text-blue-600 hover:underline">
+                intervizly@gmail.com
               </a>
             </p>
           </section>

@@ -1,4 +1,4 @@
-/* InterviewAI service worker — installability, light offline support, push. */
+/* Intervizly service worker — installability, light offline support, push. */
 const CACHE = 'interviewai-v1'
 const OFFLINE_URL = '/'
 
@@ -58,7 +58,7 @@ self.addEventListener('fetch', (event) => {
 
 // Web push — show the notification sent by the server.
 self.addEventListener('push', (event) => {
-  let data = { title: 'InterviewAI', body: 'Time to practise!', url: '/dashboard' }
+  let data = { title: 'Intervizly', body: 'Time to practise!', url: '/dashboard' }
   try {
     if (event.data) data = { ...data, ...event.data.json() }
   } catch {

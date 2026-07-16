@@ -9,7 +9,7 @@
  *   NEXT_PUBLIC_SUPABASE_URL
  *   NEXT_PUBLIC_SUPABASE_ANON_KEY
  *   SUPABASE_SERVICE_ROLE_KEY
- *   TEST_USER_EMAIL          (e.g. playwright-test@interviewai.in)
+ *   TEST_USER_EMAIL          (e.g. playwright-test@example.com)
  *   TEST_USER_PASSWORD       (strong password for the test account)
  *   PLAYWRIGHT_BASE_URL      (defaults to http://localhost:3000)
  *

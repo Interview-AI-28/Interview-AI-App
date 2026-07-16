@@ -53,7 +53,7 @@ export default function AccountPage() {
               <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
                 <Mic className="w-3.5 h-3.5 text-white" />
               </div>
-              <span className="font-bold text-gray-900">InterviewAI</span>
+              <span className="font-bold text-gray-900">Intervizly</span>
             </div>
             <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
           </div>
@@ -112,7 +112,7 @@ export default function AccountPage() {
   }
 
   const { user } = data
-  const appUrl = typeof window !== 'undefined' ? window.location.origin : 'https://interviewai.in'
+  const appUrl = typeof window !== 'undefined' ? window.location.origin : 'https://interview-ai-app-iota.vercel.app'
   const referralLink = `${appUrl}/?ref=${user.referral_code}`
 
   return (
@@ -124,7 +124,7 @@ export default function AccountPage() {
             <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
               <Mic className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="font-bold text-gray-900">InterviewAI</span>
+            <span className="font-bold text-gray-900">Intervizly</span>
           </div>
           <Link href="/dashboard" className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Dashboard

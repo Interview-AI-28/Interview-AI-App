@@ -12,7 +12,7 @@ import { test, expect } from '@playwright/test'
 test.describe('Landing page', () => {
   test('renders hero and primary CTA', async ({ page }) => {
     await page.goto('/')
-    await expect(page).toHaveTitle(/InterviewAI/i)
+    await expect(page).toHaveTitle(/Intervizly/i)
     // Headline is visible
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     // Primary CTA present
@@ -87,7 +87,7 @@ test.describe('Auth / login page', () => {
 test.describe('Pricing page', () => {
   test('renders pricing tiers', async ({ page }) => {
     await page.goto('/pricing')
-    await expect(page).toHaveTitle(/pricing|plans|InterviewAI/i)
+    await expect(page).toHaveTitle(/pricing|plans|Intervizly/i)
     // At least one pricing card visible
     await expect(page.locator('text=/₹|free|credits/i').first()).toBeVisible()
   })

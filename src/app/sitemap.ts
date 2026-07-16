@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { PRACTICE_GUIDES } from '@/lib/practice-content'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://interviewai.in'
+  const base = process.env.NEXT_PUBLIC_APP_URL ?? 'https://interview-ai-app-iota.vercel.app'
   const now = new Date()
 
   const practiceUrls: MetadataRoute.Sitemap = PRACTICE_GUIDES.map((g) => ({

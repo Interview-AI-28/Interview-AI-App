@@ -50,7 +50,7 @@ export default function LoginPage() {
 
         <div className="relative z-10 flex items-center gap-2.5">
           <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
-          <span className="font-bold text-gray-900 text-xl tracking-tight">InterviewAI</span>
+          <span className="font-bold text-gray-900 text-xl tracking-tight">Intervizly</span>
         </div>
 
         <div className="relative z-10">
@@ -78,7 +78,7 @@ export default function LoginPage() {
         </div>
 
         <div className="relative z-10">
-          <p className="text-gray-400 text-xs">© 2026 InterviewAI · Made in India</p>
+          <p className="text-gray-400 text-xs">© 2026 Intervizly · Made in India</p>
         </div>
       </div>
 
@@ -88,7 +88,7 @@ export default function LoginPage() {
           {/* Mobile logo — shown only on mobile */}
           <div className="flex lg:hidden items-center gap-2 mb-10">
             <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
-            <span className="font-bold text-gray-900 text-lg">InterviewAI</span>
+            <span className="font-bold text-gray-900 text-lg">Intervizly</span>
           </div>
 
           <motion.div
@@ -96,7 +96,7 @@ export default function LoginPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, ease: 'easeOut' }}
           >
-            <h1 className="text-2xl font-bold text-gray-900 mb-1.5">Sign in to InterviewAI</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-1.5">Sign in to Intervizly</h1>
             <p className="text-gray-600 text-sm mb-8">1 free interview session included on signup.</p>
           </motion.div>
 

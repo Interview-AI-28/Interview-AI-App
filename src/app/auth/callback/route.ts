@@ -127,9 +127,9 @@ async function sendWelcomeEmail(email: string, name: string, origin: string) {
     const resend = new Resend(process.env.RESEND_API_KEY)
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? origin
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL ?? 'InterviewAI <noreply@interviewai.in>',
+      from: process.env.RESEND_FROM_EMAIL ?? 'Intervizly <intervizly@gmail.com>',
       to: email,
-      subject: 'Welcome to InterviewAI — your free session is ready',
+      subject: 'Welcome to Intervizly — your free session is ready',
       html: buildWelcomeHtml(name, appUrl),
     })
   } catch (err) {
@@ -144,7 +144,7 @@ function buildWelcomeHtml(name: string, appUrl: string) {
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9fafb;margin:0;padding:20px;">
   <div style="max-width:600px;margin:0 auto;background:white;border-radius:16px;overflow:hidden;border:1px solid #e5e7eb;">
     <div style="background:#1d4ed8;padding:32px;text-align:center;">
-      <h1 style="color:white;margin:0;font-size:24px;">InterviewAI</h1>
+      <h1 style="color:white;margin:0;font-size:24px;">Intervizly</h1>
       <p style="color:#93c5fd;margin:8px 0 0;">Practice like it&apos;s real. Perform when it matters.</p>
     </div>
     <div style="padding:32px;">
@@ -186,7 +186,7 @@ function buildWelcomeHtml(name: string, appUrl: string) {
       </div>
     </div>
     <div style="background:#f9fafb;padding:16px;text-align:center;border-top:1px solid #e5e7eb;">
-      <p style="color:#9ca3af;font-size:12px;margin:0;">InterviewAI &middot; Practice like it&apos;s real. Perform when it matters.</p>
+      <p style="color:#9ca3af;font-size:12px;margin:0;">Intervizly &middot; Practice like it&apos;s real. Perform when it matters.</p>
     </div>
   </div>
 </body>

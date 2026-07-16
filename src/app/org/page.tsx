@@ -4,7 +4,7 @@ import { createServerSupabaseClient, createServiceClient } from '@/lib/supabase-
 import { Mic, Users, TrendingUp, Target, Building2 } from 'lucide-react'
 import type { InterviewSession } from '@/types'
 
-export const metadata = { title: 'Cohort Analytics — InterviewAI', robots: { index: false } }
+export const metadata = { title: 'Cohort Analytics — Intervizly', robots: { index: false } }
 
 interface MemberStat {
   userId: string
@@ -228,7 +228,7 @@ function Shell({ children }: { children: React.ReactNode }) {
             <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
               <Mic className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="font-bold text-gray-900">InterviewAI</span>
+            <span className="font-bold text-gray-900">Intervizly</span>
           </div>
           <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-900">← Dashboard</Link>
         </div>

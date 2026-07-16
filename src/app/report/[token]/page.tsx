@@ -18,7 +18,7 @@ export async function generateMetadata({
     .eq('share_token', token)
     .single()
 
-  if (!data) return { title: 'Interview Report — InterviewAI' }
+  if (!data) return { title: 'Interview Report — Intervizly' }
 
   const session = data.interview_sessions as unknown as { company: string; role: string } | null
   const company = session?.company ?? 'Company'
@@ -27,8 +27,8 @@ export async function generateMetadata({
   const prob = data.selection_probability as number
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
 
-  const title = `${company} ${role} Interview — ${score}/100 on InterviewAI`
-  const description = `Scored ${score}/100 with a ${prob}% chance of selection for the ${role} role at ${company}. Powered by InterviewAI — practise like it's real.`
+  const title = `${company} ${role} Interview — ${score}/100 on Intervizly`
+  const description = `Scored ${score}/100 with a ${prob}% chance of selection for the ${role} role at ${company}. Powered by Intervizly — practise like it's real.`
   const ogImageUrl = `${appUrl}/report/${token}/opengraph-image`
 
   return {
@@ -38,7 +38,7 @@ export async function generateMetadata({
       title,
       description,
       url: `${appUrl}/report/${token}`,
-      siteName: 'InterviewAI',
+      siteName: 'Intervizly',
       type: 'article',
       images: [{ url: ogImageUrl, width: 1200, height: 630, alt: `${company} ${role} interview scorecard` }],
     },
@@ -80,7 +80,7 @@ export default async function PublicReportPage({
           <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
             <Mic className="w-3.5 h-3.5 text-white" />
           </div>
-          <span className="font-bold text-gray-900">InterviewAI</span>
+          <span className="font-bold text-gray-900">Intervizly</span>
           <span className="text-gray-400 ml-2 text-sm">Interview Report</span>
         </div>
       </nav>
@@ -154,7 +154,7 @@ export default async function PublicReportPage({
             href="/"
             className="inline-block bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700"
           >
-            Try InterviewAI Free
+            Try Intervizly Free
           </a>
         </div>
       </main>
