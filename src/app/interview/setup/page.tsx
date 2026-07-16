@@ -45,6 +45,10 @@ function SetupPageInner() {
   const [loading, setLoading] = useState(false)
   const [loadingMsg, setLoadingMsg] = useState(0)
   const [error, setError] = useState('')
+  // TEMPORARY: diagnostic details shown on the page when generation fails, so the
+  // root cause of the "API key is invalid" error is visible/copyable here.
+  const [diagnostic, setDiagnostic] = useState<Record<string, unknown> | null>(null)
+  const [copied, setCopied] = useState(false)
   const [resumeTab, setResumeTab] = useState<ResumeTab>('text')
   const [resumeParsing, setResumeParsing] = useState(false)
   const [resumeFileName, setResumeFileName] = useState('')
@@ -75,6 +79,7 @@ function SetupPageInner() {
   function updateForm(field: keyof FormData, value: string | number) {
     setForm((prev) => ({ ...prev, [field]: value }))
     setError('')
+    setDiagnostic(null)
   }
 
   async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -154,6 +159,7 @@ function SetupPageInner() {
   async function handleSubmit() {
     setLoading(true)
     setError('')
+    setDiagnostic(null)
 
     analytics.capture('setup_submitted', {
       round_type: form.round_type,
@@ -170,6 +176,7 @@ function SetupPageInner() {
 
       if (!res.ok) {
         const data = await res.json()
+        if (data.diagnostic) setDiagnostic(data.diagnostic)
         throw new Error(data.error ?? 'Failed to generate questions')
       }
 
@@ -524,8 +531,34 @@ function SetupPageInner() {
 
           {/* Error */}
           {error && (
-            <div className="mt-4 bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl">
+            <div className="mt-4 bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl break-words">
               {error}
+            </div>
+          )}
+
+          {/* TEMPORARY diagnostics — surfaces the root cause of the generation
+              error on the page itself so it can be screenshotted / copied. */}
+          {diagnostic && (
+            <div className="mt-3 bg-slate-900 rounded-xl overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-2 bg-slate-800">
+                <span className="text-xs font-semibold text-slate-300">Diagnostics — copy &amp; share for analysis</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const text = `Error: ${error}\n\nDiagnostics:\n${JSON.stringify(diagnostic, null, 2)}`
+                    navigator.clipboard?.writeText(text).then(() => {
+                      setCopied(true)
+                      setTimeout(() => setCopied(false), 2000)
+                    })
+                  }}
+                  className="text-xs font-medium text-indigo-300 hover:text-indigo-200 transition-colors"
+                >
+                  {copied ? 'Copied ✓' : 'Copy'}
+                </button>
+              </div>
+              <pre className="px-4 py-3 text-xs text-slate-200 overflow-x-auto whitespace-pre-wrap break-all leading-relaxed">
+{JSON.stringify(diagnostic, null, 2)}
+              </pre>
             </div>
           )}
 
