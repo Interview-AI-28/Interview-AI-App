@@ -281,7 +281,10 @@ function SessionPageInner({ params }: SessionPageProps) {
         const sampleRate = Math.round(audioContext.sampleRate)
 
         const ws = new WebSocket(
-          `wss://api.deepgram.com/v1/listen?model=nova-2-general&language=en-IN&punctuate=true&interim_results=true&vad_events=true&endpointing=2000&utterance_end_ms=2000&encoding=linear16&sample_rate=${sampleRate}&channels=1`,
+          // endpointing/utterance_end at 3 s: interview answers have natural
+          // thinking pauses — 2 s cut candidates off mid-thought. The Done button
+          // covers anyone who finishes early.
+          `wss://api.deepgram.com/v1/listen?model=nova-2-general&language=en-IN&punctuate=true&interim_results=true&vad_events=true&endpointing=3000&utterance_end_ms=3000&encoding=linear16&sample_rate=${sampleRate}&channels=1`,
           ['token', key]
         )
 
@@ -738,7 +741,13 @@ function SessionPageInner({ params }: SessionPageProps) {
         // (fired when the last answer was evaluated). Let the feedback page know
         // so it waits for that run instead of immediately starting a duplicate.
         try { sessionStorage.setItem(`iai_pregen_${sessionId}`, '1') } catch { /* ignore */ }
-        await endInterview()
+        // A real interviewer closes the conversation — react to the final answer
+        // and wrap up out loud before cutting to the report screen. The report is
+        // already generating in the background, so this costs no extra wait.
+        const spoken: string = data.spoken_response ?? ''
+        const closing = `${spoken ? spoken + '... ' : ''}And that brings us to the end of the interview. Thanks so much for your time today — it was great talking with you. Your detailed feedback report is being prepared right now.`
+        await speakText(closing, false)
+        endInterview()
       }
     } catch {
       if (!evalAutoRetriedRef.current) {
@@ -797,7 +806,11 @@ function SessionPageInner({ params }: SessionPageProps) {
         await speakText(`No worries, let's move on. ${data.next_question.text}`)
       } else {
         try { sessionStorage.setItem(`iai_pregen_${sessionId}`, '1') } catch { /* ignore */ }
-        await endInterview()
+        await speakText(
+          `No problem at all. And that actually brings us to the end of the interview — thanks so much for your time today. Your feedback report is being prepared right now.`,
+          false
+        )
+        endInterview()
       }
     } catch {
       isProcessingRef.current = false

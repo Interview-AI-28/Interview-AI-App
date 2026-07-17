@@ -166,11 +166,12 @@ export default async function FeedbackPage({
       ]
     : null
 
-  const benchmark: Record<string, number> = {
-    tech_l1: 55, tech_l2: 52, managerial: 54, hr: 62, full_loop: 53,
+  // Aspirational target per round — a bar to aim for, not a claimed statistic.
+  const targets: Record<string, number> = {
+    tech_l1: 65, tech_l2: 60, managerial: 65, hr: 70, full_loop: 60,
   }
-  const benchmarkAvg = benchmark[s.round_type as string] ?? 55
-  const benchmarkDiff = r.selection_probability - benchmarkAvg
+  const targetScore = targets[s.round_type as string] ?? 65
+  const targetDiff = r.overall_score - targetScore
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -238,17 +239,17 @@ export default async function FeedbackPage({
 
           <div className="mt-6 pt-5 border-t border-gray-200 flex flex-wrap items-center justify-center gap-2">
             <span className="text-xs text-gray-500">
-              Industry average for {getRoundLabel(s.round_type as RoundType)}:
+              Target score for {getRoundLabel(s.round_type as RoundType)}:
             </span>
-            <span className="text-xs font-semibold text-gray-700">{benchmarkAvg}%</span>
+            <span className="text-xs font-semibold text-gray-700">{targetScore}+</span>
             <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${
-              benchmarkDiff >= 0
+              targetDiff >= 0
                 ? 'bg-emerald-50 text-emerald-600'
                 : 'bg-amber-50 text-amber-600'
             }`}>
-              {benchmarkDiff >= 0
-                ? `↑ +${benchmarkDiff}% above average`
-                : `↓ ${benchmarkDiff}% below average`}
+              {targetDiff >= 0
+                ? `✓ Target met — ${targetDiff} above`
+                : `${Math.abs(targetDiff)} points to go`}
             </span>
           </div>
         </div>

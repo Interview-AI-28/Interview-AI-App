@@ -32,7 +32,7 @@ Return ONLY a valid JSON object with this exact structure:
       "question_id": "uuid",
       "score": <1-5>,
       "feedback": "specific feedback referencing what they actually said",
-      "ideal_answer_hint": "For scores 1-3 only: 2-3 bullet points (use • character) covering what a strong answer must include. Omit this field entirely for scores 4-5."
+      "ideal_answer_hint": "For scores 1-3: 2-3 bullet points (use • character) covering what a strong answer must include. For score 4: exactly one bullet (•) with the single upgrade that would make it a 5. Omit this field entirely for score 5."
     }
   ],
   "communication": {
@@ -57,7 +57,11 @@ Rules:
 - Be specific — reference actual words and phrases used
 - No generic feedback — every point must trace back to something in the transcript
 - Be honest but constructive — this helps candidates improve
-- ideal_answer_hint: only include for per_question scores 1-3; use bullet points starting with •`
+- ideal_answer_hint: scores 1-3 get 2-3 bullets; score 4 gets exactly one "make it a 5" bullet; score 5 gets none. Bullets start with •
+- Tailor everything to the target role, company, and the candidate's experience level given in the interview details — a gap for a senior engineer ("no capacity estimates in your design") is not a gap for a fresher, and vice versa
+- Every "advice" field must name a concrete next action the candidate can practise this week ("rehearse a 90-second STAR story about X", "explain Y out loud without notes"), never vague encouragement ("be more confident")
+- filler_words score and filler_note: base them on the computed filler-word counts provided in the interview details — do not estimate your own counts
+- summary: write it TO the candidate ("you"), open with the single most important takeaway, and end with the one change that would most improve their next interview`
 
 // Best-effort single-flight per warm serverless instance: when the background
 // pre-generation (fired from evaluate-answer) and the feedback page's request
@@ -125,13 +129,9 @@ async function generateInner(
       selection_probability: 0,
       strengths: [
         { title: 'Showed up', example: 'Candidate initiated an interview session', advice: 'Complete the full interview to receive meaningful strengths feedback' },
-        { title: 'N/A', example: '', advice: '' },
-        { title: 'N/A', example: '', advice: '' },
       ],
       gaps: [
         { title: 'Interview not completed', example: 'No questions were answered in this session', advice: 'Try again and complete at least a few questions to get actionable feedback' },
-        { title: 'N/A', example: '', advice: '' },
-        { title: 'N/A', example: '', advice: '' },
       ],
       per_question: [],
       communication: {
@@ -162,12 +162,28 @@ Score given: ${answer?.score ?? 'N/A'}/5
 `
     }).join('\n---\n\n')
 
+    // Deterministic filler-word counts from the real transcripts — fed to the LLM
+    // as ground truth so its filler score can't contradict the per-question
+    // regex counts the report UI shows.
+    const FILLERS = ['um', 'uh', 'hmm', 'err', 'you know', 'i mean', 'kind of', 'sort of', 'basically']
+    let fillerTotal = 0
+    let fillerWords = 0
+    for (const a of answers as Answer[] ?? []) {
+      if (!a.transcript_text) continue
+      const lower = a.transcript_text.toLowerCase()
+      fillerWords += lower.split(/\s+/).filter(Boolean).length
+      for (const f of FILLERS) {
+        fillerTotal += (lower.match(new RegExp(`\\b${f.replace(' ', '\\s+')}\\b`, 'g')) ?? []).length
+      }
+    }
+
     const userMessage = `Interview Details:
 Company: ${session.company}
 Role: ${session.role}
 Round: ${session.round_type}
 Experience: ${session.experience_years} years
 Questions asked: ${questions.length}
+Computed filler-word counts: ${fillerTotal} filler words across ${fillerWords} spoken words total
 
 Complete Interview Transcript:
 ${transcript}
@@ -175,11 +191,13 @@ ${transcript}
 Generate a comprehensive feedback report for this candidate.`
 
     const message = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      // 8192 is Haiku's ceiling. A 15-question full_loop with ideal_answer_hints on
-      // every low-scoring answer easily exceeds 4096 output tokens — the old limit
-      // silently truncated the JSON mid-string, causing JSON.parse to throw and the
-      // report to never save, leaving the feedback page polling forever.
+      // Sonnet, not Haiku: the report is the product's core deliverable and
+      // Sonnet's feedback is markedly more specific. It runs pre-generated in
+      // the background, so the extra latency is invisible in the normal flow.
+      model: 'claude-sonnet-4-6',
+      // A 15-question full_loop with ideal_answer_hints on every low-scoring answer
+      // easily exceeds 4096 output tokens — a lower limit silently truncated the JSON
+      // mid-string, causing JSON.parse to throw and the report to never save.
       max_tokens: 8192,
       system: [
         {
@@ -232,7 +250,7 @@ Generate a comprehensive feedback report for this candidate.`
           ? llm.feedback
           : 'No answer was recorded for this question, so no specific feedback is available.',
       }
-      if (entry.score <= 3 && llm?.ideal_answer_hint) {
+      if (entry.score <= 4 && llm?.ideal_answer_hint) {
         entry.ideal_answer_hint = llm.ideal_answer_hint
       }
       return entry
