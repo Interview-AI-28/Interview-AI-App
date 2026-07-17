@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { anthropicClient as client } from '@/lib/anthropic-client'
+import { scrubPII } from '@/lib/scrub-pii'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { checkRateLimit } from '@/lib/rate-limit'
 import { normalizeTopic } from '@/lib/utils'
@@ -51,7 +52,7 @@ export async function POST(request: NextRequest) {
 "${question}"
 
 Candidate's answer:
-"${transcript || '[No answer]'}"`,
+"${scrubPII(transcript) || '[No answer]'}"`,
       }],
     })
 

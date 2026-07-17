@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { anthropicClient as client } from '@/lib/anthropic-client'
+import { scrubPII } from '@/lib/scrub-pii'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { getDailyDrillQuestions, type DrillRoundFilter } from '@/lib/drill-questions'
 import { checkRateLimit } from '@/lib/rate-limit'
@@ -60,7 +61,7 @@ export async function POST(request: NextRequest) {
     const experienceYears = latestSession?.experience_years ?? null
     // Truncate JD to 800 chars — enough for key skills/technologies without bloating the prompt
     const jdSnippet = latestSession?.jd_text
-      ? latestSession.jd_text.trim().slice(0, 800)
+      ? scrubPII(latestSession.jd_text.trim().slice(0, 800))
       : null
 
     const roleContext = role && company
