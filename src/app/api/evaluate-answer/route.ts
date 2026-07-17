@@ -5,6 +5,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { PERSONA_SPEECH_STYLE } from '@/lib/personas'
 import type { Question, RoundType } from '@/types'
 import { scrubPII } from '@/lib/scrub-pii'
+import { checkRateLimit } from '@/lib/rate-limit'
 import { generateFeedbackForSession } from '@/lib/feedback-generation'
 
 const EVAL_SYSTEM_PROMPT = `You are a sharp, fair human interviewer conducting a live voice interview. You score the candidate's answer and decide how to react in the moment — exactly as a real person would.
@@ -107,6 +108,12 @@ export async function POST(request: NextRequest) {
 
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // ~25 evaluations per interview × 10 sessions/hr cap — well above real use,
+    // guards Anthropic spend against a scripted loop.
+    if (!await checkRateLimit(`eval:${user.id}`, 300, 3_600_000)) {
+      return NextResponse.json({ error: 'Rate limit exceeded. Try again later.' }, { status: 429 })
     }
 
     const { transcript, question_id, session_id, start_time } = await request.json() as {
@@ -266,8 +273,11 @@ Candidate's answer:
     const probeText = (evaluation.probe_question ?? '').trim()
     // Never probe a probe — caps follow-up chains at one per scripted question
     // so a probe-happy model can't extend the interview indefinitely.
+    // Also never insert a probe on a retried request (existingAnswer set): the
+    // original request already inserted one if it was warranted, and a second
+    // insert would duplicate the follow-up in the transcript and report.
     const currentIsProbe = q.order_index === 999
-    if (evaluation.probe && probeText && !currentIsProbe) {
+    if (evaluation.probe && probeText && !currentIsProbe && !existingAnswer) {
       const { data: fq } = await supabase.from('questions').insert({
         session_id,
         text: probeText,

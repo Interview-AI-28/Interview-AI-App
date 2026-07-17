@@ -37,3 +37,13 @@ export function generateShareToken(): string {
 export function normalizeTopic(tag: string): string {
   return tag.toLowerCase().replace(/[\s-]+/g, '_')
 }
+
+// Escapes user-controlled strings before interpolation into email HTML.
+export function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}

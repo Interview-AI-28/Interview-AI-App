@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 const MAX_FILE_BYTES = 5 * 1024 * 1024 // 5 MB
 
@@ -36,6 +37,11 @@ export async function POST(request: NextRequest) {
     const supabase = await createServerSupabaseClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+    // PDF parsing is CPU-heavy and Drive mode makes outbound fetches — cap it.
+    if (!await checkRateLimit(`parse-resume:${user.id}`, 20, 3_600_000)) {
+      return NextResponse.json({ error: 'Rate limit exceeded. Try again later.' }, { status: 429 })
+    }
 
     const contentType = request.headers.get('content-type') ?? ''
 

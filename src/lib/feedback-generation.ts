@@ -1,7 +1,7 @@
 import { anthropicClient as client } from '@/lib/anthropic-client'
 import { waitUntil } from '@vercel/functions'
 import { Resend } from 'resend'
-import { generateShareToken } from '@/lib/utils'
+import { generateShareToken, escapeHtml } from '@/lib/utils'
 import { scrubPII } from '@/lib/scrub-pii'
 import type { Question, Answer, FeedbackJSON } from '@/types'
 import type { createServerSupabaseClient } from '@/lib/supabase-server'
@@ -429,12 +429,12 @@ async function sendFeedbackEmail(
     to: userData.email,
     subject: `Your Interview Report — ${session.company} ${session.role} | Score: ${feedback.overall_score}/100`,
     html: buildEmailHtml({
-      name: userData.name,
-      company: session.company,
-      role: session.role,
+      name: escapeHtml(userData.name ?? ''),
+      company: escapeHtml(session.company ?? ''),
+      role: escapeHtml(session.role ?? ''),
       score: feedback.overall_score,
       probability: feedback.selection_probability,
-      summary: feedback.summary,
+      summary: escapeHtml(feedback.summary ?? ''),
       reportUrl: `${appUrl}/interview/feedback/${sessionId}`,
     }),
   })

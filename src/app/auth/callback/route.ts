@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { Resend } from 'resend'
 import { createServiceClient } from '@/lib/supabase-server'
+import { escapeHtml } from '@/lib/utils'
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
@@ -92,7 +93,7 @@ export async function GET(request: NextRequest) {
         data.user.email?.split('@')[0] ??
         'there'
       // fire-and-forget — must not delay the login redirect
-      void sendWelcomeEmail(data.user.email ?? '', name, origin)
+      void sendWelcomeEmail(data.user.email ?? '', escapeHtml(name), origin)
     }
   }
 
