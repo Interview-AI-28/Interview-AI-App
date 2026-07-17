@@ -16,6 +16,7 @@ import StudyPlanWidget from './StudyPlanWidget'
 import FingerprintCapture from './FingerprintCapture'
 import FadeIn from '@/components/FadeIn'
 import { StaggerContainer, StaggerItem } from '@/components/Stagger'
+import Logo from '@/components/Logo'
 
 // Exact lookup — mirrors the controlled vocabulary enforced in generate-questions.
 const TOPIC_ROUND_MAP: Record<string, RoundType> = {
@@ -134,12 +135,7 @@ export default async function DashboardPage() {
       {/* Top nav */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 px-6 py-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <div className="w-2 h-2 bg-white rounded-full" />
-            </div>
-            <span className="font-bold text-gray-900 tracking-tight">Intervizly</span>
-          </div>
+          <Logo href="/dashboard" />
           <div className="flex items-center gap-4">
             <UserMenu
               name={authUser.user_metadata?.full_name ?? ''}

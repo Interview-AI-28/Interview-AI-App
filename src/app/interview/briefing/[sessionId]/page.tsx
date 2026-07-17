@@ -6,6 +6,7 @@ import { Mic, Clock, Shield, ArrowLeft, Users } from 'lucide-react'
 import type { InterviewSession, Question, RoundType } from '@/types'
 import MicCheckGate from './MicCheckGate'
 import FadeIn from '@/components/FadeIn'
+import Logo from '@/components/Logo'
 
 export default async function BriefingPage({
   params,
@@ -48,14 +49,9 @@ export default async function BriefingPage({
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Nav */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-6 py-4 sticky top-0 z-20">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 px-6 py-4">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <Mic className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="font-bold text-gray-900">Intervizly</span>
-          </div>
+          <Logo href="/dashboard" />
           <Link
             href="/dashboard"
             className="flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"

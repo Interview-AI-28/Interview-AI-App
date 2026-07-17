@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Mic, CheckCircle, ArrowLeft, Loader2, Trash2 } from 'lucide-react'
+import { CheckCircle, ArrowLeft, Loader2, Trash2 } from 'lucide-react'
+import Logo from '@/components/Logo'
 
 interface AccountData {
   user: { email: string; name: string; referral_code: string }
@@ -47,14 +48,9 @@ export default function AccountPage() {
   if (loading) {
     return (
       <div className="bg-slate-50 min-h-screen">
-        <nav className="border-b border-gray-200 px-6 py-4">
+        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 px-6 py-4">
           <div className="max-w-3xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <Mic className="w-3.5 h-3.5 text-white" />
-              </div>
-              <span className="font-bold text-gray-900">Intervizly</span>
-            </div>
+            <Logo href="/dashboard" />
             <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
           </div>
         </nav>
@@ -118,14 +114,9 @@ export default function AccountPage() {
   return (
     <div className="bg-slate-50 min-h-screen">
       {/* Nav */}
-      <nav className="border-b border-gray-200 px-6 py-4">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <Mic className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="font-bold text-gray-900">Intervizly</span>
-          </div>
+          <Logo href="/dashboard" />
           <Link href="/dashboard" className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Dashboard
           </Link>

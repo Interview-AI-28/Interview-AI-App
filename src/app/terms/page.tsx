@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { Mic } from 'lucide-react'
 import type { Metadata } from 'next'
+import PublicNav from '@/components/PublicNav'
+import SiteFooter from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
   title: 'Terms of Service — Intervizly',
@@ -245,21 +246,13 @@ const SECTIONS = [
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <Mic className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="font-bold text-gray-900">Intervizly</span>
-          </Link>
-          <div className="flex items-center gap-4 text-sm text-gray-500">
-            <Link href="/privacy" className="hover:text-gray-900">Privacy Policy</Link>
-            <Link href="/dashboard" className="hover:text-gray-900">Dashboard</Link>
-          </div>
+    <div className="min-h-screen bg-slate-50">
+      <PublicNav>
+        <div className="flex items-center gap-4 text-sm text-gray-500">
+          <Link href="/privacy" className="hover:text-gray-900 transition-colors">Privacy Policy</Link>
+          <Link href="/dashboard" className="hover:text-gray-900 transition-colors">Dashboard</Link>
         </div>
-      </nav>
+      </PublicNav>
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         <div className="mb-10">
@@ -278,11 +271,13 @@ export default function TermsPage() {
           <div className="border-t border-gray-200 pt-6 text-xs text-gray-400">
             <p>
               These Terms should be read alongside our{' '}
-              <Link href="/privacy" className="text-indigo-500 hover:underline">Privacy Policy</Link>.
+              <Link href="/privacy" className="text-indigo-600 hover:underline">Privacy Policy</Link>.
             </p>
           </div>
         </div>
       </main>
+
+      <SiteFooter />
     </div>
   )
 }

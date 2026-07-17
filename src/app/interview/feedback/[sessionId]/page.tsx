@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { getProbabilityLabel } from '@/lib/utils'
 import { getRoundLabel } from '@/lib/personas'
-import { CheckCircle, AlertCircle, Share2, RotateCcw, Mic, TrendingUp, ArrowLeft } from 'lucide-react'
+import { CheckCircle, AlertCircle, Share2, RotateCcw, TrendingUp, ArrowLeft } from 'lucide-react'
+import Logo from '@/components/Logo'
 import type { FeedbackReport, InterviewSession, StrengthItem, GapItem, PerQuestionFeedback, CommunicationFeedback, RoundType } from '@/types'
 import FeedbackClient from './FeedbackClient'
 import ScoreCard from './ScoreCard'
@@ -49,14 +50,9 @@ export default async function FeedbackPage({
   if (!r) {
     return (
       <div className="min-h-screen bg-slate-50">
-        <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-6 py-4 sticky top-0 z-20">
+        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 px-6 py-4">
           <div className="max-w-4xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <Mic className="w-3.5 h-3.5 text-white" />
-              </div>
-              <span className="font-bold text-gray-900">Intervizly</span>
-            </div>
+            <Logo href="/dashboard" />
             <Link href="/dashboard" className="flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
               <ArrowLeft className="w-4 h-4" /> Dashboard
             </Link>
@@ -177,14 +173,9 @@ export default async function FeedbackPage({
     <div className="min-h-screen bg-slate-50">
 
       {/* Nav */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-6 py-4 sticky top-0 z-20">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 px-6 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <Mic className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="font-bold text-gray-900">Intervizly</span>
-          </div>
+          <Logo href="/dashboard" />
           <Link href="/dashboard" className="flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Dashboard
           </Link>

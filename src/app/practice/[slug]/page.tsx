@@ -1,8 +1,10 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { Mic, ArrowRight, CheckCircle, Target, MessageSquare, TrendingUp } from 'lucide-react'
+import { ArrowRight, CheckCircle, Target, MessageSquare, TrendingUp } from 'lucide-react'
 import { PRACTICE_GUIDES, getGuide } from '@/lib/practice-content'
+import PublicNav from '@/components/PublicNav'
+import SiteFooter from '@/components/SiteFooter'
 
 export function generateStaticParams() {
   return PRACTICE_GUIDES.map((g) => ({ slug: g.slug }))
@@ -59,22 +61,7 @@ export default async function PracticeGuidePage({
       />
 
       {/* Nav */}
-      <nav className="border-b border-gray-100 px-6 py-4">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <Mic className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-xl text-gray-900">Intervizly</span>
-          </Link>
-          <Link
-            href="/auth/login"
-            className="bg-indigo-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-          >
-            Start Free
-          </Link>
-        </div>
-      </nav>
+      <PublicNav />
 
       <main className="max-w-4xl mx-auto px-6 py-12">
         {/* Breadcrumb */}
@@ -192,15 +179,7 @@ export default async function PracticeGuidePage({
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 px-6 py-8 mt-8">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-400">
-          <span>© 2026 Intervizly. Made in India.</span>
-          <div className="flex gap-6">
-            <Link href="/practice" className="hover:text-gray-900">All guides</Link>
-            <Link href="/privacy" className="hover:text-gray-900">Privacy</Link>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

@@ -3,6 +3,7 @@ import { Mic, Brain, BarChart3, CheckCircle, ArrowRight, Zap, Users, Award, Cloc
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import FadeIn from '@/components/FadeIn'
 import { StaggerContainer, StaggerItem } from '@/components/Stagger'
+import Logo from '@/components/Logo'
 
 // Session count is read live from the DB on every request, so the page must
 // not be statically cached at build time.
@@ -30,10 +31,7 @@ export default async function LandingPage() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-200 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
-            <span className="font-bold text-xl text-gray-900">Intervizly</span>
-          </div>
+          <Logo />
           <div className="flex items-center gap-4">
             {isLoggedIn ? (
               <Link
@@ -265,10 +263,7 @@ export default async function LandingPage() {
       {/* Footer */}
       <footer className="bg-slate-50 border-t border-gray-200 px-6 py-10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full" />
-            <span className="font-bold text-gray-900">Intervizly</span>
-          </div>
+          <Logo />
           <div className="flex gap-6 text-sm text-gray-500">
             <Link href="/privacy" className="hover:text-gray-700 transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-gray-700 transition-colors">Terms of Service</Link>

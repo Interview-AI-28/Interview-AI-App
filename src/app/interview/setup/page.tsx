@@ -2,7 +2,8 @@
 
 import { useState, useEffect, Suspense, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Mic, ArrowRight, ArrowLeft, Loader2, Upload, Link, FileText, X, Check } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Loader2, Upload, Link, FileText, X, Check } from 'lucide-react'
+import Logo from '@/components/Logo'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import type { RoundType } from '@/types'
 
@@ -204,11 +205,8 @@ function SetupPageInner() {
     <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-2xl">
         {/* Header */}
-        <div className="flex items-center gap-2 mb-8">
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-            <Mic className="w-4 h-4 text-white" />
-          </div>
-          <span className="font-bold text-gray-900">Intervizly</span>
+        <div className="flex mb-8">
+          <Logo href="/dashboard" />
         </div>
 
         {/* Progress stepper */}

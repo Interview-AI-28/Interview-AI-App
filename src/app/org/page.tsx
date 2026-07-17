@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createServerSupabaseClient, createServiceClient } from '@/lib/supabase-server'
-import { Mic, Users, TrendingUp, Target, Building2 } from 'lucide-react'
+import { Mic, Users, TrendingUp, Target, Building2, ArrowLeft } from 'lucide-react'
+import Logo from '@/components/Logo'
 import type { InterviewSession } from '@/types'
 
 export const metadata = { title: 'Cohort Analytics — Intervizly', robots: { index: false } }
@@ -221,16 +222,13 @@ function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; va
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
+    <div className="min-h-screen bg-slate-50">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 px-6 py-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <Mic className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="font-bold text-gray-900">Intervizly</span>
-          </div>
-          <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-900">← Dashboard</Link>
+          <Logo href="/dashboard" />
+          <Link href="/dashboard" className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900 transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Dashboard
+          </Link>
         </div>
       </nav>
       <main className="max-w-5xl mx-auto px-6 py-10">{children}</main>

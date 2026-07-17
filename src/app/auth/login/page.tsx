@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mic, CheckCircle } from 'lucide-react'
+import Logo from '@/components/Logo'
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false)
@@ -48,9 +49,8 @@ export default function LoginPage() {
         <div className="absolute bottom-[-80px] right-[-80px] w-[360px] h-[360px] rounded-full bg-indigo-50 blur-[80px] pointer-events-none" />
         <div className="absolute top-[-60px] left-[10%] w-[240px] h-[240px] rounded-full bg-indigo-50 blur-[60px] pointer-events-none" />
 
-        <div className="relative z-10 flex items-center gap-2.5">
-          <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
-          <span className="font-bold text-gray-900 text-xl tracking-tight">Intervizly</span>
+        <div className="relative z-10">
+          <Logo />
         </div>
 
         <div className="relative z-10">
@@ -86,9 +86,8 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center bg-slate-50 px-6 py-12">
         <div className="w-full max-w-sm">
           {/* Mobile logo — shown only on mobile */}
-          <div className="flex lg:hidden items-center gap-2 mb-10">
-            <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
-            <span className="font-bold text-gray-900 text-lg">Intervizly</span>
+          <div className="flex lg:hidden mb-10">
+            <Logo />
           </div>
 
           <motion.div

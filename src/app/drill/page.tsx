@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mic, MicOff, ChevronRight, CheckCircle, RotateCcw, Zap, Clock, ArrowRight, Sparkles } from 'lucide-react'
 import { getDailyDrillQuestions, type DrillQuestion, type DrillRoundFilter } from '@/lib/drill-questions'
+import { ROUND_COLORS } from '@/lib/round-badges'
 
 interface DrillQuestionsResponse {
   questions: DrillQuestion[]
@@ -20,14 +21,6 @@ const ROUND_LABELS: Record<RoundType, string> = {
   managerial: 'Managerial',
   hr: 'HR',
   full_loop: 'Full Loop',
-}
-
-const ROUND_COLORS: Record<RoundType, string> = {
-  tech_l1: 'bg-indigo-50 text-indigo-600 border border-indigo-200',
-  tech_l2: 'bg-purple-50 text-purple-600 border border-purple-200',
-  managerial: 'bg-indigo-50 text-indigo-600 border border-indigo-200',
-  hr: 'bg-emerald-50 text-emerald-600 border border-emerald-200',
-  full_loop: 'bg-gray-100 text-gray-600 border border-gray-200',
 }
 
 const SCORE_LABEL = ['', 'Needs Work', 'Below Par', 'Developing', 'Good', 'Excellent'] as const

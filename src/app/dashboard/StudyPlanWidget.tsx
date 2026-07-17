@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Calendar, Loader2, ChevronRight, RefreshCw, Target } from 'lucide-react'
+import { ROUND_COLORS, ROUND_COLOR_FALLBACK } from '@/lib/round-badges'
 
 interface StudyDay {
   day: number
@@ -17,15 +18,6 @@ interface StoredPlan {
   days: StudyDay[]
   generated_at: string
   interview_date?: string
-}
-
-const ROUND_COLORS: Record<string, string> = {
-  tech_l1: 'bg-indigo-50 text-indigo-600 border border-indigo-200',
-  tech_l2: 'bg-violet-50 text-violet-600 border border-violet-200',
-  managerial: 'bg-indigo-50 text-indigo-600 border border-indigo-200',
-  hr: 'bg-emerald-50 text-emerald-600 border border-emerald-200',
-  full_loop: 'bg-orange-50 text-orange-600 border border-orange-200',
-  drill: 'bg-gray-100 text-gray-600 border border-gray-200',
 }
 
 export default function StudyPlanWidget() {
@@ -157,7 +149,7 @@ export default function StudyPlanWidget() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-0.5">
-                            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${ROUND_COLORS[roundKey] ?? 'bg-gray-100 text-gray-600 border border-gray-200'}`}>
+                            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${ROUND_COLORS[roundKey] ?? ROUND_COLOR_FALLBACK}`}>
                               {d.focus}
                             </span>
                           </div>
