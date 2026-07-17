@@ -64,6 +64,16 @@ const SECTIONS = [
           are provided &ldquo;as is&rdquo; without warranty as to their accuracy, completeness, or
           suitability for any specific employer.
         </p>
+        <p className="mt-2">
+          <strong>Simulation only — no company affiliation.</strong> Every interview on the
+          Platform is a fictional, AI-generated simulation. Where a company name appears
+          (whether entered by you or shown in a practice guide), it is used solely to set the
+          practice context. Intervizly is not affiliated with, endorsed by, or connected to
+          any company named on the Platform, and simulated interviews do not represent, and
+          should not be relied upon as, any company&apos;s actual interview process, questions,
+          or hiring criteria. All company names and trademarks remain the property of their
+          respective owners.
+        </p>
       </>
     ),
   },

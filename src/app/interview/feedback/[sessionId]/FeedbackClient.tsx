@@ -31,23 +31,34 @@ export default function FeedbackClient({
     }
     if (timedOut) return
 
-    // Trigger generation immediately. The session page already fired it as a head
-    // start, but the route dedups (returns the existing report), so this is safe and
-    // becomes the reliable path with the real auth cookie. When it resolves, refresh
-    // so the server component re-renders with the report — no waiting on a poll tick.
+    // The session page sets a marker when the server already started generating
+    // the report in the background (normal completion). In that case, hold the
+    // fallback trigger for a while and let the 3 s poll pick up the pre-generated
+    // report — firing immediately raced the in-flight run and produced a
+    // duplicate LLM generation. Without the marker (early end, direct visit),
+    // trigger right away.
+    let pregen = false
+    try {
+      pregen = sessionStorage.getItem(`iai_pregen_${sessionId}`) === '1'
+    } catch { /* ignore */ }
+
     let cancelled = false
+    let triggerTimer: ReturnType<typeof setTimeout> | null = null
     if (!retriedRef.current) {
       retriedRef.current = true
-      ;(async () => {
+      const trigger = async () => {
         try {
           const res = await fetch('/api/generate-feedback', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ session_id: sessionId }),
           })
+          try { sessionStorage.removeItem(`iai_pregen_${sessionId}`) } catch { /* ignore */ }
           if (res.ok && !cancelled) router.refresh()
         } catch { /* poll below is the safety net */ }
-      })()
+      }
+      if (pregen) triggerTimer = setTimeout(trigger, 25000)
+      else void trigger()
     }
 
     // Safety-net poll — covers the case where generation finished via the head-start
@@ -59,6 +70,7 @@ export default function FeedbackClient({
 
     return () => {
       cancelled = true
+      if (triggerTimer) clearTimeout(triggerTimer)
       clearInterval(pollInterval)
       clearTimeout(giveUpTimer)
     }

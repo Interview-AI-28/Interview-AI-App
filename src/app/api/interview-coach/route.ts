@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { anthropicClient as client } from '@/lib/anthropic-client'
+import { scrubPII } from '@/lib/scrub-pii'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { checkRateLimit } from '@/lib/rate-limit'
 
@@ -65,7 +66,7 @@ export async function POST(request: NextRequest) {
     // Build interview transcript for context
     const transcript = (questions ?? []).map((q, i) => {
       const a = answerMap.get(q.id)
-      return `Q${i + 1} [${q.topic_tag}, diff ${q.difficulty}/5]: ${q.text}\nAnswer: ${a?.transcript_text || '[no answer]'}\nScore: ${a?.score ?? '?'}/5`
+      return `Q${i + 1} [${q.topic_tag}, diff ${q.difficulty}/5]: ${q.text}\nAnswer: ${a?.transcript_text ? scrubPII(a.transcript_text) : '[no answer]'}\nScore: ${a?.score ?? '?'}/5`
     }).join('\n\n')
 
     // Session-specific context goes in the user turn so the static system block

@@ -4,6 +4,8 @@ import { waitUntil } from '@vercel/functions'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { PERSONA_SPEECH_STYLE } from '@/lib/personas'
 import type { Question, RoundType } from '@/types'
+import { scrubPII } from '@/lib/scrub-pii'
+import { generateFeedbackForSession } from '@/lib/feedback-generation'
 
 const EVAL_SYSTEM_PROMPT = `You are a sharp, fair human interviewer conducting a live voice interview. You score the candidate's answer and decide how to react in the moment — exactly as a real person would.
 
@@ -106,8 +108,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Cap transcript to ~3 min of speech — prevents prompt injection and token overuse
-    const cappedTranscript = transcript.slice(0, 3000)
+    // Cap transcript to ~3 min of speech — prevents prompt injection and token
+    // overuse — and redact contact PII (emails, phone numbers, links) before the
+    // text is stored or sent to the LLM.
+    const cappedTranscript = scrubPII(transcript.slice(0, 3000))
 
     // Verify session belongs to this user
     const { data: session } = await supabase
@@ -183,22 +187,34 @@ Candidate's answer:
 
     const score = Math.min(5, Math.max(1, evaluation.score ?? 3))
 
-    // Persist answer and mark question asked in parallel — both are independent writes
-    const [{ error: answerError }, { error: askedError }] = await Promise.all([
-      supabase.from('answers').insert({
+    // Dedupe: a client retry after a lost response would otherwise insert a
+    // second answer row for the same question, double-counting it in weak-area
+    // averages and duplicating it in the transcript view.
+    const { data: existingAnswer } = await supabase
+      .from('answers')
+      .select('id')
+      .eq('session_id', session_id)
+      .eq('question_id', question_id)
+      .limit(1)
+      .maybeSingle()
+
+    if (!existingAnswer) {
+      // Save the answer FIRST, and only mark the question asked once the answer
+      // row exists — the reverse order could leave an asked question with no
+      // answer on a partial failure, which the report scores as a non-attempt.
+      const { error: answerError } = await supabase.from('answers').insert({
         session_id,
         question_id,
         transcript_text: cappedTranscript,
         duration_seconds: durationSeconds,
         score,
-      }),
-      supabase.from('questions').update({ asked: true }).eq('id', question_id),
-    ])
-
-    if (answerError) {
-      console.error('Failed to save answer:', answerError)
-      return NextResponse.json({ error: 'Failed to save answer — please retry' }, { status: 500 })
+      })
+      if (answerError) {
+        console.error('Failed to save answer:', answerError)
+        return NextResponse.json({ error: 'Failed to save answer — please retry' }, { status: 500 })
+      }
     }
+    const { error: askedError } = await supabase.from('questions').update({ asked: true }).eq('id', question_id)
     if (askedError) console.error('Failed to mark question asked:', askedError)
 
     // Select next question using adaptive difficulty — sort buckets so we step
@@ -235,7 +251,10 @@ Candidate's answer:
     // the AI challenges the candidate before moving on.
     let isProbe = false
     const probeText = (evaluation.probe_question ?? '').trim()
-    if (evaluation.probe && probeText) {
+    // Never probe a probe — caps follow-up chains at one per scripted question
+    // so a probe-happy model can't extend the interview indefinitely.
+    const currentIsProbe = q.order_index === 999
+    if (evaluation.probe && probeText && !currentIsProbe) {
       const { data: fq } = await supabase.from('questions').insert({
         session_id,
         text: probeText,
@@ -254,20 +273,16 @@ Candidate's answer:
 
     const questionsRemaining = (remainingQuestions?.length ?? 0) + (isProbe ? 1 : 0)
 
-    // When the last question has been answered, kick off feedback generation in the
-    // background immediately. The LLM call runs while the AI speaks its closing words
-    // and the user navigates — so the report is ready (or nearly ready) by the time
-    // the feedback page loads, instead of making the user stare at a spinner.
-    // No charge here — credit deduction happens only via endInterview() on the client.
+    // When the last question has been answered, kick off feedback generation in
+    // the background immediately — in-process, no HTTP self-call and no cookie
+    // forwarding (the old fetch targeted NEXT_PUBLIC_APP_URL, which on preview
+    // deployments pointed at a different host). The LLM call runs while the AI
+    // speaks its closing words and the user navigates, so the report is ready
+    // (or nearly ready) by the time the feedback page loads.
     if (questionsRemaining === 0) {
-      const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
-      const cookieHeader = request.headers.get('cookie') ?? ''
       waitUntil(
-        fetch(`${appUrl}/api/generate-feedback`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Cookie': cookieHeader },
-          body: JSON.stringify({ session_id }),
-        }).catch(() => {}) // silent — the feedback page retries if this fails
+        generateFeedbackForSession(supabase, user.id, session_id)
+          .catch(() => {}) // silent — the feedback page retries if this fails
       )
     }
 
