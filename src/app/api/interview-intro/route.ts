@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { anthropicClient as client } from '@/lib/anthropic-client'
 import { scrubPII } from '@/lib/scrub-pii'
+import { checkRateLimit } from '@/lib/rate-limit'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { PERSONA_SPEECH_STYLE } from '@/lib/personas'
 import type { RoundType } from '@/types'
@@ -22,7 +23,12 @@ export async function POST(request: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const { step, transcript: rawTranscript, round_type, role, company } = await request.json() as {
+    // 2 intro steps per session × 10 sessions/hr cap — 60 is generous headroom.
+    if (!await checkRateLimit(`intro:${user.id}`, 60, 3_600_000)) {
+      return NextResponse.json({ error: 'Rate limit exceeded. Try again later.' }, { status: 429 })
+    }
+
+    const { step, transcript: rawTranscript, round_type, role: rawRole, company: rawCompany } = await request.json() as {
       step: 1 | 3
       transcript: string
       round_type: RoundType
@@ -30,8 +36,11 @@ export async function POST(request: NextRequest) {
       company: string
     }
 
-    // Redact contact PII from the spoken reply before it reaches the LLM.
-    const transcript = scrubPII(rawTranscript ?? '')
+    // Cap lengths before anything reaches the LLM — an uncapped transcript is a
+    // token-spend vector — and redact contact PII from the spoken reply.
+    const transcript = scrubPII((rawTranscript ?? '').slice(0, 2000))
+    const role = (rawRole ?? '').slice(0, 200)
+    const company = (rawCompany ?? '').slice(0, 200)
 
     if (step !== 1 && step !== 3) {
       return NextResponse.json({ error: 'Missing or invalid fields' }, { status: 400 })

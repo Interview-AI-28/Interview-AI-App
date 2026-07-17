@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { createServiceClient } from '@/lib/supabase-server'
 import { sendPushToUser } from '@/lib/push-server'
+import { escapeHtml } from '@/lib/utils'
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get('Authorization')
@@ -40,7 +41,7 @@ export async function GET(request: NextRequest) {
         from,
         to: u.email,
         subject: `Your ${u.current_streak}-day streak is at risk today`,
-        html: streakAtRiskHtml({ name: u.name, streak: u.current_streak, appUrl }),
+        html: streakAtRiskHtml({ name: escapeHtml(u.name ?? ''), streak: u.current_streak, appUrl }),
       })
       sent++
     } catch { /* non-fatal */ }
@@ -80,7 +81,7 @@ export async function GET(request: NextRequest) {
         subject: weakTopic
           ? `Time to work on your ${weakTopic} skills`
           : `Ready for your next practice interview?`,
-        html: reEngageHtml({ name: u.name, appUrl, weakTopic, weakScore }),
+        html: reEngageHtml({ name: escapeHtml(u.name ?? ''), appUrl, weakTopic, weakScore }),
       })
       sent++
     } catch { /* non-fatal */ }
