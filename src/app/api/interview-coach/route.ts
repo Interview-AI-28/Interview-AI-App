@@ -39,12 +39,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Message too long (max 1000 characters)' }, { status: 400 })
     }
 
-    // Sanitize history — reject any item with an invalid role to prevent prompt injection
+    // Sanitize history — reject any item with an invalid role to prevent prompt injection,
+    // and scrub PII since these are free-typed messages that may contain contact details.
     const safeHistory = (Array.isArray(history) ? history : [])
       .filter((m): m is { role: 'user' | 'assistant'; content: string } =>
         (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string'
       )
       .slice(-6)
+      .map((m) => ({ ...m, content: scrubPII(m.content) }))
 
     // Load session context — verify ownership
     const [
@@ -89,7 +91,7 @@ ${transcript}`
       { role: 'user', content: contextBlock },
       { role: 'assistant', content: 'Got it — I\'ve reviewed the interview. What would you like to explore?' },
       ...safeHistory,
-      { role: 'user', content: message },
+      { role: 'user', content: scrubPII(message) },
     ]
 
     const stream = await client.messages.stream({

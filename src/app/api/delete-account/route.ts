@@ -18,6 +18,7 @@ export async function POST() {
     // - Push notification subscriptions
     // - Referral relationships
     // - App experience feedback
+    // - Device fingerprint and legacy phone-verification fields
     //
     // ── What is retained (not PII, or legally required) ──────────────────────
     // - auth.users row              → prevents re-granting free signup credit on re-login
@@ -47,6 +48,9 @@ export async function POST() {
         current_streak: 0,
         longest_streak: 0,
         last_session_date: null,
+        device_fingerprint: null,
+        phone_number: null,
+        phone_number_hash: null,
         // credit_balance, plan, and referral_code are legacy columns, intentionally NOT touched
       })
       .eq('id', userId)
