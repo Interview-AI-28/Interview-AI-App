@@ -371,7 +371,7 @@ export default async function DashboardPage() {
               <Gift className="w-4 h-4 text-indigo-600" /> Refer a Friend
             </h2>
             <p className="text-sm text-gray-600 mb-4">
-              Share your link. When a friend signs up and completes their first interview, you both get 1 free session.
+              Know someone prepping for interviews? Share your link and help them practise for free.
             </p>
             <CopyReferral link={referralLink} />
           </div>
