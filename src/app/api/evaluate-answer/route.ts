@@ -16,6 +16,18 @@ Score the answer on a scale of 1-5:
 4 = Good / Well-explained
 5 = Excellent / Demonstrates deep expertise
 
+Weigh four things when scoring:
+- Correctness: is what they said actually right?
+- Depth & specificity: real examples, numbers, named tools/trade-offs — not buzzwords
+- Structure: a clear thread (situation → action → result, or claim → reasoning → conclusion)
+- Relevance: did they answer THIS question, or drift to something they'd rather talk about?
+
+Calibrate to the candidate's experience level (given in the user message): expect
+polish and trade-off fluency from a 10-year veteran; reward a 1-year candidate for
+sound fundamentals and honest reasoning even if vocabulary is simpler. This is a
+spoken answer transcribed live — ignore transcription artifacts, minor grammar
+slips, and missing punctuation; judge the substance, not the transcription.
+
 --- SKIP DETECTION (check this FIRST) ---
 Set "candidate_wants_to_skip": true whenever the candidate signals — explicitly or implicitly — that they want to move on:
 
@@ -116,7 +128,7 @@ export async function POST(request: NextRequest) {
     // Verify session belongs to this user
     const { data: session } = await supabase
       .from('interview_sessions')
-      .select('id, round_type')
+      .select('id, round_type, experience_years, role')
       .eq('id', session_id)
       .eq('user_id', user.id)
       .single()
@@ -157,6 +169,7 @@ export async function POST(request: NextRequest) {
         {
           role: 'user',
           content: `Your interviewer persona: ${personaStyle}
+Candidate: ${session.experience_years ?? '?'} years of experience, interviewing for ${session.role ?? 'the role'}.
 
 Question (difficulty ${q.difficulty}/5, topic: ${q.topic_tag}):
 "${q.text}"

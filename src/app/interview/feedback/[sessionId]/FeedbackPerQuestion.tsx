@@ -330,7 +330,9 @@ export default function FeedbackPerQuestion({ perQuestion, questions, answers, s
                     <div className="rounded-lg border border-indigo-200 bg-indigo-50 p-3">
                       <div className="flex items-center gap-1.5 mb-1.5">
                         <Lightbulb className="w-3.5 h-3.5 text-indigo-600" />
-                        <span className="text-xs font-semibold text-indigo-700">What a strong answer covers</span>
+                        <span className="text-xs font-semibold text-indigo-700">
+                          {pq.score === 4 ? 'To make it a 5' : 'What a strong answer covers'}
+                        </span>
                       </div>
                       <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
                         {pq.ideal_answer_hint}
