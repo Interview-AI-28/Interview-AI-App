@@ -11,7 +11,8 @@ function SentryInit() {
     const dsn = process.env.NEXT_PUBLIC_SENTRY_DSN
     if (!dsn) return
     import('@sentry/nextjs').then(({ init, browserTracingIntegration }) => {
-      init({ dsn, tracesSampleRate: 0.1, integrations: [browserTracingIntegration()] })
+      // sendDefaultPii stays explicitly false — no IPs, headers, or cookies in events.
+      init({ dsn, tracesSampleRate: 0.1, sendDefaultPii: false, integrations: [browserTracingIntegration()] })
     }).catch(() => {})
   }, [])
   return null
@@ -49,6 +50,10 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       capture_pageview: false,
       capture_pageleave: true,
       persistence: 'localStorage',
+      // Only explicit analytics.capture() events — no DOM autocapture and no
+      // session recording, so interview content can never reach analytics.
+      autocapture: false,
+      disable_session_recording: true,
     })
   }, [])
 

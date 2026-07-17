@@ -171,21 +171,34 @@ function SessionPageInner({ params }: SessionPageProps) {
           throw new Error(body?.error ?? 'Session not found')
         }
         const data = await res.json()
+        // Completed sessions can't be re-entered — go straight to the report.
+        if (data.completed) {
+          router.replace(`/interview/feedback/${sessionId}`)
+          return
+        }
+        const answeredCount: number = data.answered_count ?? 0
         setSessionData(data)
         setCurrentQuestion(data.questions[0] ?? null)
-        setTotalQuestions(data.questions.length)
+        // After a refresh the unasked list excludes already-answered questions —
+        // add them back so Q-numbering stays accurate.
+        setTotalQuestions(data.questions.length + answeredCount)
         // Evict audio from previous sessions so IndexedDB doesn't grow unboundedly
         clearOldAudio(sessionId).catch(() => {})
-        // Check for saved progress from a previous incomplete attempt
+        // Check for saved progress from a previous incomplete attempt. The saved
+        // index can go stale (adaptive jumps, refreshes), so the server-side
+        // asked-question count is the source of truth for position.
         try {
           const saved = localStorage.getItem(`iai_progress_${sessionId}`)
           if (saved) {
             const p = JSON.parse(saved) as { questionIndex: number; currentQuestionId: string; savedAt: number }
             const age = Date.now() - p.savedAt
-            // Only offer to resume if less than 2 hours old and they made it past Q1
-            if (age < 7200000 && p.questionIndex > 0) {
-              setResumeInfo({ questionIndex: p.questionIndex, currentQuestionId: p.currentQuestionId })
+            if (age < 7200000 && (answeredCount > 0 || p.questionIndex > 0)) {
+              setResumeInfo({ questionIndex: Math.max(answeredCount, 0), currentQuestionId: p.currentQuestionId })
             }
+          } else if (answeredCount > 0) {
+            // Progress exists server-side even without a local save (e.g. cleared
+            // storage) — offer resume from the first unasked question.
+            setResumeInfo({ questionIndex: answeredCount, currentQuestionId: data.questions[0]?.id ?? '' })
           }
         } catch { /* ignore */ }
       } catch (err) {
@@ -721,6 +734,10 @@ function SessionPageInner({ params }: SessionPageProps) {
 
         await speakText(ackText)
       } else {
+        // The server has already started generating the report in the background
+        // (fired when the last answer was evaluated). Let the feedback page know
+        // so it waits for that run instead of immediately starting a duplicate.
+        try { sessionStorage.setItem(`iai_pregen_${sessionId}`, '1') } catch { /* ignore */ }
         await endInterview()
       }
     } catch {
@@ -761,14 +778,25 @@ function SessionPageInner({ params }: SessionPageProps) {
     evalAutoRetriedRef.current = false
     stopAnswerRecording(currentQuestion.id)
 
-    const nextIndex = questionIndex + 1
     try {
-      if (nextIndex < sessionData.questions.length) {
-        const nextQ = sessionData.questions[nextIndex]
-        setCurrentQuestion(nextQ)
-        setQuestionIndex(nextIndex)
-        await speakText(`No worries, let's move on. ${nextQ.text}`)
+      // Skip goes through the server so the question is marked asked (the report
+      // scores it as a non-attempt) and the next question comes from the same
+      // unasked pool the adaptive picker uses — indexing the static question
+      // array here desynced after adaptive jumps and could repeat questions.
+      const res = await fetch('/api/skip-question', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId, question_id: currentQuestion.id }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? 'Skip failed')
+
+      if (data.next_question && data.questions_remaining > 0) {
+        setCurrentQuestion(data.next_question)
+        setQuestionIndex((i) => i + 1)
+        await speakText(`No worries, let's move on. ${data.next_question.text}`)
       } else {
+        try { sessionStorage.setItem(`iai_pregen_${sessionId}`, '1') } catch { /* ignore */ }
         await endInterview()
       }
     } catch {
@@ -779,8 +807,11 @@ function SessionPageInner({ params }: SessionPageProps) {
 
   function handleResume() {
     if (!resumeInfo || !sessionData) return
-    // Find the saved question in the loaded question list
+    // Prefer the saved question; if it's already been asked since (or the save
+    // is stale), resume from the first unasked question instead of silently
+    // restarting the whole interview.
     const savedQ = sessionData.questions.find(q => q.id === resumeInfo.currentQuestionId)
+      ?? sessionData.questions[0]
     if (savedQ) {
       setCurrentQuestion(savedQ)
       setQuestionIndex(resumeInfo.questionIndex)
@@ -840,11 +871,10 @@ function SessionPageInner({ params }: SessionPageProps) {
       body: JSON.stringify({ session_id: sessionId }),
     }).catch(() => {})
 
-    fetch('/api/generate-feedback', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ session_id: sessionId }),
-    }).catch(console.error)
+    // Feedback generation is NOT triggered here: on normal completion the server
+    // already started it in the background, and the feedback page triggers it
+    // itself when no report exists (e.g. after an early end) — a third call from
+    // here only produced duplicate LLM runs.
 
     // Step 5 — navigate to the feedback page.
     router.push(`/interview/feedback/${sessionId}`)
@@ -867,7 +897,7 @@ function SessionPageInner({ params }: SessionPageProps) {
   }
 
   if (error) {
-    const isSpeechError = error.toLowerCase().includes('speech') || error.toLowerCase().includes('recognition')
+    const isSpeechError = error.toLowerCase().includes('speech') || error.toLowerCase().includes('recognition') || error.toLowerCase().includes('connection')
     return (
       <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center px-4">
         <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-8 max-w-md text-center">

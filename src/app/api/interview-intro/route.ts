@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { anthropicClient as client } from '@/lib/anthropic-client'
+import { scrubPII } from '@/lib/scrub-pii'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { PERSONA_SPEECH_STYLE } from '@/lib/personas'
 import type { RoundType } from '@/types'
@@ -21,13 +22,16 @@ export async function POST(request: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const { step, transcript, round_type, role, company } = await request.json() as {
+    const { step, transcript: rawTranscript, round_type, role, company } = await request.json() as {
       step: 1 | 3
       transcript: string
       round_type: RoundType
       role: string
       company: string
     }
+
+    // Redact contact PII from the spoken reply before it reaches the LLM.
+    const transcript = scrubPII(rawTranscript ?? '')
 
     if (step !== 1 && step !== 3) {
       return NextResponse.json({ error: 'Missing or invalid fields' }, { status: 400 })

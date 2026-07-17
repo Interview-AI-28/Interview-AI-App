@@ -25,6 +25,12 @@ export async function GET(
       return NextResponse.json({ error: 'Session not found' }, { status: 404 })
     }
 
+    // A completed session cannot be re-entered — the client redirects to the
+    // report instead of starting a dead interview UI with zero questions left.
+    if (session.status === 'completed') {
+      return NextResponse.json({ completed: true })
+    }
+
     // Transition setup → in_progress (idempotent: .eq('status', 'setup') is a no-op if already started)
     if (session.status === 'setup') {
       // Rate limit: max 10 sessions started per hour, to stop runaway loops.
@@ -51,16 +57,26 @@ export async function GET(
         .eq('status', 'setup')
     }
 
-    const { data: questions } = await supabase
-      .from('questions')
-      .select('*')
-      .eq('session_id', sessionId)
-      .eq('asked', false)
-      .order('order_index')
+    const [{ data: questions }, { count: askedCount }] = await Promise.all([
+      supabase
+        .from('questions')
+        .select('*')
+        .eq('session_id', sessionId)
+        .eq('asked', false)
+        .order('order_index'),
+      supabase
+        .from('questions')
+        .select('id', { count: 'exact', head: true })
+        .eq('session_id', sessionId)
+        .eq('asked', true),
+    ])
 
     return NextResponse.json({
       session: { ...session, status: 'in_progress' },
       questions: questions ?? [],
+      // Lets the client keep accurate Q-numbering after a mid-interview refresh,
+      // when the unasked list no longer includes already-answered questions.
+      answered_count: askedCount ?? 0,
     })
   } catch (error) {
     console.error('session-data error:', error)

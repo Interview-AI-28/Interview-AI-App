@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { anthropicClient as client } from '@/lib/anthropic-client'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import type { RoundType } from '@/types'
+import { scrubPII } from '@/lib/scrub-pii'
 
 const SYSTEM_PROMPT = `You are an expert technical interviewer with 15 years of hiring experience at top tech companies across India and globally.
 
@@ -133,7 +134,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Résumé is optional and used only to personalise question generation (not stored).
-    const resume = (resume_text ?? '').trim().slice(0, 6000)
+    // Contact PII (emails, phone numbers, links) is redacted from the résumé and JD
+    // before they are sent to the LLM, and the stored JD is the scrubbed version.
+    const resume = scrubPII((resume_text ?? '').trim().slice(0, 6000))
+    const jd = scrubPII(jd_text)
 
     // Generate questions BEFORE inserting the session row — this prevents orphaned
     // `setup` rows (and wasted rate-limit budget) when the LLM call fails.
@@ -143,7 +147,7 @@ Experience: ${experience_years} years
 Round Type: ${round_type}
 
 Job Description:
-${jd_text}
+${jd}
 ${resume ? `\nCandidate Résumé:\n${resume}\n` : ''}
 Generate 15 interview questions for this ${round_type} round at ${company}.${resume ? ' Ground several questions in the candidate\'s actual résumé projects and experience.' : ''}`
 
@@ -192,7 +196,7 @@ Generate 15 interview questions for this ${round_type} round at ${company}.${res
         user_id: user.id,
         company,
         role,
-        jd_text,
+        jd_text: jd,
         experience_years,
         round_type,
         status: 'setup',
