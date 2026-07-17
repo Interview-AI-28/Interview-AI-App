@@ -51,8 +51,8 @@ Return ONLY a valid JSON object with this exact structure:
 }
 
 Rules:
-- overall_score: weighted average considering depth, accuracy, communication
-- selection_probability: realistic estimate of getting to next round
+- per_question score: copy the "Score given" value shown in the transcript for that question — these scores were assigned live during the interview and are final. Do NOT invent different scores.
+- overall_score and selection_probability: estimates consistent with the per-question scores given (they are recomputed server-side from the live scores, so keep yours coherent with them)
 - strengths: exactly 3, based on actual things said
 - gaps: exactly 3, specific to what was actually said (or not said)
 - Be specific — reference actual words and phrases used
@@ -190,14 +190,72 @@ Generate a comprehensive feedback report for this candidate.`
         console.error('Haiku hit max_tokens limit during feedback generation — output truncated')
       }
 
-      // Re-assign question_id by position — safety net in case Claude echoed the IDs
-      // incorrectly. The transcript is ordered, Claude returns per_question in the same
-      // order, so index 0 in per_question always corresponds to questions[0].
+      // ── Deterministic scoring ─────────────────────────────────────────────
+      // The report's numbers derive from the per-answer scores assigned live
+      // during the interview (answers.score, 1-5) — not from a second LLM
+      // opinion that could contradict them. The LLM contributes the narrative
+      // (feedback text, strengths, gaps, communication assessment); the maths
+      // is done here.
       const orderedQuestions = questions as Question[]
-      feedback.per_question = feedback.per_question.map((pq, i) => ({
-        ...pq,
-        question_id: orderedQuestions[i]?.id ?? pq.question_id,
+      const llmPerQuestion = Array.isArray(feedback.per_question) ? feedback.per_question : []
+
+      // Rebuild per_question so every asked question has exactly one entry,
+      // keyed by position (the transcript is ordered and the LLM returns
+      // entries in the same order), with the live score as the score of record.
+      // An asked question with no recorded answer counts as 1 (no attempt).
+      feedback.per_question = orderedQuestions.map((q, i) => {
+        const llm = llmPerQuestion[i]
+        const liveScore = answerMap.get(q.id)?.score ?? 1
+        const entry: typeof llmPerQuestion[number] = {
+          question_id: q.id,
+          score: Math.min(5, Math.max(1, liveScore)),
+          feedback: llm?.feedback?.trim()
+            ? llm.feedback
+            : 'No answer was recorded for this question, so no specific feedback is available.',
+        }
+        if (entry.score <= 3 && llm?.ideal_answer_hint) {
+          entry.ideal_answer_hint = llm.ideal_answer_hint
+        }
+        return entry
+      })
+
+      // Overall score: difficulty-weighted average of the live scores mapped
+      // onto 0-100 (score 1 → 0, score 5 → 100), so harder questions count for
+      // more and the number is fully reproducible from actual performance.
+      const weights = feedback.per_question.map((pq, i) => ({
+        weight: orderedQuestions[i]?.difficulty ?? 3,
+        normalized: ((pq.score - 1) / 4) * 100,
       }))
+      const totalWeight = weights.reduce((sum, w) => sum + w.weight, 0)
+      const computedOverall = totalWeight > 0
+        ? Math.round(weights.reduce((sum, w) => sum + w.normalized * w.weight, 0) / totalWeight)
+        : 0
+      feedback.overall_score = computedOverall
+
+      // Selection probability stays an LLM estimate (it legitimately weighs
+      // things beyond raw scores) but is clamped to a band around the computed
+      // overall so the two can never tell contradictory stories.
+      const llmProbability = Number.isFinite(feedback.selection_probability)
+        ? feedback.selection_probability
+        : computedOverall
+      feedback.selection_probability = Math.round(
+        Math.min(Math.min(100, computedOverall + 10), Math.max(Math.max(0, computedOverall - 20), llmProbability))
+      )
+
+      // Communication metrics are LLM-assessed by design — just clamp to range.
+      if (feedback.communication) {
+        for (const key of ['score', 'clarity', 'pacing', 'confidence', 'filler_words'] as const) {
+          const v = feedback.communication[key]
+          feedback.communication[key] = Number.isFinite(v) ? Math.min(100, Math.max(0, v)) : 0
+        }
+      } else {
+        feedback.communication = {
+          score: 0, clarity: 0, pacing: 0, confidence: 0, filler_words: 0,
+          clarity_note: '', pacing_note: '', confidence_note: '', filler_note: '',
+        }
+      }
+      if (!Array.isArray(feedback.strengths)) feedback.strengths = []
+      if (!Array.isArray(feedback.gaps)) feedback.gaps = []
     }
 
     const shareToken = generateShareToken()
@@ -226,14 +284,13 @@ Generate a comprehensive feedback report for this candidate.`
       return NextResponse.json({ error: 'Failed to save report' }, { status: 500 })
     }
 
-    // Streak, weak areas, referral credit, and email are all non-critical for the
-    // user to see their report. Defer them with waitUntil so they complete after the
+    // Streak, weak areas, and email are all non-critical for the user to see
+    // their report. Defer them with waitUntil so they complete after the
     // response is sent — removes ~4-5 s of blocking from the critical path.
     waitUntil(
       Promise.allSettled([
         updateStreak(supabase, user.id),
         updateWeakAreas(supabase, user.id, questions as Question[] ?? [], answerMap),
-        completeReferral(supabase, user.id),
         sendFeedbackEmail(supabase, user.id, session, feedback, session_id, shareToken),
       ])
     )
@@ -307,43 +364,6 @@ async function updateWeakAreas(
     )
     if (upsertErr) console.error('weak_areas upsert error:', topicTag, upsertErr)
   }))
-}
-
-async function completeReferral(
-  supabase: Awaited<ReturnType<typeof import('@/lib/supabase-server').createServerSupabaseClient>>,
-  userId: string,
-) {
-  const { createServiceClient } = await import('@/lib/supabase-server')
-  const svc = await createServiceClient()
-
-  const { data: referral } = await svc
-    .from('referrals')
-    .select('id, referrer_id')
-    .eq('referee_id', userId)
-    .eq('status', 'pending')
-    .single()
-  if (!referral) return
-
-  const { data: claimed } = await svc.from('referrals')
-    .update({ status: 'completed', completed_at: new Date().toISOString() })
-    .eq('id', referral.id)
-    .eq('status', 'pending')
-    .select('id')
-    .maybeSingle()
-  if (!claimed) return
-
-  await Promise.all([
-    creditReferralBonus(svc, referral.referrer_id),
-    creditReferralBonus(svc, userId),
-  ])
-}
-
-async function creditReferralBonus(
-  svc: Awaited<ReturnType<typeof import('@/lib/supabase-server').createServiceClient>>,
-  id: string,
-) {
-  await svc.rpc('increment_user_credits', { p_user_id: id, p_amount: 1 })
-  await svc.from('credit_transactions').insert({ user_id: id, amount: 1, type: 'referral' })
 }
 
 async function sendFeedbackEmail(

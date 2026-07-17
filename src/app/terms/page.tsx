@@ -23,7 +23,7 @@ const SECTIONS = [
         </p>
         <p className="mt-2">
           If you do not agree to these Terms, do not use the Platform. We reserve the right to
-          update these Terms at any time with 14 days&apos; notice. Continued use after the effective
+          update these Terms at any time. Continued use after the effective
           date constitutes acceptance.
         </p>
       </>
@@ -178,7 +178,9 @@ const SECTIONS = [
           the platform, even if advised of the possibility of such damages.
         </p>
         <p className="mt-2">
-          In no event shall our total liability to you exceed ₹500.
+          The Platform is provided to you free of charge, and you agree that, to the maximum
+          extent permitted by applicable law, we shall have no monetary liability to you arising
+          out of or in connection with your use of the Platform.
         </p>
       </>
     ),

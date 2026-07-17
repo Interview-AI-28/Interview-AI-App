@@ -4,10 +4,9 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { normalizeTopic } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
-import { Mic, Plus, Clock, TrendingUp, Flame, Target, Gift, ArrowRight, Zap } from 'lucide-react'
+import { Mic, Plus, Clock, TrendingUp, Flame, Target, ArrowRight, Zap } from 'lucide-react'
 import type { User, InterviewSession, FeedbackReport } from '@/types'
 import type { RoundType } from '@/types'
-import { CopyReferral } from './CopyReferral'
 import InterviewCountdown from './InterviewCountdown'
 import EnableReminders from './EnableReminders'
 import OnboardingModal from './OnboardingModal'
@@ -88,7 +87,6 @@ export default async function DashboardPage() {
   const currentStreak = user?.current_streak ?? 0
   const longestStreak = user?.longest_streak ?? 0
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://interview-ai-app-iota.vercel.app'
-  const referralLink = user?.referral_code ? `${appUrl}/?ref=${user.referral_code}` : null
 
   // Score trend: chronological, last 8 completed sessions with reports (for chart)
   const sessionsWithReports = [...(sessions ?? [])]
@@ -361,19 +359,6 @@ export default async function DashboardPage() {
                 )
               })}
             </div>
-          </div>
-        )}
-
-        {/* Referral programme */}
-        {referralLink && (
-          <div className="bg-white border border-indigo-200 hover:border-indigo-300 rounded-2xl p-6 mb-8 transition-all duration-200">
-            <h2 className="font-semibold text-gray-900 mb-1 flex items-center gap-2">
-              <Gift className="w-4 h-4 text-indigo-600" /> Refer a Friend
-            </h2>
-            <p className="text-sm text-gray-600 mb-4">
-              Know someone prepping for interviews? Share your link and help them practise for free.
-            </p>
-            <CopyReferral link={referralLink} />
           </div>
         )}
 
