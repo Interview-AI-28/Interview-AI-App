@@ -96,29 +96,6 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // Track referral if the referral_code cookie was set before OAuth. Use the user
-  // returned by the exchange (no extra network round-trip). Non-fatal.
-  const refCode = request.cookies.get('referral_code')?.value
-  if (refCode && data.user) {
-    try {
-      const { data: referrer } = await supabase
-        .from('users')
-        .select('id')
-        .eq('referral_code', decodeURIComponent(refCode))
-        .single()
-      if (referrer && referrer.id !== data.user.id) {
-        await supabase.from('referrals').insert({
-          referrer_id: referrer.id,
-          referee_id: data.user.id,
-          status: 'pending',
-        })
-      }
-    } catch {
-      // non-fatal — referral tracking failure should not block login
-    }
-    response.cookies.set('referral_code', '', { maxAge: 0, path: '/' })
-  }
-
   return response
 }
 

@@ -1,26 +1,15 @@
 export type RoundType = 'tech_l1' | 'tech_l2' | 'managerial' | 'hr' | 'full_loop'
 export type SessionStatus = 'setup' | 'in_progress' | 'completed' | 'abandoned'
-export type TransactionType = 'signup' | 'purchase' | 'referral' | 'session_use'
 
 export interface User {
   id: string
   email: string
   name: string
   avatar_url: string | null
-  referral_code: string
   created_at: string
   current_streak: number
   longest_streak: number
   last_session_date: string | null
-}
-
-export interface CreditTransaction {
-  id: string
-  user_id: string
-  amount: number
-  type: TransactionType
-  session_id: string | null
-  created_at: string
 }
 
 export interface InterviewSession {

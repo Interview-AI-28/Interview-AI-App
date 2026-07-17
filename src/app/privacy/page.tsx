@@ -78,7 +78,6 @@ export default function PrivacyPage() {
                     ['Practice streak and session history', 'System-generated', 'Display your progress on the dashboard; send you streak-at-risk reminder notifications'],
                     ['Browser push notification token', 'Browser Web Push API (only if you opt in)', 'Send you streak reminders and re-engagement notifications. You can revoke permission in your browser settings at any time.'],
                     ['App experience feedback (star rating + suggestions)', 'Optionally submitted after each session', 'Improve the product. Entirely optional.'],
-                    ['Referral relationships (who referred whom)', 'Referral link clicks', 'Credit both parties when a referral converts to a completed interview'],
                   ].map(([data, source, why]) => (
                     <tr key={data}>
                       <td className="px-4 py-3 font-medium text-gray-800 align-top">{data}</td>

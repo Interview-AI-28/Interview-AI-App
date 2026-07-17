@@ -6,7 +6,7 @@ import { CheckCircle, ArrowLeft, Loader2, Trash2 } from 'lucide-react'
 import Logo from '@/components/Logo'
 
 interface AccountData {
-  user: { email: string; name: string; referral_code: string }
+  user: { email: string; name: string }
 }
 
 export default function AccountPage() {
@@ -56,15 +56,6 @@ export default function AccountPage() {
         </nav>
         <main className="max-w-3xl mx-auto px-6 py-10 space-y-6">
           <div className="h-8 w-48 bg-gray-200 rounded animate-pulse" />
-          {/* Referral card skeleton */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-            <div className="h-4 w-36 bg-gray-200 rounded animate-pulse mb-2" />
-            <div className="h-3 w-full bg-gray-100 rounded animate-pulse mb-4" />
-            <div className="flex gap-2">
-              <div className="flex-1 h-10 bg-gray-100 rounded-xl animate-pulse" />
-              <div className="h-10 w-24 bg-gray-200 rounded-xl animate-pulse" />
-            </div>
-          </div>
           {/* Account details skeleton */}
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
             <div className="h-4 w-28 bg-gray-200 rounded animate-pulse mb-4" />
@@ -95,8 +86,6 @@ export default function AccountPage() {
   }
 
   const { user } = data
-  const appUrl = typeof window !== 'undefined' ? window.location.origin : 'https://interview-ai-app-iota.vercel.app'
-  const referralLink = `${appUrl}/?ref=${user.referral_code}`
 
   return (
     <div className="bg-slate-50 min-h-screen">
@@ -112,29 +101,6 @@ export default function AccountPage() {
 
       <main className="max-w-3xl mx-auto px-6 py-10 space-y-6">
         <h1 className="text-2xl font-bold text-gray-900">Account</h1>
-
-        {/* Referral */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-          <h2 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-indigo-600" /> Referral Programme
-          </h2>
-          <p className="text-sm text-gray-600 mb-4">
-            Know someone prepping for interviews? Share your link and help them practise for free.
-          </p>
-          <div className="flex items-center gap-2">
-            <input
-              readOnly
-              value={referralLink}
-              className="flex-1 bg-slate-50 border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 font-mono focus:outline-none focus:border-indigo-500/50"
-            />
-            <button
-              onClick={() => navigator.clipboard.writeText(referralLink)}
-              className="bg-indigo-600 hover:bg-indigo-500 text-white text-sm px-4 py-2.5 rounded-xl font-medium transition-colors whitespace-nowrap"
-            >
-              Copy Link
-            </button>
-          </div>
-        </div>
 
         {/* Account info */}
         <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
