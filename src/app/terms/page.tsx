@@ -23,7 +23,7 @@ const SECTIONS = [
         </p>
         <p className="mt-2">
           If you do not agree to these Terms, do not use the Platform. We reserve the right to
-          update these Terms at any time with 14 days&apos; notice. Continued use after the effective
+          update these Terms at any time. Continued use after the effective
           date constitutes acceptance.
         </p>
       </>
