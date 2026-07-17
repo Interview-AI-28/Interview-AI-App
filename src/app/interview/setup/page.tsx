@@ -231,7 +231,7 @@ function SetupPageInner() {
           ))}
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-8 shadow-sm">
           {/* Step 1: JD */}
           {step === 1 && (
             <div>
@@ -483,7 +483,7 @@ function SetupPageInner() {
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2.5">
                   Targeted round practice &mdash; use when you know your weak area
                 </p>
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {ROUND_OPTIONS.map((option) => (
                     <button
                       key={option.value}

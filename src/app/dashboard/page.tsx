@@ -188,7 +188,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Stats row */}
-        <StaggerContainer className="grid grid-cols-3 gap-4 mb-8">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <StaggerItem lift>
             <div className="bg-white border border-gray-200 hover:border-gray-300 rounded-2xl p-4 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 bg-indigo-50 border border-indigo-200 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -397,9 +397,9 @@ export default async function DashboardPage() {
               {(sessions as InterviewSession[]).slice(0, 10).map((session) => {
                 const report = reportMap.get(session.id)
                 return (
-                  <div key={session.id} className="px-6 py-4 flex items-center justify-between hover:bg-indigo-50/30 transition-colors">
-                    <div>
-                      <div className="font-medium text-gray-900 text-sm">
+                  <div key={session.id} className="px-4 sm:px-6 py-4 flex items-center justify-between gap-3 hover:bg-indigo-50/30 transition-colors">
+                    <div className="min-w-0">
+                      <div className="font-medium text-gray-900 text-sm truncate">
                         {session.company} — {session.role}
                       </div>
                       <div className="flex items-center gap-3 mt-0.5">
@@ -419,7 +419,7 @@ export default async function DashboardPage() {
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3 sm:gap-4 shrink-0">
                       {report && (
                         <div className="text-right">
                           <div className={`text-lg font-bold ${

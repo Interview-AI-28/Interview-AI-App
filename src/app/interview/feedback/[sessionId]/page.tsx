@@ -70,7 +70,7 @@ export default async function FeedbackPage({
         <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-16 space-y-5 -mt-12 relative">
           {/* Score rings skeleton */}
           <div className="bg-white border border-gray-200 rounded-2xl shadow-2xl p-6 sm:p-8">
-            <div className="grid grid-cols-3 gap-4 sm:gap-8 justify-items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
               {[0, 1, 2].map((i) => (
                 <div key={i} className="flex flex-col items-center gap-3">
                   <div className="w-[110px] h-[110px] sm:w-[130px] sm:h-[130px] rounded-full bg-gray-200 animate-pulse" />
@@ -215,7 +215,7 @@ export default async function FeedbackPage({
 
         {/* Score rings — overlaps hero */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-2xl p-6 sm:p-8">
-          <div className="grid grid-cols-3 gap-4 sm:gap-8 justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 justify-items-center">
             <ScoreRing
               score={r.overall_score}
               label="Overall Score"

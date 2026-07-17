@@ -172,7 +172,7 @@ export default function FeedbackPerQuestion({ perQuestion, questions, answers, s
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
         <h2 className="text-lg font-semibold text-gray-900">Per-Question Breakdown</h2>
         <button
           onClick={toggleAll}

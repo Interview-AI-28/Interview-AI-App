@@ -306,7 +306,7 @@ function DrillPageInner() {
                 <CheckCircle className="w-4 h-4 text-indigo-600 flex-shrink-0" /> Instant AI evaluation after each answer
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
-                <CheckCircle className="w-4 h-4 text-indigo-600 flex-shrink-0" /> No interview credit needed — unlimited daily practice
+                <CheckCircle className="w-4 h-4 text-indigo-600 flex-shrink-0" /> Completely free — unlimited daily practice
               </div>
             </div>
 
