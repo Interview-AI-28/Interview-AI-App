@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { anthropicClient as client, getKeyDiagnostics } from '@/lib/anthropic-client'
+import { anthropicClient as client } from '@/lib/anthropic-client'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import type { RoundType } from '@/types'
 
@@ -235,14 +235,8 @@ Generate 15 interview questions for this ${round_type} round at ${company}.${res
     return NextResponse.json({ session_id: session.id, questions: questionsToInsert })
   } catch (error) {
     console.error('generate-questions error:', error)
-    // TEMPORARY: attach masked key diagnostics so the failing step surfaces the
-    // root cause on the page itself. Remove once the API key issue is resolved.
-    const anthropicStatus = (error as { status?: number })?.status ?? null
     return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : 'Internal server error',
-        diagnostic: { ...getKeyDiagnostics(), anthropic_http_status: anthropicStatus },
-      },
+      { error: error instanceof Error ? error.message : 'Internal server error' },
       { status: 500 }
     )
   }

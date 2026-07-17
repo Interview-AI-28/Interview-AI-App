@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mic, CheckCircle } from 'lucide-react'
+import Logo from '@/components/Logo'
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false)
@@ -48,9 +49,8 @@ export default function LoginPage() {
         <div className="absolute bottom-[-80px] right-[-80px] w-[360px] h-[360px] rounded-full bg-indigo-50 blur-[80px] pointer-events-none" />
         <div className="absolute top-[-60px] left-[10%] w-[240px] h-[240px] rounded-full bg-indigo-50 blur-[60px] pointer-events-none" />
 
-        <div className="relative z-10 flex items-center gap-2.5">
-          <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
-          <span className="font-bold text-gray-900 text-xl tracking-tight">Intervizly</span>
+        <div className="relative z-10">
+          <Logo />
         </div>
 
         <div className="relative z-10">
@@ -86,9 +86,8 @@ export default function LoginPage() {
       <div className="flex-1 flex items-center justify-center bg-slate-50 px-6 py-12">
         <div className="w-full max-w-sm">
           {/* Mobile logo — shown only on mobile */}
-          <div className="flex lg:hidden items-center gap-2 mb-10">
-            <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
-            <span className="font-bold text-gray-900 text-lg">Intervizly</span>
+          <div className="flex lg:hidden mb-10">
+            <Logo />
           </div>
 
           <motion.div
@@ -97,7 +96,7 @@ export default function LoginPage() {
             transition={{ duration: 0.35, ease: 'easeOut' }}
           >
             <h1 className="text-2xl font-bold text-gray-900 mb-1.5">Sign in to Intervizly</h1>
-            <p className="text-gray-600 text-sm mb-8">1 free interview session included on signup.</p>
+            <p className="text-gray-600 text-sm mb-8">Free and unlimited — practice as much as you like.</p>
           </motion.div>
 
           {deleted && (
@@ -114,7 +113,7 @@ export default function LoginPage() {
             transition={{ duration: 0.35, delay: 0.1, ease: 'easeOut' }}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.97 }}
-            className="bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-900 rounded-xl px-6 py-3 w-full flex items-center justify-center gap-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-white hover:bg-gray-50 border border-gray-300 shadow-sm text-gray-900 rounded-xl px-6 py-3 w-full flex items-center justify-center gap-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <div className="w-4 h-4 border-2 border-gray-200 border-t-indigo-600 rounded-full animate-spin" />
@@ -126,7 +125,7 @@ export default function LoginPage() {
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
               </svg>
             )}
-            <span className="text-sm font-medium">{loading ? 'Redirecting...' : 'Continue with Google'}</span>
+            <span className="text-sm font-semibold">{loading ? 'Redirecting...' : 'Continue with Google'}</span>
           </motion.button>
 
           {error && (
@@ -140,7 +139,7 @@ export default function LoginPage() {
           >
             <div className="mt-6 flex justify-center">
               <div className="bg-indigo-50 border border-indigo-200 text-indigo-700 rounded-full px-4 py-2 text-sm">
-                1 free session included — no card needed
+                Free &amp; unlimited — no credit card needed
               </div>
             </div>
 

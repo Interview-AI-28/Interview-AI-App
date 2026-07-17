@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Mic, CheckCircle, ArrowLeft, Loader2, Trash2 } from 'lucide-react'
+import { CheckCircle, ArrowLeft, Loader2, Trash2 } from 'lucide-react'
+import Logo from '@/components/Logo'
 
 interface AccountData {
   user: { email: string; name: string; referral_code: string }
@@ -47,34 +48,14 @@ export default function AccountPage() {
   if (loading) {
     return (
       <div className="bg-slate-50 min-h-screen">
-        <nav className="border-b border-gray-200 px-6 py-4">
+        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 px-6 py-4">
           <div className="max-w-3xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-                <Mic className="w-3.5 h-3.5 text-white" />
-              </div>
-              <span className="font-bold text-gray-900">Intervizly</span>
-            </div>
+            <Logo href="/dashboard" />
             <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
           </div>
         </nav>
         <main className="max-w-3xl mx-auto px-6 py-10 space-y-6">
           <div className="h-8 w-48 bg-gray-200 rounded animate-pulse" />
-          {/* Credits card skeleton */}
-          <div className="bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-200 rounded-2xl p-6">
-            <div className="h-4 w-20 bg-indigo-200 rounded animate-pulse mb-5" />
-            <div className="flex items-start justify-between mb-6 gap-4">
-              <div className="space-y-2">
-                <div className="h-6 w-32 bg-indigo-200 rounded-full animate-pulse" />
-                <div className="h-3 w-44 bg-indigo-100 rounded animate-pulse" />
-              </div>
-              <div className="text-right space-y-1.5">
-                <div className="h-12 w-14 bg-indigo-200 rounded animate-pulse" />
-                <div className="h-3 w-16 bg-indigo-100 rounded animate-pulse ml-auto" />
-              </div>
-            </div>
-            <div className="h-10 w-full bg-indigo-200 rounded-xl animate-pulse" />
-          </div>
           {/* Referral card skeleton */}
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
             <div className="h-4 w-36 bg-gray-200 rounded animate-pulse mb-2" />
@@ -105,8 +86,10 @@ export default function AccountPage() {
 
   if (!data) {
     return (
-      <div className="bg-slate-50 min-h-screen flex items-center justify-center">
-        <p className="text-red-600">{error || 'Failed to load account data.'}</p>
+      <div className="bg-slate-50 min-h-screen flex items-center justify-center px-6">
+        <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl px-5 py-4 text-sm max-w-sm text-center">
+          {error || 'Failed to load account data. Please refresh the page to try again.'}
+        </div>
       </div>
     )
   }
@@ -118,14 +101,9 @@ export default function AccountPage() {
   return (
     <div className="bg-slate-50 min-h-screen">
       {/* Nav */}
-      <nav className="border-b border-gray-200 px-6 py-4">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 px-6 py-4">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <Mic className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="font-bold text-gray-900">Intervizly</span>
-          </div>
+          <Logo href="/dashboard" />
           <Link href="/dashboard" className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Dashboard
           </Link>
@@ -141,7 +119,7 @@ export default function AccountPage() {
             <CheckCircle className="w-4 h-4 text-indigo-600" /> Referral Programme
           </h2>
           <p className="text-sm text-gray-600 mb-4">
-            Share your link. When a friend signs up and completes their first interview, you both get 1 free session.
+            Know someone prepping for interviews? Share your link and help them practise for free.
           </p>
           <div className="flex items-center gap-2">
             <input

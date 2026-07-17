@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Calendar, Loader2, ChevronRight, RefreshCw, Target } from 'lucide-react'
+import { ROUND_COLORS, ROUND_COLOR_FALLBACK } from '@/lib/round-badges'
 
 interface StudyDay {
   day: number
@@ -19,20 +20,12 @@ interface StoredPlan {
   interview_date?: string
 }
 
-const ROUND_COLORS: Record<string, string> = {
-  tech_l1: 'bg-indigo-50 text-indigo-600 border border-indigo-200',
-  tech_l2: 'bg-violet-50 text-violet-600 border border-violet-200',
-  managerial: 'bg-blue-50 text-blue-600 border border-blue-200',
-  hr: 'bg-emerald-50 text-emerald-600 border border-emerald-200',
-  full_loop: 'bg-orange-50 text-orange-600 border border-orange-200',
-  drill: 'bg-gray-100 text-gray-600 border border-gray-200',
-}
-
 export default function StudyPlanWidget() {
   const [plan, setPlan] = useState<StoredPlan | null>(null)
   const [loading, setLoading] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const [interviewDate, setInterviewDate] = useState('')
+  const [error, setError] = useState('')
 
   // Load cached plan from localStorage on mount
   useEffect(() => {
@@ -52,6 +45,7 @@ export default function StudyPlanWidget() {
 
   async function generate() {
     setLoading(true)
+    setError('')
     try {
       const res = await fetch('/api/study-plan', {
         method: 'POST',
@@ -65,7 +59,7 @@ export default function StudyPlanWidget() {
       localStorage.setItem('iai_study_plan', JSON.stringify(data))
       setExpanded(true)
     } catch {
-      alert('Could not generate study plan. Please try again.')
+      setError('Could not generate study plan. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -130,6 +124,7 @@ export default function StudyPlanWidget() {
                   ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating plan…</>
                   : <><Calendar className="w-4 h-4" /> Generate My Study Plan</>}
               </button>
+              {error && <p className="text-xs text-red-600 mt-2 text-center">{error}</p>}
             </div>
           ) : (
             <div>
@@ -157,7 +152,7 @@ export default function StudyPlanWidget() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-0.5">
-                            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${ROUND_COLORS[roundKey] ?? 'bg-gray-100 text-gray-600 border border-gray-200'}`}>
+                            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${ROUND_COLORS[roundKey] ?? ROUND_COLOR_FALLBACK}`}>
                               {d.focus}
                             </span>
                           </div>

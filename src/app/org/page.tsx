@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { createServerSupabaseClient, createServiceClient } from '@/lib/supabase-server'
-import { Mic, Users, TrendingUp, Target, Building2 } from 'lucide-react'
+import { Mic, Users, TrendingUp, Target, Building2, ArrowLeft } from 'lucide-react'
+import Logo from '@/components/Logo'
 import type { InterviewSession } from '@/types'
 
 export const metadata = { title: 'Cohort Analytics — Intervizly', robots: { index: false } }
@@ -32,7 +33,7 @@ export default async function OrgDashboardPage() {
     return (
       <Shell>
         <div className="bg-white rounded-2xl border border-gray-200 p-10 text-center">
-          <Building2 className="w-10 h-10 text-blue-500 mx-auto mb-4" />
+          <Building2 className="w-10 h-10 text-indigo-500 mx-auto mb-4" />
           <h1 className="text-xl font-bold text-gray-900 mb-2">Cohort Analytics for Teams &amp; Colleges</h1>
           <p className="text-gray-500 text-sm max-w-md mx-auto mb-6">
             Track interview readiness across your whole batch — average scores, total practice
@@ -138,7 +139,7 @@ export default async function OrgDashboardPage() {
   return (
     <Shell>
       <div className="mb-6">
-        <div className="text-xs text-blue-600 font-medium uppercase tracking-wide mb-1">
+        <div className="text-xs text-indigo-600 font-medium uppercase tracking-wide mb-1">
           {orgInfo?.type === 'college' ? 'College cohort' : 'Team'} analytics
         </div>
         <h1 className="text-2xl font-bold text-gray-900">{orgInfo?.name ?? 'Your organization'}</h1>
@@ -158,7 +159,7 @@ export default async function OrgDashboardPage() {
 
       {/* Top weak areas across cohort */}
       {topWeak.length > 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8">
           <h2 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
             <Target className="w-4 h-4 text-amber-500" /> Where the cohort struggles most
           </h2>
@@ -177,12 +178,16 @@ export default async function OrgDashboardPage() {
       )}
 
       {/* Per-member table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-100">
           <h2 className="font-semibold text-gray-900">Members</h2>
         </div>
         {memberStats.length === 0 ? (
-          <div className="px-6 py-12 text-center text-gray-400 text-sm">No members yet.</div>
+          <div className="px-6 py-12 text-center">
+            <Users className="w-8 h-8 text-gray-300 mx-auto mb-3" />
+            <p className="text-sm font-medium text-gray-600 mb-1">No members yet</p>
+            <p className="text-xs text-gray-400">Members appear here once they join your cohort and complete interviews.</p>
+          </div>
         ) : (
           <div className="divide-y divide-gray-100">
             {memberStats.map((m) => (
@@ -212,7 +217,7 @@ export default async function OrgDashboardPage() {
 
 function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; value: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-4">
+    <div className="bg-white rounded-2xl border border-gray-200 p-4">
       <div className="text-2xl font-bold text-gray-900">{value}</div>
       <div className="text-sm text-gray-500 flex items-center gap-1 mt-0.5">{icon} {label}</div>
     </div>
@@ -221,16 +226,13 @@ function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; va
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
+    <div className="min-h-screen bg-slate-50">
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200 px-6 py-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
-              <Mic className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="font-bold text-gray-900">Intervizly</span>
-          </div>
-          <Link href="/dashboard" className="text-sm text-gray-500 hover:text-gray-900">← Dashboard</Link>
+          <Logo href="/dashboard" />
+          <Link href="/dashboard" className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900 transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Dashboard
+          </Link>
         </div>
       </nav>
       <main className="max-w-5xl mx-auto px-6 py-10">{children}</main>

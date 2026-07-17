@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { Mic } from 'lucide-react'
 import type { Metadata } from 'next'
+import PublicNav from '@/components/PublicNav'
+import SiteFooter from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
   title: 'Terms of Service — Intervizly',
@@ -72,7 +73,7 @@ const SECTIONS = [
       <ul className="list-disc pl-5 space-y-2">
         <li>You may create one account per Google identity. Creating multiple accounts to circumvent usage limits is prohibited and may result in permanent suspension of all associated accounts.</li>
         <li>You are responsible for all activity that occurs under your account.</li>
-        <li>Notify us immediately at <a href="mailto:intervizly@gmail.com" className="text-blue-600 hover:underline">intervizly@gmail.com</a> if you suspect unauthorised access.</li>
+        <li>Notify us immediately at <a href="mailto:intervizly@gmail.com" className="text-indigo-600 hover:underline">intervizly@gmail.com</a> if you suspect unauthorised access.</li>
         <li>We reserve the right to suspend or terminate accounts that violate these Terms.</li>
       </ul>
     ),
@@ -148,7 +149,7 @@ const SECTIONS = [
     content: (
       <p>
         Our collection and use of your personal data is governed by our{' '}
-        <Link href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</Link>,
+        <Link href="/privacy" className="text-indigo-600 hover:underline">Privacy Policy</Link>,
         which is incorporated into these Terms by reference. By using the Platform, you consent
         to the processing of your data as described therein.
       </p>
@@ -199,7 +200,7 @@ const SECTIONS = [
       <>
         <p>
           You may delete your personal data at any time from your{' '}
-          <Link href="/account" className="text-blue-600 hover:underline">Account Settings</Link>{' '}
+          <Link href="/account" className="text-indigo-600 hover:underline">Account Settings</Link>{' '}
           page. Deletion removes your name, email, interview history, transcripts, and feedback
           reports, and you are welcome to return to the Platform at any time.
         </p>
@@ -235,7 +236,7 @@ const SECTIONS = [
     content: (
       <p>
         For questions about these Terms, contact us at:{' '}
-        <a href="mailto:intervizly@gmail.com" className="text-blue-600 hover:underline">
+        <a href="mailto:intervizly@gmail.com" className="text-indigo-600 hover:underline">
           intervizly@gmail.com
         </a>
       </p>
@@ -245,21 +246,13 @@ const SECTIONS = [
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
-              <Mic className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="font-bold text-gray-900">Intervizly</span>
-          </Link>
-          <div className="flex items-center gap-4 text-sm text-gray-500">
-            <Link href="/privacy" className="hover:text-gray-900">Privacy Policy</Link>
-            <Link href="/dashboard" className="hover:text-gray-900">Dashboard</Link>
-          </div>
+    <div className="min-h-screen bg-slate-50">
+      <PublicNav>
+        <div className="flex items-center gap-4 text-sm text-gray-500">
+          <Link href="/privacy" className="hover:text-gray-900 transition-colors">Privacy Policy</Link>
+          <Link href="/dashboard" className="hover:text-gray-900 transition-colors">Dashboard</Link>
         </div>
-      </nav>
+      </PublicNav>
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         <div className="mb-10">
@@ -278,11 +271,13 @@ export default function TermsPage() {
           <div className="border-t border-gray-200 pt-6 text-xs text-gray-400">
             <p>
               These Terms should be read alongside our{' '}
-              <Link href="/privacy" className="text-blue-500 hover:underline">Privacy Policy</Link>.
+              <Link href="/privacy" className="text-indigo-600 hover:underline">Privacy Policy</Link>.
             </p>
           </div>
         </div>
       </main>
+
+      <SiteFooter />
     </div>
   )
 }

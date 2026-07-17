@@ -156,7 +156,7 @@ export default function AppFeedbackWidget({ sessionId }: Props) {
                 <button
                   onClick={handleSubmit}
                   disabled={submitting}
-                  className="bg-indigo-600 text-white text-sm font-semibold px-6 py-2.5 rounded-xl hover:bg-indigo-700 disabled:opacity-60 transition-colors shadow-lg shadow-indigo-500/20"
+                  className="bg-indigo-600 text-white text-sm font-semibold px-6 py-2.5 rounded-xl hover:bg-indigo-500 disabled:opacity-60 transition-colors shadow-lg shadow-indigo-500/20"
                 >
                   {submitting ? 'Submitting…' : 'Submit feedback'}
                 </button>

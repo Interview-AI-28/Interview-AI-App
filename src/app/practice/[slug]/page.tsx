@@ -1,8 +1,10 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { Mic, ArrowRight, CheckCircle, Target, MessageSquare, TrendingUp } from 'lucide-react'
+import { ArrowRight, CheckCircle, Target, MessageSquare, TrendingUp } from 'lucide-react'
 import { PRACTICE_GUIDES, getGuide } from '@/lib/practice-content'
+import PublicNav from '@/components/PublicNav'
+import SiteFooter from '@/components/SiteFooter'
 
 export function generateStaticParams() {
   return PRACTICE_GUIDES.map((g) => ({ slug: g.slug }))
@@ -59,22 +61,7 @@ export default async function PracticeGuidePage({
       />
 
       {/* Nav */}
-      <nav className="border-b border-gray-100 px-6 py-4">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <Mic className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-xl text-gray-900">Intervizly</span>
-          </Link>
-          <Link
-            href="/auth/login"
-            className="bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Start Free
-          </Link>
-        </div>
-      </nav>
+      <PublicNav />
 
       <main className="max-w-4xl mx-auto px-6 py-12">
         {/* Breadcrumb */}
@@ -93,7 +80,7 @@ export default async function PracticeGuidePage({
         <div className="flex flex-wrap gap-3 mb-8">
           <Link
             href="/auth/login"
-            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 bg-indigo-600 text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-indigo-500 transition-colors"
           >
             Practise a free {guide.company} mock interview
             <ArrowRight className="w-4 h-4" />
@@ -104,19 +91,19 @@ export default async function PracticeGuidePage({
         <div className="grid sm:grid-cols-3 gap-4 mb-10">
           <div className="border border-gray-200 rounded-xl p-4">
             <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
-              <Target className="w-4 h-4 text-amber-500" /> Round
+              <Target className="w-4 h-4 text-indigo-600" /> Round
             </div>
             <div className="font-semibold text-gray-900">{guide.roundLabel}</div>
           </div>
           <div className="border border-gray-200 rounded-xl p-4">
             <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
-              <TrendingUp className="w-4 h-4 text-blue-500" /> Difficulty
+              <TrendingUp className="w-4 h-4 text-indigo-600" /> Difficulty
             </div>
             <div className="font-semibold text-gray-900">{guide.difficulty}</div>
           </div>
           <div className="border border-gray-200 rounded-xl p-4">
             <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
-              <MessageSquare className="w-4 h-4 text-green-500" /> Avg practice score
+              <MessageSquare className="w-4 h-4 text-indigo-600" /> Avg practice score
             </div>
             <div className="font-semibold text-gray-900">{guide.avgScore}/100</div>
           </div>
@@ -126,7 +113,7 @@ export default async function PracticeGuidePage({
         <h2 className="text-xl font-bold text-gray-900 mb-3">What they assess</h2>
         <div className="flex flex-wrap gap-2 mb-10">
           {guide.skills.map((s) => (
-            <span key={s} className="bg-blue-50 text-blue-700 text-sm px-3 py-1.5 rounded-full font-medium">
+            <span key={s} className="bg-indigo-50 text-indigo-700 text-sm px-3 py-1.5 rounded-full font-medium">
               {s}
             </span>
           ))}
@@ -140,7 +127,7 @@ export default async function PracticeGuidePage({
           {guide.sampleQuestions.map((sq, i) => (
             <div key={i} className="border border-gray-200 rounded-xl p-5">
               <div className="flex items-start gap-3">
-                <div className="w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                <div className="w-7 h-7 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                   {i + 1}
                 </div>
                 <div>
@@ -156,17 +143,17 @@ export default async function PracticeGuidePage({
         </div>
 
         {/* CTA */}
-        <div className="bg-blue-600 rounded-2xl p-8 text-center text-white">
+        <div className="bg-indigo-600 rounded-2xl p-8 text-center text-white">
           <h2 className="text-2xl font-bold mb-2">
             Ready for the real {guide.company} interview?
           </h2>
-          <p className="text-blue-100 mb-6 max-w-xl mx-auto">
+          <p className="text-indigo-100 mb-6 max-w-xl mx-auto">
             Practise a full voice mock interview with an AI interviewer, answer out loud, and get a
             detailed feedback report with your selection probability — free to start.
           </p>
           <Link
             href="/auth/login"
-            className="inline-flex items-center gap-2 bg-white text-blue-600 font-semibold px-8 py-3.5 rounded-xl hover:bg-blue-50 transition-colors"
+            className="inline-flex items-center gap-2 bg-white text-indigo-600 font-semibold px-8 py-3.5 rounded-xl hover:bg-indigo-50 transition-colors"
           >
             Start your free mock interview
             <ArrowRight className="w-5 h-5" />
@@ -181,10 +168,10 @@ export default async function PracticeGuidePage({
               <Link
                 key={g.slug}
                 href={`/practice/${g.slug}`}
-                className="border border-gray-200 rounded-xl px-4 py-3 hover:border-blue-300 hover:bg-blue-50/40 transition-colors flex items-center justify-between group"
+                className="border border-gray-200 rounded-xl px-4 py-3 hover:border-indigo-300 hover:bg-indigo-50/40 transition-colors flex items-center justify-between group"
               >
                 <span className="text-sm font-medium text-gray-900">{g.company} {g.role}</span>
-                <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-blue-500" />
+                <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-indigo-500" />
               </Link>
             ))}
           </div>
@@ -192,15 +179,7 @@ export default async function PracticeGuidePage({
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 px-6 py-8 mt-8">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-400">
-          <span>© 2026 Intervizly. Made in India.</span>
-          <div className="flex gap-6">
-            <Link href="/practice" className="hover:text-gray-900">All guides</Link>
-            <Link href="/privacy" className="hover:text-gray-900">Privacy</Link>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }

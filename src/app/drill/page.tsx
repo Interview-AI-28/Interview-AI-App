@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mic, MicOff, ChevronRight, CheckCircle, RotateCcw, Zap, Clock, ArrowRight, Sparkles } from 'lucide-react'
 import { getDailyDrillQuestions, type DrillQuestion, type DrillRoundFilter } from '@/lib/drill-questions'
+import { ROUND_COLORS } from '@/lib/round-badges'
 
 interface DrillQuestionsResponse {
   questions: DrillQuestion[]
@@ -20,14 +21,6 @@ const ROUND_LABELS: Record<RoundType, string> = {
   managerial: 'Managerial',
   hr: 'HR',
   full_loop: 'Full Loop',
-}
-
-const ROUND_COLORS: Record<RoundType, string> = {
-  tech_l1: 'bg-blue-50 text-blue-600 border border-blue-200',
-  tech_l2: 'bg-purple-50 text-purple-600 border border-purple-200',
-  managerial: 'bg-indigo-50 text-indigo-600 border border-indigo-200',
-  hr: 'bg-emerald-50 text-emerald-600 border border-emerald-200',
-  full_loop: 'bg-gray-100 text-gray-600 border border-gray-200',
 }
 
 const SCORE_LABEL = ['', 'Needs Work', 'Below Par', 'Developing', 'Good', 'Excellent'] as const
@@ -79,6 +72,7 @@ function DrillPageInner() {
   const [listening, setListening] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [results, setResults] = useState<DrillResult[]>([])
+  const [uiError, setUiError] = useState('')
   const [elapsed, setElapsed] = useState(0)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const recognitionRef = useRef<{ stop: () => void } | null>(null)
@@ -121,6 +115,7 @@ function DrillPageInner() {
   }, [])
 
   function startListening() {
+    setUiError('')
     const win = window as unknown as Record<string, unknown>
     type SpeechRecognitionInstance = {
       continuous: boolean; interimResults: boolean; lang: string
@@ -129,7 +124,7 @@ function DrillPageInner() {
       start(): void; stop(): void
     }
     const SpeechRec = (win.SpeechRecognition || win.webkitSpeechRecognition) as (new () => SpeechRecognitionInstance) | undefined
-    if (!SpeechRec) { alert('Speech recognition is not supported in this browser. Please type your answer.'); return }
+    if (!SpeechRec) { setUiError('Speech recognition is not supported in this browser. Please type your answer.'); return }
 
     const rec = new SpeechRec()
     rec.continuous = true
@@ -177,6 +172,7 @@ function DrillPageInner() {
     const answer = (transcript + ' ' + interimRef.current).trim()
     interimRef.current = ''
     setSubmitting(true)
+    setUiError('')
     try {
       const res = await fetch('/api/drill-evaluate', {
         method: 'POST',
@@ -193,7 +189,7 @@ function DrillPageInner() {
       setResults(prev => [...prev, { question: q, transcript: answer, score: data.score, one_line: data.one_line, missing: data.missing }])
       setPhase('scored')
     } catch {
-      alert('Evaluation failed. Please try again.')
+      setUiError('Evaluation failed. Please try again.')
     } finally {
       setSubmitting(false)
     }
@@ -404,6 +400,7 @@ function DrillPageInner() {
                     : <><ChevronRight className="w-4 h-4" /> Submit</>}
                 </button>
               </div>
+              {uiError && <p className="text-xs text-red-600 mt-3">{uiError}</p>}
             </div>
 
             <button

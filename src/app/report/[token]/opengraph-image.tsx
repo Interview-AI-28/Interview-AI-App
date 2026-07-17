@@ -61,7 +61,7 @@ export default async function Image({ params }: { params: { token: string } }) {
         flexDirection: 'column',
         padding: '56px 64px',
         fontFamily: 'system-ui, -apple-system, sans-serif',
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)',
+        background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)',
         position: 'relative',
       }}
     >
@@ -82,7 +82,7 @@ export default async function Image({ params }: { params: { token: string } }) {
             style={{
               width: '52px',
               height: '52px',
-              background: '#3b82f6',
+              background: '#6366f1',
               borderRadius: '12px',
               display: 'flex',
               alignItems: 'center',
@@ -109,8 +109,8 @@ export default async function Image({ params }: { params: { token: string } }) {
         </div>
         <div
           style={{
-            background: 'rgba(59,130,246,0.25)',
-            color: '#93c5fd',
+            background: 'rgba(99,102,241,0.25)',
+            color: '#a5b4fc',
             padding: '8px 28px',
             borderRadius: '20px',
             fontSize: '16px',

@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation'
 import { createServiceClient } from '@/lib/supabase-server'
 import { getScoreColor, getProbabilityLabel } from '@/lib/utils'
-import { CheckCircle, AlertCircle, Mic } from 'lucide-react'
+import { CheckCircle, AlertCircle } from 'lucide-react'
+import PublicNav from '@/components/PublicNav'
+import SiteFooter from '@/components/SiteFooter'
 import type { FeedbackReport, StrengthItem, GapItem } from '@/types'
 import type { Metadata } from 'next'
 
@@ -74,16 +76,8 @@ export default async function PublicReportPage({
   const gaps = (r.gaps_json as GapItem[]) ?? []
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="max-w-4xl mx-auto flex items-center gap-2">
-          <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
-            <Mic className="w-3.5 h-3.5 text-white" />
-          </div>
-          <span className="font-bold text-gray-900">Intervizly</span>
-          <span className="text-gray-400 ml-2 text-sm">Interview Report</span>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-slate-50">
+      <PublicNav />
 
       <main className="max-w-4xl mx-auto px-6 py-10">
         <div className="text-center mb-8">
@@ -148,16 +142,18 @@ export default async function PublicReportPage({
           </div>
         )}
 
-        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center">
-          <p className="text-blue-800 font-medium mb-2">Want to practice your own interviews?</p>
+        <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-6 text-center">
+          <p className="text-indigo-800 font-medium mb-2">Want to practice your own interviews?</p>
           <a
             href="/"
-            className="inline-block bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700"
+            className="inline-block bg-indigo-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-indigo-500 transition-colors"
           >
             Try Intervizly Free
           </a>
         </div>
       </main>
+
+      <SiteFooter />
     </div>
   )
 }
