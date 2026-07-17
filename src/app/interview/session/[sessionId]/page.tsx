@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Mic, MicOff, PhoneOff, Volume2, CheckCircle2, SkipForward } from 'lucide-react'
+import { Mic, MicOff, PhoneOff, Volume2, CheckCircle2, SkipForward, AlertTriangle } from 'lucide-react'
 import { useAudioStateMachine } from '@/hooks/useAudioStateMachine'
 import { useAnalytics } from '@/hooks/useAnalytics'
 import { formatDuration } from '@/lib/utils'
@@ -1041,13 +1041,13 @@ function SessionPageInner({ params }: SessionPageProps) {
           )}
           {ttsFallback && (
             <div className="flex items-center gap-1 text-xs text-amber-400" title="ElevenLabs TTS unavailable — using browser voice">
-              <span>⚠</span>
+              <AlertTriangle className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Browser voice (TTS error)</span>
             </div>
           )}
           <div className={`text-xs sm:text-sm font-mono tabular-nums ${timeWarning ? 'text-amber-400' : 'text-gray-400'}`}>
             {formatDuration(elapsed)}
-            {timeWarning && <span className="ml-1 text-xs hidden sm:inline">⚠ wrapping up</span>}
+            {timeWarning && <span className="ml-1 text-xs hidden sm:inline items-center gap-1 sm:inline-flex"><AlertTriangle className="w-3 h-3" /> wrapping up</span>}
           </div>
           {phase === 'interview' ? (
             <div className="text-xs sm:text-sm text-gray-400 tabular-nums bg-white/[0.06] px-2.5 py-1 rounded-full">

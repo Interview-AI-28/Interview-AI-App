@@ -56,21 +56,6 @@ export default function AccountPage() {
         </nav>
         <main className="max-w-3xl mx-auto px-6 py-10 space-y-6">
           <div className="h-8 w-48 bg-gray-200 rounded animate-pulse" />
-          {/* Credits card skeleton */}
-          <div className="bg-gradient-to-br from-indigo-50 to-violet-50 border border-indigo-200 rounded-2xl p-6">
-            <div className="h-4 w-20 bg-indigo-200 rounded animate-pulse mb-5" />
-            <div className="flex items-start justify-between mb-6 gap-4">
-              <div className="space-y-2">
-                <div className="h-6 w-32 bg-indigo-200 rounded-full animate-pulse" />
-                <div className="h-3 w-44 bg-indigo-100 rounded animate-pulse" />
-              </div>
-              <div className="text-right space-y-1.5">
-                <div className="h-12 w-14 bg-indigo-200 rounded animate-pulse" />
-                <div className="h-3 w-16 bg-indigo-100 rounded animate-pulse ml-auto" />
-              </div>
-            </div>
-            <div className="h-10 w-full bg-indigo-200 rounded-xl animate-pulse" />
-          </div>
           {/* Referral card skeleton */}
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
             <div className="h-4 w-36 bg-gray-200 rounded animate-pulse mb-2" />
@@ -101,8 +86,10 @@ export default function AccountPage() {
 
   if (!data) {
     return (
-      <div className="bg-slate-50 min-h-screen flex items-center justify-center">
-        <p className="text-red-600">{error || 'Failed to load account data.'}</p>
+      <div className="bg-slate-50 min-h-screen flex items-center justify-center px-6">
+        <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl px-5 py-4 text-sm max-w-sm text-center">
+          {error || 'Failed to load account data. Please refresh the page to try again.'}
+        </div>
       </div>
     )
   }

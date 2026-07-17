@@ -129,7 +129,7 @@ async function sendWelcomeEmail(email: string, name: string, origin: string) {
     await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL ?? 'Intervizly <intervizly@gmail.com>',
       to: email,
-      subject: 'Welcome to Intervizly — your free session is ready',
+      subject: 'Welcome to Intervizly — your first mock interview awaits',
       html: buildWelcomeHtml(name, appUrl),
     })
   } catch (err) {
@@ -143,18 +143,18 @@ function buildWelcomeHtml(name: string, appUrl: string) {
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
 <body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9fafb;margin:0;padding:20px;">
   <div style="max-width:600px;margin:0 auto;background:white;border-radius:16px;overflow:hidden;border:1px solid #e5e7eb;">
-    <div style="background:#1d4ed8;padding:32px;text-align:center;">
+    <div style="background:#4f46e5;padding:32px;text-align:center;">
       <h1 style="color:white;margin:0;font-size:24px;">Intervizly</h1>
       <p style="color:#c7d2fe;margin:8px 0 0;">Practice like it&apos;s real. Perform when it matters.</p>
     </div>
     <div style="padding:32px;">
       <p style="color:#374151;margin-bottom:8px;">Hi ${name},</p>
-      <p style="color:#374151;margin-bottom:24px;">Welcome! You&apos;ve got <strong>1 free interview session</strong> ready to go. Here&apos;s how it works:</p>
+      <p style="color:#374151;margin-bottom:24px;">Welcome! Intervizly is <strong>free and unlimited</strong> — your first mock interview is ready whenever you are. Here&apos;s how it works:</p>
 
       <table style="width:100%;border-collapse:collapse;margin-bottom:28px;">
         <tr>
           <td style="vertical-align:top;width:36px;padding-bottom:16px;">
-            <div style="background:#eff6ff;border-radius:8px;padding:6px 10px;font-weight:700;color:#1d4ed8;font-size:13px;text-align:center;">1</div>
+            <div style="background:#eef2ff;border-radius:8px;padding:6px 10px;font-weight:700;color:#4f46e5;font-size:13px;text-align:center;">1</div>
           </td>
           <td style="padding-left:12px;padding-bottom:16px;vertical-align:top;">
             <div style="font-weight:600;color:#111827;font-size:14px;">Set up your interview</div>
@@ -163,7 +163,7 @@ function buildWelcomeHtml(name: string, appUrl: string) {
         </tr>
         <tr>
           <td style="vertical-align:top;width:36px;padding-bottom:16px;">
-            <div style="background:#eff6ff;border-radius:8px;padding:6px 10px;font-weight:700;color:#1d4ed8;font-size:13px;text-align:center;">2</div>
+            <div style="background:#eef2ff;border-radius:8px;padding:6px 10px;font-weight:700;color:#4f46e5;font-size:13px;text-align:center;">2</div>
           </td>
           <td style="padding-left:12px;padding-bottom:16px;vertical-align:top;">
             <div style="font-weight:600;color:#111827;font-size:14px;">Speak with the AI interviewer</div>
@@ -172,7 +172,7 @@ function buildWelcomeHtml(name: string, appUrl: string) {
         </tr>
         <tr>
           <td style="vertical-align:top;width:36px;">
-            <div style="background:#eff6ff;border-radius:8px;padding:6px 10px;font-weight:700;color:#1d4ed8;font-size:13px;text-align:center;">3</div>
+            <div style="background:#eef2ff;border-radius:8px;padding:6px 10px;font-weight:700;color:#4f46e5;font-size:13px;text-align:center;">3</div>
           </td>
           <td style="padding-left:12px;vertical-align:top;">
             <div style="font-weight:600;color:#111827;font-size:14px;">Get your scorecard</div>
@@ -182,7 +182,7 @@ function buildWelcomeHtml(name: string, appUrl: string) {
       </table>
 
       <div style="text-align:center;">
-        <a href="${appUrl}/interview/setup" style="background:#1d4ed8;color:white;text-decoration:none;padding:12px 32px;border-radius:8px;font-weight:600;display:inline-block;font-size:15px;">Start my first interview &rarr;</a>
+        <a href="${appUrl}/interview/setup" style="background:#4f46e5;color:white;text-decoration:none;padding:12px 32px;border-radius:8px;font-weight:600;display:inline-block;font-size:15px;">Start my first interview &rarr;</a>
       </div>
     </div>
     <div style="background:#f9fafb;padding:16px;text-align:center;border-top:1px solid #e5e7eb;">

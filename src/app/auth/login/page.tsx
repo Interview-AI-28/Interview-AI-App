@@ -96,7 +96,7 @@ export default function LoginPage() {
             transition={{ duration: 0.35, ease: 'easeOut' }}
           >
             <h1 className="text-2xl font-bold text-gray-900 mb-1.5">Sign in to Intervizly</h1>
-            <p className="text-gray-600 text-sm mb-8">1 free interview session included on signup.</p>
+            <p className="text-gray-600 text-sm mb-8">Free and unlimited — practice as much as you like.</p>
           </motion.div>
 
           {deleted && (
@@ -139,7 +139,7 @@ export default function LoginPage() {
           >
             <div className="mt-6 flex justify-center">
               <div className="bg-indigo-50 border border-indigo-200 text-indigo-700 rounded-full px-4 py-2 text-sm">
-                1 free session included — no card needed
+                Free &amp; unlimited — no credit card needed
               </div>
             </div>
 

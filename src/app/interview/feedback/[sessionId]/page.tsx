@@ -99,9 +99,12 @@ export default async function FeedbackPage({
 
           {/* Strengths + Focus areas skeleton */}
           <div className="grid md:grid-cols-2 gap-5">
-            {['emerald', 'amber'].map((color) => (
+            {[
+              ['emerald', 'from-emerald-500/60 to-emerald-400/40'],
+              ['amber', 'from-amber-500/60 to-amber-400/40'],
+            ].map(([color, gradient]) => (
               <div key={color} className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-                <div className={`h-px bg-gradient-to-r from-${color}-500/60 to-${color}-400/40`} />
+                <div className={`h-px bg-gradient-to-r ${gradient}`} />
                 <div className="p-5">
                   <div className="h-4 w-28 bg-gray-200 rounded animate-pulse mb-4" />
                   <div className="space-y-3">

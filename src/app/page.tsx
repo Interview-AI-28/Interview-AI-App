@@ -216,7 +216,7 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Social proof — companies + testimonials */}
+      {/* Social proof — company strip */}
       <section className="px-6 py-20 bg-white">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
@@ -226,7 +226,7 @@ export default async function LandingPage() {
           </FadeIn>
           {/* Company name strip */}
           <FadeIn delay={0.08}>
-            <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-3 mb-16">
+            <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-3">
               {[
                 'Google', 'Amazon', 'Flipkart', 'Swiggy', 'Zepto',
                 'Infosys', 'TCS', 'Wipro', 'Accenture', 'PhonePe',

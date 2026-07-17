@@ -183,7 +183,11 @@ export default async function OrgDashboardPage() {
           <h2 className="font-semibold text-gray-900">Members</h2>
         </div>
         {memberStats.length === 0 ? (
-          <div className="px-6 py-12 text-center text-gray-400 text-sm">No members yet.</div>
+          <div className="px-6 py-12 text-center">
+            <Users className="w-8 h-8 text-gray-300 mx-auto mb-3" />
+            <p className="text-sm font-medium text-gray-600 mb-1">No members yet</p>
+            <p className="text-xs text-gray-400">Members appear here once they join your cohort and complete interviews.</p>
+          </div>
         ) : (
           <div className="divide-y divide-gray-100">
             {memberStats.map((m) => (

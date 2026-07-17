@@ -25,6 +25,7 @@ export default function StudyPlanWidget() {
   const [loading, setLoading] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const [interviewDate, setInterviewDate] = useState('')
+  const [error, setError] = useState('')
 
   // Load cached plan from localStorage on mount
   useEffect(() => {
@@ -44,6 +45,7 @@ export default function StudyPlanWidget() {
 
   async function generate() {
     setLoading(true)
+    setError('')
     try {
       const res = await fetch('/api/study-plan', {
         method: 'POST',
@@ -57,7 +59,7 @@ export default function StudyPlanWidget() {
       localStorage.setItem('iai_study_plan', JSON.stringify(data))
       setExpanded(true)
     } catch {
-      alert('Could not generate study plan. Please try again.')
+      setError('Could not generate study plan. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -122,6 +124,7 @@ export default function StudyPlanWidget() {
                   ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating plan…</>
                   : <><Calendar className="w-4 h-4" /> Generate My Study Plan</>}
               </button>
+              {error && <p className="text-xs text-red-600 mt-2 text-center">{error}</p>}
             </div>
           ) : (
             <div>

@@ -72,6 +72,7 @@ function DrillPageInner() {
   const [listening, setListening] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [results, setResults] = useState<DrillResult[]>([])
+  const [uiError, setUiError] = useState('')
   const [elapsed, setElapsed] = useState(0)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const recognitionRef = useRef<{ stop: () => void } | null>(null)
@@ -114,6 +115,7 @@ function DrillPageInner() {
   }, [])
 
   function startListening() {
+    setUiError('')
     const win = window as unknown as Record<string, unknown>
     type SpeechRecognitionInstance = {
       continuous: boolean; interimResults: boolean; lang: string
@@ -122,7 +124,7 @@ function DrillPageInner() {
       start(): void; stop(): void
     }
     const SpeechRec = (win.SpeechRecognition || win.webkitSpeechRecognition) as (new () => SpeechRecognitionInstance) | undefined
-    if (!SpeechRec) { alert('Speech recognition is not supported in this browser. Please type your answer.'); return }
+    if (!SpeechRec) { setUiError('Speech recognition is not supported in this browser. Please type your answer.'); return }
 
     const rec = new SpeechRec()
     rec.continuous = true
@@ -170,6 +172,7 @@ function DrillPageInner() {
     const answer = (transcript + ' ' + interimRef.current).trim()
     interimRef.current = ''
     setSubmitting(true)
+    setUiError('')
     try {
       const res = await fetch('/api/drill-evaluate', {
         method: 'POST',
@@ -186,7 +189,7 @@ function DrillPageInner() {
       setResults(prev => [...prev, { question: q, transcript: answer, score: data.score, one_line: data.one_line, missing: data.missing }])
       setPhase('scored')
     } catch {
-      alert('Evaluation failed. Please try again.')
+      setUiError('Evaluation failed. Please try again.')
     } finally {
       setSubmitting(false)
     }
@@ -397,6 +400,7 @@ function DrillPageInner() {
                     : <><ChevronRight className="w-4 h-4" /> Submit</>}
                 </button>
               </div>
+              {uiError && <p className="text-xs text-red-600 mt-3">{uiError}</p>}
             </div>
 
             <button
