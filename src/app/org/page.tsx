@@ -191,7 +191,7 @@ export default async function OrgDashboardPage() {
         ) : (
           <div className="divide-y divide-gray-100">
             {memberStats.map((m) => (
-              <div key={m.userId} className="px-6 py-3 flex items-center justify-between">
+              <div key={m.userId} className="px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
                 <div className="min-w-0">
                   <div className="font-medium text-gray-900 text-sm truncate">{m.name}</div>
                   <div className="text-xs text-gray-400 truncate">{m.email}</div>

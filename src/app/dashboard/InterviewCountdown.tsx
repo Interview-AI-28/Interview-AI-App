@@ -91,12 +91,12 @@ export default function InterviewCountdown() {
 
   if (daysLeft < 0) {
     return (
-      <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-8 flex items-center justify-between shadow-sm">
+      <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-8 flex items-center justify-between gap-3 shadow-sm">
         <div className="flex items-center gap-2 text-gray-500 text-sm">
-          <Calendar className="w-4 h-4" />
+          <Calendar className="w-4 h-4 shrink-0" />
           <span>Your interview on {formattedDate} has passed. Did it go well?</span>
         </div>
-        <button onClick={clear} className="text-gray-400 hover:text-gray-600 transition-colors">
+        <button onClick={clear} className="text-gray-400 hover:text-gray-600 transition-colors shrink-0">
           <X className="w-4 h-4" />
         </button>
       </div>
@@ -114,9 +114,9 @@ export default function InterviewCountdown() {
   const digitColor = daysLeft <= 3 ? 'text-red-600' : daysLeft <= 7 ? 'text-amber-600' : 'text-gray-900'
 
   return (
-    <div className={`border rounded-2xl p-4 mb-8 flex items-center justify-between ${urgencyBg}`}>
-      <div className="flex items-center gap-3">
-        <Calendar className={`w-5 h-5 ${textColor}`} />
+    <div className={`border rounded-2xl p-4 mb-8 flex items-center justify-between gap-3 ${urgencyBg}`}>
+      <div className="flex items-center gap-3 min-w-0">
+        <Calendar className={`w-5 h-5 shrink-0 ${textColor}`} />
         <div>
           <div className={`font-semibold text-sm ${digitColor}`}>
             {daysLeft === 0
@@ -128,7 +128,7 @@ export default function InterviewCountdown() {
           <div className={`text-xs ${subTextColor}`}>{formattedDate}</div>
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 shrink-0">
         <button
           onClick={() => setEditing(true)}
           className={`text-xs underline ${subTextColor} hover:opacity-80 transition-opacity`}

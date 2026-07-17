@@ -106,13 +106,13 @@ export default function AccountPage() {
         <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
           <h2 className="font-semibold text-gray-900 mb-4">Account Details</h2>
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between items-center py-2 border-b border-gray-100">
-              <span className="text-gray-600">Name</span>
-              <span className="text-gray-900 font-medium">{user.name}</span>
+            <div className="flex justify-between items-center gap-4 py-2 border-b border-gray-100">
+              <span className="text-gray-600 shrink-0">Name</span>
+              <span className="text-gray-900 font-medium text-right break-words min-w-0">{user.name}</span>
             </div>
-            <div className="flex justify-between items-center py-2">
-              <span className="text-gray-600">Email</span>
-              <span className="text-gray-900">{user.email}</span>
+            <div className="flex justify-between items-center gap-4 py-2">
+              <span className="text-gray-600 shrink-0">Email</span>
+              <span className="text-gray-900 text-right break-all min-w-0">{user.email}</span>
             </div>
           </div>
         </div>
