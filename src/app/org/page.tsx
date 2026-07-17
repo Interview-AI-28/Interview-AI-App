@@ -159,7 +159,7 @@ export default async function OrgDashboardPage() {
 
       {/* Top weak areas across cohort */}
       {topWeak.length > 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-8">
           <h2 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
             <Target className="w-4 h-4 text-amber-500" /> Where the cohort struggles most
           </h2>
@@ -178,7 +178,7 @@ export default async function OrgDashboardPage() {
       )}
 
       {/* Per-member table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-100">
           <h2 className="font-semibold text-gray-900">Members</h2>
         </div>
@@ -213,7 +213,7 @@ export default async function OrgDashboardPage() {
 
 function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; value: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-4">
+    <div className="bg-white rounded-2xl border border-gray-200 p-4">
       <div className="text-2xl font-bold text-gray-900">{value}</div>
       <div className="text-sm text-gray-500 flex items-center gap-1 mt-0.5">{icon} {label}</div>
     </div>

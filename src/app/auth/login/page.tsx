@@ -113,7 +113,7 @@ export default function LoginPage() {
             transition={{ duration: 0.35, delay: 0.1, ease: 'easeOut' }}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.97 }}
-            className="bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-900 rounded-xl px-6 py-3 w-full flex items-center justify-center gap-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-white hover:bg-gray-50 border border-gray-300 shadow-sm text-gray-900 rounded-xl px-6 py-3 w-full flex items-center justify-center gap-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <div className="w-4 h-4 border-2 border-gray-200 border-t-indigo-600 rounded-full animate-spin" />
@@ -125,7 +125,7 @@ export default function LoginPage() {
                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
               </svg>
             )}
-            <span className="text-sm font-medium">{loading ? 'Redirecting...' : 'Continue with Google'}</span>
+            <span className="text-sm font-semibold">{loading ? 'Redirecting...' : 'Continue with Google'}</span>
           </motion.button>
 
           {error && (

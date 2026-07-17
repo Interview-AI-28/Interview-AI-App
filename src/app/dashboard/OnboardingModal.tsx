@@ -90,7 +90,7 @@ export default function OnboardingModal({ show, userName }: Props) {
         <div className="flex flex-col gap-3">
           <button
             onClick={startInterview}
-            className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
+            className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-500 transition-colors"
           >
             Start your first interview <ArrowRight className="w-4 h-4" />
           </button>

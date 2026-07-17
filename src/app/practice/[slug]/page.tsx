@@ -80,7 +80,7 @@ export default async function PracticeGuidePage({
         <div className="flex flex-wrap gap-3 mb-8">
           <Link
             href="/auth/login"
-            className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center gap-2 bg-indigo-600 text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-indigo-500 transition-colors"
           >
             Practise a free {guide.company} mock interview
             <ArrowRight className="w-4 h-4" />

@@ -246,7 +246,7 @@ export default function CoachChat({ sessionId }: { sessionId: string }) {
                 <button
                   onClick={() => send()}
                   disabled={!input.trim() || streaming}
-                  className="w-9 h-9 bg-indigo-600 text-white rounded-xl flex items-center justify-center hover:bg-indigo-700 disabled:opacity-40 transition-colors flex-shrink-0 shadow-lg shadow-indigo-500/20"
+                  className="w-9 h-9 bg-indigo-600 text-white rounded-xl flex items-center justify-center hover:bg-indigo-500 disabled:opacity-40 transition-colors flex-shrink-0 shadow-lg shadow-indigo-500/20"
                 >
                   {streaming
                     ? <Loader2 className="w-4 h-4 animate-spin" />

@@ -432,7 +432,7 @@ export default async function FeedbackPage({
         <div className="flex flex-col sm:flex-row gap-3">
           <Link
             href="/interview/setup"
-            className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-indigo-700 transition-colors flex-1 shadow-lg shadow-indigo-500/20"
+            className="flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-indigo-500 transition-colors flex-1 shadow-lg shadow-indigo-500/20"
           >
             <RotateCcw className="w-4 h-4" /> Practice Again
           </Link>
